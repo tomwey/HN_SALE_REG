@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { HouseQueryPage } from './house-query';
+
+@NgModule({
+  declarations: [
+    HouseQueryPage,
+  ],
+  imports: [
+    IonicPageModule.forChild(HouseQueryPage),
+  ],
+})
+export class HouseQueryPageModule {}
