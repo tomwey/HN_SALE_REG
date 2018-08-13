@@ -26,7 +26,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngFor="let item of houses;let i=index;">
-        <ion-card class="house-box">
+        <ion-card class="house-box" tappable (click)="openHouse(item);">
           <h2>{{item.name}}</h2>
           <p>可售 <span class="digit">{{item.count}}</span> 套</p>
         </ion-card>
