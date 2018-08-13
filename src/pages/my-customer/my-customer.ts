@@ -19,7 +19,7 @@ export class MyCustomerPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad MyCustomerPage');
-    this.error = '暂无数据';
+    // this.error = '暂无数据';
   }
 
   segmentChanged(ev) {
@@ -30,7 +30,32 @@ export class MyCustomerPage {
 
   }
 
-  data: any = [];
+  openItem(item) {
+    
+  }
+
+  data: any = [
+    {
+      mobile: '18048553687',
+      name: '张先生',
+      sex: '1',
+      type: '1',
+      typename: '来电',
+      content: '询问了价格方面的情况',
+      time: '2018-07-28',
+      left_days: 1,
+    },
+    {
+      mobile: '13312345678',
+      name: '王女士',
+      sex: '2',
+      type: '2',
+      typename: '来访',
+      content: '初次了解',
+      time: '2018-07-25',
+      left_days: 3,
+    },
+  ];
   error: any = null;
 
   keyword: string = '';

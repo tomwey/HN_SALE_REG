@@ -10,4 +10,54 @@ page-my-customer {
             color: color($colors,primary);
         }
     }
+
+    .custom-card {
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .male {
+            color: rgb(101,142,223);
+        }
+
+        .female {
+            color: rgb(232, 83, 177);
+        }
+
+        .state {
+            // background: red;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            color: white;
+            margin-left: 5px;
+        }
+    
+        .state-1 {
+            background: rgb(101,142,223);
+        }
+    
+        .state-2 {
+            background: rgb(132,196,159);
+        }
+
+        .right-section {
+            text-align: center;
+            p {
+                font-size: 12px;
+            }
+
+            .days {
+                color: color($colors, primary);
+                padding: 0 3px;
+                font-size: 18px;
+            }
+
+            ion-icon {
+                font-size: 32px;
+            }
+        }
+    }
+
+    
 }

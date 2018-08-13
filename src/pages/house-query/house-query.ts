@@ -28,6 +28,14 @@ export class HouseQueryPage {
     this.app.getRootNavs()[0].push('HouseInfoPage');
   }
 
+  selectIndustry() {
+
+  }
+
+  selectProject() {
+    
+  }
+
   houses: any = [
     {
       name: '2栋',

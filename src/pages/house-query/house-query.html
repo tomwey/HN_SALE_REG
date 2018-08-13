@@ -11,10 +11,10 @@
   </ion-navbar>
   <ion-toolbar color="white">
     <ion-row class="subnavbar">
-      <ion-col col-6>
+      <ion-col col-6 tappable (click)="selectProject();">
         枫丹西悦二期 <ion-icon name="md-arrow-dropdown"></ion-icon>
       </ion-col>
-      <ion-col col-6>
+      <ion-col col-6 tappable (click)="selectIndustry();">
           住宅 <ion-icon name="md-arrow-dropdown"></ion-icon>
         </ion-col>
     </ion-row>
@@ -33,4 +33,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>
