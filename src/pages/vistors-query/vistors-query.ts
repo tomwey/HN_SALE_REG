@@ -22,4 +22,8 @@ export class VistorsQueryPage {
     console.log('ionViewDidLoad VistorsQueryPage');
   }
 
+  back() {
+    window.location.href = 'salereg://back';
+  }
+
 }

@@ -22,4 +22,35 @@ export class HouseQueryPage {
     console.log('ionViewDidLoad HouseQueryPage');
   }
 
+  houses: any = [
+    {
+      name: '2栋',
+      count: 30
+    },
+    {
+      name: '3栋',
+      count: 30
+    },
+    {
+      name: '4栋',
+      count: 30
+    },
+    {
+      name: '7栋',
+      count: 30
+    },
+    {
+      name: '12栋',
+      count: 30
+    },
+    {
+      name: '13栋',
+      count: 30
+    },
+    {
+      name: '15栋',
+      count: 30
+    },
+  ];
+
 }

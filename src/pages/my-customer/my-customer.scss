@@ -1,3 +1,13 @@
 page-my-customer {
+    .toolbar-ios {
+        padding: 0;
+        margin: 0;
+    }
 
+    .segment-md .segment-button {
+        color: #666;
+        &.segment-activated {
+            color: color($colors,primary);
+        }
+    }
 }

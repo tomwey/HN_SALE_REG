@@ -9,10 +9,38 @@
   <ion-navbar color="primary">
     <ion-title>我的客户</ion-title>
   </ion-navbar>
-
+  <ion-toolbar color="white">
+    <ion-segment [(ngModel)]="menuType" 
+      mode="md"
+      
+      (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="{{menu.ID}}" *ngFor="let menu of menues">
+        {{menu.name}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar color="white">
+      <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
+      <form action=".">
+        <ion-searchbar
+          #searchBar
+          [(ngModel)]="keyword"
+          cancelButtonText="取消"
+          [ngModelOptions]="{standalone: true}"
+          [showCancelButton]="true"
+          (search)="startSearch(keyword)"
+          placeholder="搜索"
+          [animated]="false"
+          name="search"
+        >
+        </ion-searchbar>
+    </form>
+    </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <div class="empty-error-box" *ngIf="!!error">
+    {{error}}
+  </div>
 </ion-content>

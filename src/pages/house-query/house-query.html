@@ -9,10 +9,28 @@
   <ion-navbar color="primary">
     <ion-title>房源查询</ion-title>
   </ion-navbar>
-
+  <ion-toolbar color="white">
+    <ion-row class="subnavbar">
+      <ion-col col-6>
+        枫丹西悦二期 <ion-icon name="md-arrow-dropdown"></ion-icon>
+      </ion-col>
+      <ion-col col-6>
+          住宅 <ion-icon name="md-arrow-dropdown"></ion-icon>
+        </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 *ngFor="let item of houses;let i=index;">
+        <ion-card class="house-box">
+          <h2>{{item.name}}</h2>
+          <p>可售 <span class="digit">{{item.count}}</span> 套</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
