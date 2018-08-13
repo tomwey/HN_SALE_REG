@@ -9,9 +9,49 @@
   <ion-navbar color="primary">
     <ion-title>枫丹西悦二期 — 12栋 住宅</ion-title>
   </ion-navbar>
-
+  <ion-toolbar color="white">
+    <ion-segment [(ngModel)]="unit" 
+      mode="md"
+      (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="{{u.ID}}" *ngFor="let u of units">
+        {{u.name}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="help-box">
+    <span class="color-item" [style.background]="color.value" *ngFor="let color of colors">
+      {{color.name}}
+    </span>
+  </div>
+  <ion-grid>
+    <ion-row *ngFor="let floor of roomsData">
+      <ion-col col-2>
+        <div class="floor-box">
+          {{floor.floor}}
+        </div>
+      </ion-col>
+      <ion-col col-10>
+        <ion-row class="rooms">
+          <ion-col *ngFor="let room of floor.rooms" class="cell">
+            <div class="room-box" [style.background]="GetColor(room)" tappable (click)="selectRoom(room);">
+              {{room.name}}
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <table class="rooms-table">
+    <tr *ngFor="let floor of roomsData">
+      <td class="cell">{{floor.floor}}</td>
+      <td class="cell" *ngFor="let room of floor.rooms">
+        <div class="room-box" [style.background]="GetColor(room)">
+          {{room.name}}
+        </div>
+      </td>
+    </tr>
+  </table> -->
 </ion-content>
