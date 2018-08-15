@@ -15,6 +15,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { VistorsQueryPage } from '../pages/vistors-query/vistors-query';
 import { HouseQueryPage } from '../pages/house-query/house-query';
 import { MyCustomerPage } from '../pages/my-customer/my-customer';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MyCustomerPage } from '../pages/my-customer/my-customer';
       backButtonText: '',
     }),
     PipesModule,
+    IonicImageViewerModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

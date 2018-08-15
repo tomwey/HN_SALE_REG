@@ -39,7 +39,8 @@ export class HouseInfoPage {
   }
 
   selectRoom(room) {
-    console.log(room);
+    // console.log(room);
+    this.navCtrl.push('HouseDetailPage', room);
   }
 
   unit: any = '1';
