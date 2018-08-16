@@ -1,0 +1,31 @@
+page-vistor-register {
+    .item-ios {
+        border-bottom: 0.55px solid #e6e6e6;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .placeholder {
+        color: #999;
+        padding-left: 20px;
+    }
+
+    ion-card-header {
+        color: #666!important;
+    }
+
+    .state {
+        display: block;
+        float: right;
+        font-size: 12px;
+        text-align: center;
+        font-weight: normal;
+        // background: red;
+        padding: 2px 5px;
+        border-radius: 2px;
+        color: white;
+    }
+
+    .state-0 {
+        background: color($colors, primary);
+    }
+}

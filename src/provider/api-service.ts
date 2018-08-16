@@ -14,7 +14,7 @@ import { Tools } from './Tools';
 // 正式服务器和账号
 const API_HOST: string = "http://cys.afterwind.cn/api/v1";
 const API_KEY:  string = "c2fb2548ed4460dd10c7f62b33d9082e";
-const API_SERVER:string = "http://220.167.103.56:8888";
+const API_SERVER:string = "http://erp20-app.heneng.cn:16681";
 
 // 测试账号和测试服务器
 // const API_HOST: string = "http://0.0.0.0:3000/api/v1";
@@ -95,7 +95,7 @@ export class ApiService {
         this.showLoading(loadingText);
     }
     
-    let url = API_SERVER + '/api';//API_HOST + '/' + uri;
+    let url = API_SERVER; //+ '/api';//API_HOST + '/' + uri;
 
     // 参数签名
     // params.sign = ApiService.signParams(params);
@@ -201,7 +201,7 @@ export class ApiService {
   // 处理请求成功的回调
   private handleSuccess(resp: Response): any {
     let body = resp.json();
-    // console.log(`result: ${JSON.stringify(body)}`);
+    console.log(`result: ${JSON.stringify(body)}`);
     if (parseInt(body.code) == 0) {
       let rd: ResultData = { code: 0, total: body.total || 0, data: body.data || [] };
       return rd;

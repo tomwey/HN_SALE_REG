@@ -22,11 +22,11 @@
     <!-- <ion-list> -->
     <ion-item>
       <ion-label>客户姓名</ion-label>
-      <ion-input placeholder="输入姓名"></ion-input>
+      <ion-input placeholder="输入姓名" [(ngModel)]="queryModel.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>客户手机</ion-label>
-      <ion-input placeholder="输入11位手机" type="number"></ion-input>
+      <ion-input placeholder="输入11位手机" type="number" [(ngModel)]="queryModel.mobile"></ion-input>
     </ion-item>
     <!-- <ion-item>
       <ion-label>所属项目</ion-label>
@@ -42,13 +42,20 @@
       <span class="placeholder">请选择</span>
     </button>
     <!-- </ion-list> -->
+    <div class="query-result" *ngIf="dataList.length > 0">
+      <h2>共找到{{dataList.length}}条记录</h2>
+      <button ion-item *ngFor="let person of dataList">
+        {{person.custname}}&emsp;{{person.telephone}}
+      </button>
+    </div>
+    
     <div class="buttons">
       <ion-row>
         <ion-col col-6>
-            <button ion-button outline block>来电</button>
+            <button ion-button outline block (click)="query(1);">来电</button>
         </ion-col>
         <ion-col col-6>
-            <button ion-button block>来访</button>
+            <button ion-button block (click)="query(2);">来访</button>
         </ion-col>
       </ion-row>
     </div>

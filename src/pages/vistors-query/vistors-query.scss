@@ -12,4 +12,15 @@ page-vistors-query {
     .buttons {
         padding: 10px 12px;
     }
+
+    .query-result {
+        margin-top: 15px;
+        // margin-bottom: 10px;
+        h2 {
+            text-align: center;
+            border-bottom: 0.55px solid #e6e6e6;
+            padding-bottom: 15px;
+            color: #999;
+        }
+    }
 }
