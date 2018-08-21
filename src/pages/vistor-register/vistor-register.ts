@@ -141,7 +141,7 @@ export class VistorRegisterPage {
   }
 
   selectSourceDetail() {
-
+    
   }
 
   selectBtn(btn) {
