@@ -23,11 +23,11 @@
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
       <ion-label>客户手机</ion-label>
-      <ion-input [(ngModel)]="person.telephone"></ion-input>
+      <ion-input [(ngModel)]="person.telephone" [disabled]="mobileReadonly"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>客户姓名</ion-label>
-      <ion-input [(ngModel)]="person.custname"></ion-input>
+      <ion-input [(ngModel)]="person.custname" placeholder="输入姓名"></ion-input>
     </ion-item>
     <!-- <ion-item>
       <ion-label>客户性别</ion-label>
@@ -57,7 +57,7 @@
 
     <ion-item>
       <ion-label>知晓途径</ion-label>
-      <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
+      <ion-input [(ngModel)]="person.knowway" placeholder="请输入" [disabled]="knowwayReadonly"></ion-input>
     </ion-item>
 
     <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
@@ -143,9 +143,9 @@
     </ion-item>
   </ion-card>
   <ion-card>
-    <button ion-item>
+    <button ion-item (click)="viewHistory();">
       跟进次数
-      <ion-note item-right>{{person.followcnt}}次</ion-note>
+      <ion-note item-right>{{person.followcnt || 0}}次</ion-note>
     </button>
     <button ion-item>
       问卷调查

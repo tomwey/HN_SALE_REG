@@ -72,6 +72,9 @@ export class VistorRegisterPage {
     },
   ];
 
+  knowwayReadonly: any = false;
+  mobileReadonly: any = true;
+
   followtypes: any = [
     {
       label: '来电',
@@ -101,6 +104,14 @@ export class VistorRegisterPage {
     private modalCtrl: ModalController,
     public navParams: NavParams) {
     this.person = this.navParams.data.person;
+
+    if (this.person.knowway) {
+      this.knowwayReadonly = true;
+    }
+
+    if (this.navParams.data.isNew == '1') {
+      this.mobileReadonly = false;
+    }
     
     this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
     this.currentFollowType = this.followtype;
@@ -217,6 +228,12 @@ export class VistorRegisterPage {
       .then(data => {
         // console.log(data);
         this.person.followcnt = parseInt(this.person.followcnt) + 1;
+        if (data && data['data']) {
+          let arr = data['data'];
+          if (arr.length > 0) {
+            this.person.callid = arr[0].callid;
+          }
+        }
       })
       .catch(error => {
         this.tools.showToast(error.message || '服务器出错了~');
@@ -225,6 +242,15 @@ export class VistorRegisterPage {
 
   selectFollowType(type) {
     this.currentFollowType = type.value;
+  }
+
+  viewHistory() {
+    if (parseInt(this.person.followcnt) == 0) {
+      this.tools.showToast('还没跟进过，不能查看~');
+      return;
+    }
+
+    this.navCtrl.push('FollowHistoryPage', { callid: this.person.callid });
   }
 
 }

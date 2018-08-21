@@ -122,7 +122,7 @@ export class VistorsQueryPage {
       } else {
         // console.log('2222222');
         this.forwardTo( { custname: this.queryModel.name, 
-          telephone: this.queryModel.mobile });
+          telephone: this.queryModel.mobile }, true);
       }
     })
     .catch(error => {
@@ -130,8 +130,8 @@ export class VistorsQueryPage {
     });
   }
 
-  forwardTo(person) {
-    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, followtype: this.followtype, proj_id: this.project.value });
+  forwardTo(person, isNew = false) {
+    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, isNew: isNew ? '1' : '0', followtype: this.followtype, proj_id: this.project.value });
   }
 
 }
