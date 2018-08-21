@@ -37,11 +37,44 @@ export class FollowHistoryPage {
                           param1: this.navParams.data.callid, 
                           param2: Utils.getQueryString('manid') })
             .then(data => {
-              console.log(data);
+              // console.log(data);
+              if (data && data['data']) {
+                this.dataList = data['data'];
+              }
+
+              if (this.dataList.length > 0) {
+                this.error = null;
+              } else {
+                this.error = '暂无跟进历史';
+              }
             })
             .catch(error => {
-
+              this.error = error.message || '服务器出错了~';
             })
+  }
+
+  followTypeName(item) {
+    if (item.followtype == '10') {
+      return '来电';
+    }
+
+    if (item.followtype == '20') {
+      return '来访';
+    }
+
+    if (item.followtype == '30') {
+      return '回访';
+    }
+
+    if (item.followtype == '40') {
+      return '微信';
+    }
+
+    if (item.followtype == '50') {
+      return '其他';
+    }
+
+    return null;
   }
 
 }

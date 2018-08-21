@@ -227,7 +227,7 @@ export class VistorRegisterPage {
     this.api.POST(null, params)
       .then(data => {
         // console.log(data);
-        this.person.followcnt = parseInt(this.person.followcnt) + 1;
+        this.person.followcnt = parseInt(this.person.followcnt || 0) + 1;
         if (data && data['data']) {
           let arr = data['data'];
           if (arr.length > 0) {
@@ -245,7 +245,7 @@ export class VistorRegisterPage {
   }
 
   viewHistory() {
-    if (parseInt(this.person.followcnt) == 0) {
+    if (parseInt(this.person.followcnt || 0) == 0) {
       this.tools.showToast('还没跟进过，不能查看~');
       return;
     }

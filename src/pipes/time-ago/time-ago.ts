@@ -20,7 +20,9 @@ export class TimeAgoPipe implements PipeTransform {
     // console.log(format);
     if (!value || value == 'NULL') return '--';
 
+    value = value.replace('+08:00', '');
     value = value.replace('+', ' ');
+    value = value.replace('T', ' ');
     
     return moment(value, format).fromNow();
   }

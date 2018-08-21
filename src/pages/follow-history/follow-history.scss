@@ -1,3 +1,30 @@
 page-follow-history {
+    .follow-type {
+        display: inline-block;
+        padding: 3px 5px;
+        color: white;
+        background: red;
+        border-radius: 2px;
+        font-size: 12px;
+    }
+    .time {
+        font-size: 14px;
 
+    }
+
+    .follow-type-10 {
+        background: rgb(78, 116, 18);
+    }
+    .follow-type-20 {
+        background: rgb(21, 134, 199);
+    }
+    .follow-type-30 {
+        background: rgb(156, 76, 134);
+    }
+    .follow-type-40 {
+        background: rgb(214, 5, 5);
+    }
+    .follow-type-50 {
+        background: rgb(154, 160, 39);
+    }
 }
