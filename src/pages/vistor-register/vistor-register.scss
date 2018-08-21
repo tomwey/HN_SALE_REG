@@ -28,4 +28,16 @@ page-vistor-register {
     .state-0 {
         background: color($colors, primary);
     }
+
+    .select-box {
+        // background: red;
+        // margin-left: -16px;
+        // padding-right: 10px;
+        // margin-left: 50px;
+        .select-item {
+            padding-right: 10px;
+            color: #666;
+            font-size: 18px;
+        }
+    }
 }

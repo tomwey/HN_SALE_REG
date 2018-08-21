@@ -44,7 +44,7 @@
     <!-- </ion-list> -->
     <div class="query-result" *ngIf="dataList.length > 0">
       <h2>共找到{{dataList.length}}条记录</h2>
-      <button ion-item *ngFor="let person of dataList">
+      <button ion-item *ngFor="let person of dataList" (click)="selectItem(person);">
         {{person.custname}}&emsp;{{person.telephone}}
       </button>
     </div>

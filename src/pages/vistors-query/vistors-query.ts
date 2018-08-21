@@ -22,7 +22,7 @@ export class VistorsQueryPage {
 
   queryModel: any = {
     // proj_id: '1291564',
-    mobile: '',
+    mobile: '15000000000',
     name: '',
   };
 
@@ -30,6 +30,8 @@ export class VistorsQueryPage {
     label: '',
     value: ''
   };
+
+  followtype: any;
   
   dataList: any = [];
 
@@ -71,6 +73,10 @@ export class VistorsQueryPage {
 
   }
 
+  selectItem(person) {
+    this.forwardTo(person);
+  }
+
   showSelectPage(arr) {
     let data = [];
     // console.log(arr);
@@ -94,6 +100,8 @@ export class VistorsQueryPage {
   }
 
   query(type) {
+    this.followtype = type;
+
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '案场查询客户访问记录APP',
@@ -107,19 +115,23 @@ export class VistorsQueryPage {
       let arr = data['data'];
       if (arr && arr.length > 0) {
         if (arr.length === 1) {
-          this.app.getRootNavs()[0].push('VistorRegisterPage', arr[0]);
+          this.forwardTo(arr[0]);
         } else {
           this.dataList = arr;
         }
       } else {
-        console.log('2222222');
-        this.app.getRootNavs()[0].push('VistorRegisterPage', { custname: this.queryModel, 
-                                                               telephone: this.queryModel.mobile });
+        // console.log('2222222');
+        this.forwardTo( { custname: this.queryModel.name, 
+          telephone: this.queryModel.mobile });
       }
     })
     .catch(error => {
       this.tools.showToast('查询失败，请重试~');
     });
+  }
+
+  forwardTo(person) {
+    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, followtype: this.followtype });
   }
 
 }
