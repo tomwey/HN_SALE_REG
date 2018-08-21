@@ -16,6 +16,8 @@ import { VistorsQueryPage } from '../pages/vistors-query/vistors-query';
 import { HouseQueryPage } from '../pages/house-query/house-query';
 import { MyCustomerPage } from '../pages/my-customer/my-customer';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { iOSFixedScrollFreeze } from '../provider/iOSFixedScrollFreeze';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
   imports: [
     BrowserModule,
     HttpModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp, {
       mode: 'ios',
       backButtonText: '',
@@ -50,6 +53,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     Utils,
     ApiService,
     Tools,
+    iOSFixedScrollFreeze,
   ]
 })
 export class AppModule {}

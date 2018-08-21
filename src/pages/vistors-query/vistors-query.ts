@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
 import { Tools } from '../../provider/Tools';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the VistorsQueryPage page.
@@ -20,9 +21,14 @@ import { Tools } from '../../provider/Tools';
 export class VistorsQueryPage {
 
   queryModel: any = {
-    proj_id: '1291564',
+    // proj_id: '1291564',
     mobile: '',
     name: '',
+  };
+
+  project: any = {
+    label: '',
+    value: ''
   };
   
   dataList: any = [];
@@ -31,22 +37,67 @@ export class VistorsQueryPage {
     private api: ApiService,
     private app: App,
     private tools: Tools,
+    private storage: Storage,
+    private modalCtrl: ModalController,
     public navParams: NavParams) {
+      this.storage.get('selected.project').then(data => {
+        if (data) {
+          this.project = JSON.parse(data);
+        }
+      });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VistorsQueryPage');
+    // console.log('ionViewDidLoad VistorsQueryPage');
   }
 
   back() {
     window.location.href = 'salereg://back';
   }
 
+  selectProject() {
+    this.api.POST(null, { "dotype": "GetData", 
+                          "funname": "案场获取项目列表APP", 
+                          "param1": Utils.getQueryString("manid") })
+            .then(data => {
+              if (data && data['data']) {
+                let arr = data['data'];
+                this.showSelectPage(arr);
+              }
+            })
+            .catch(error => {
+              this.tools.showToast(error.message || '获取项目失败');
+            });
+
+  }
+
+  showSelectPage(arr) {
+    let data = [];
+    // console.log(arr);
+    arr.forEach(element => {
+      // "project_id":"1291428","project_name":"珍宝金楠一期"
+      data.push(`${element.project_name}|${element.project_id}`);  
+    });
+    let selectedItem = null;
+    if (this.project.label && this.project.value) {
+      selectedItem = `${this.project.label}|${this.project.value}`;
+    }
+    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
+                                                          title: '选择项目', data: data })
+    modal.onDidDismiss((data) => {
+      if (data) {
+        this.storage.set('selected.project', JSON.stringify(data));
+        this.project = data;
+      }
+    });
+    modal.present();
+  }
+
   query(type) {
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '案场查询客户访问记录APP',
-      param1: this.queryModel.proj_id,
+      param1: this.project.value,
       param2: this.queryModel.mobile,
       param3: this.queryModel.name,
       param4: Utils.getQueryString('manid')
