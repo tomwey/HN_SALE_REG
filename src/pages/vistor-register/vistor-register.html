@@ -29,7 +29,7 @@
       <ion-label>客户姓名</ion-label>
       <ion-input [(ngModel)]="person.custname"></ion-input>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>客户性别</ion-label>
       <div class="select-box" item-right>
         <span class="select-item" tappable (click)="person.sex = '男'">
@@ -37,17 +37,40 @@
         <span class="select-item" tappable (click)="person.sex = '女'">
           <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 女</span>
       </div>
-    </ion-item>
-    <!-- <ion-item>
-      <ion-label>客户来源</ion-label>
     </ion-item> -->
-    <button ion-item (click)="selectPersonSource();">
+    
+    <ion-row class="custom-item-box">
+        <ion-col col-3>
+          <span class="custom-label">客户性别</span>
+        </ion-col>
+        <ion-col col-9>
+          <ion-row class="custom-item-right">
+              <div class="select-box" item-right>
+                  <span class="select-item" tappable (click)="person.sex = '男'">
+                    <ion-icon name="{{ person.sex == '男' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 男</span>
+                  <span class="select-item" tappable (click)="person.sex = '女'">
+                    <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 女</span>
+                </div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    <ion-item *ngIf="person.followtype == '来访'">
+        <ion-label>知晓途径</ion-label>
+        <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
+      </ion-item>
+
+    <button ion-item (click)="selectPersonSource();" *ngIf="person.followtype == '来访'">
       客户来源
       <span class="placeholder">{{person.srctypename || '请选择'}}</span>
     </button>
-    <ion-item>
-      <ion-label>知晓途径</ion-label>
-      <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
+    <button ion-item (click)="selectSourceDetail();" *ngIf="person.followtype == '来访' && !!source">
+        {{source.descname}}{{source.descname == '老业主' ? '&emsp;' : ''}}
+      <span class="placeholder">{{source.label || '请选择'}}</span>
+    </button>
+    <ion-item *ngIf="person.followtype == '来访'">
+      <ion-label>来源备注</ion-label>
+      <ion-input [(ngModel)]="person.srcmemo" placeholder="输入客户来源备注"></ion-input>
     </ion-item>
   </ion-card>
 
@@ -55,7 +78,7 @@
     <ion-card-header>
       客户跟进录入
     </ion-card-header>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>跟进方式</ion-label>
       <div class="select-box" item-right>
         <span class="select-item" tappable (click)="person.followtype = '来电'">
@@ -65,10 +88,46 @@
           <span class="select-item" tappable (click)="person.followtype = '回访'">
               <ion-icon name="{{ person.followtype == '回访' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 回访</span>
       </div>
-    </ion-item>
-    <ion-item>
-      <ion-label>购房意愿</ion-label>
-    </ion-item>
+    </ion-item> -->
+    <ion-row class="custom-item-box">
+        <ion-col col-3>
+          <span class="custom-label">跟进方式</span>
+        </ion-col>
+        <ion-col col-9>
+          <ion-row class="custom-item-right">
+              <div class="select-box" item-right>
+                  <span class="select-item" tappable (click)="person.followtype = '来电'">
+                    <ion-icon name="{{ person.followtype == '来电' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 来电</span>
+                  <span class="select-item" tappable (click)="person.followtype = '来访'">
+                    <ion-icon name="{{ person.followtype == '来访' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 来访</span>
+                    <span class="select-item" tappable (click)="person.followtype = '回访'">
+                        <ion-icon name="{{ person.followtype == '回访' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 回访</span>
+                </div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    <!-- <ion-item>
+      <ion-label item-left>购房意愿</ion-label>
+      <div class="button-group" item-right>
+        <ion-row>
+          <ion-col col-4 *ngFor="let btn of buttons">
+            <span class="custom-btn" [class.active]="btn.selected" tappable (click)="selectBtn(btn);">{{btn.label}}</span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item> -->
+    <ion-row class="custom-item-box">
+      <ion-col col-3>
+        <span class="custom-label">购房意愿</span>
+      </ion-col>
+      <ion-col col-9>
+        <ion-row class="custom-item-right">
+          <ion-col col-4 *ngFor="let btn of buttons">
+            <span class="custom-btn" [class.active]="btn.selected" tappable (click)="selectBtn(btn);">{{btn.label}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
     <ion-item>
       <ion-label>跟进内容</ion-label>
       <ion-textarea placeholder="输入跟进内容" rows="6">

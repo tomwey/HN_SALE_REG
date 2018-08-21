@@ -40,4 +40,34 @@ page-vistor-register {
             font-size: 18px;
         }
     }
+
+    .custom-btn {
+        display: block;
+        background: rgb(235,235,235);
+        width: 100%;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        font-size: 14px;
+        // padding: 10px 0;
+        &.active {
+            background:rgb(40, 141, 218);
+            color: white;
+        }
+    }
+
+    .custom-item-box {
+        padding: 10px;
+        border-bottom: 0.55px solid #e6e6e6;
+        .custom-item-right {
+            padding-left: 12px;
+        }
+    }
+
+    .custom-label {
+        display: inline-block;
+        color: #666;
+        font-size: 16px;
+    }
+
 }

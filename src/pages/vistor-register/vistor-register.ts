@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
-import { Utils } from '../../provider/Utils';
-import { ResolvedReflectiveProvider_ } from '@angular/core/src/di/reflective_provider';
 
 /**
  * Generated class for the VistorRegisterPage page.
@@ -38,6 +36,38 @@ export class VistorRegisterPage {
     srctypename: '',
   };
   followtype: any;
+
+  source: any = null;
+
+  currentSelectBtn: any = null;
+
+  buttons: any = [
+    {
+      label: '无',
+      value: 0,
+    },
+    {
+      label: '20%',
+      value: 20,
+    },
+    {
+      label: '40%',
+      value: 40,
+    },
+    {
+      label: '60%',
+      value: 60,
+    },
+    {
+      label: '80%',
+      value: 80,
+    },
+    {
+      label: '100%',
+      value: 100,
+    },
+  ];
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
@@ -93,9 +123,35 @@ export class VistorRegisterPage {
         // this.storage.set('selected.project', JSON.stringify(data));
         this.person.srctypename = res.label;
         this.person.srctypeid   = res.value;
+
+        if (res.value == '1') {
+          this.source = { descname: '老业主', field: 'old_person' };
+        } else if (res.value == '3') {
+          this.source = { descname: '转介公司', field: 'company' };
+        } else if (res.value == '5') {
+          this.source = { descname: '公司员工', field: 'employer' };
+        } else if (res.value == '6') {
+          this.source = { descname: '公司员工', field: 'employer' };
+        } else {
+          this.source = null;
+        }
       }
     });
     modal.present();
+  }
+
+  selectSourceDetail() {
+
+  }
+
+  selectBtn(btn) {
+    if (this.currentSelectBtn) {
+      this.currentSelectBtn.selected = false;
+    }
+
+    btn.selected = true;
+    
+    this.currentSelectBtn = btn;
   }
 
 }
