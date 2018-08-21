@@ -8,9 +8,9 @@
 
   <ion-navbar color="primary">
     <ion-title>客户跟进</ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button>跟进记录</button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 
 </ion-header>
@@ -55,22 +55,32 @@
         </ion-col>
       </ion-row>
 
-    <ion-item *ngIf="person.followtype == '来访'">
-        <ion-label>知晓途径</ion-label>
-        <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label>知晓途径</ion-label>
+      <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
+    </ion-item>
 
-    <button ion-item (click)="selectPersonSource();" *ngIf="person.followtype == '来访'">
+    <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
       客户来源
       <span class="placeholder">{{person.srctypename || '请选择'}}</span>
     </button>
-    <button ion-item (click)="selectSourceDetail();" *ngIf="person.followtype == '来访' && !!source">
+    <button ion-item (click)="selectSourceDetail();" *ngIf="followtype == '20' && !!source">
         {{source.descname}}{{source.descname == '老业主' ? '&emsp;' : ''}}
       <span class="placeholder">{{source.label || '请选择'}}</span>
     </button>
-    <ion-item *ngIf="person.followtype == '来访'">
+    <ion-item *ngIf="followtype == '20'">
       <ion-label>来源备注</ion-label>
       <ion-input [(ngModel)]="person.srcmemo" placeholder="输入客户来源备注"></ion-input>
+    </ion-item>
+
+    <button ion-item (click)="selectCardType();" *ngIf="followtype == '20'">
+      证件类型
+      <span class="placeholder">{{person.cardtypename || '请选择'}}</span>
+    </button>
+
+    <ion-item *ngIf="followtype == '20'">
+      <ion-label>证件号码</ion-label>
+      <ion-input [(ngModel)]="person.cardno" placeholder="输入证件号码"></ion-input>
     </ion-item>
   </ion-card>
 
@@ -96,12 +106,9 @@
         <ion-col col-9>
           <ion-row class="custom-item-right">
               <div class="select-box" item-right>
-                  <span class="select-item" tappable (click)="person.followtype = '来电'">
-                    <ion-icon name="{{ person.followtype == '来电' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 来电</span>
-                  <span class="select-item" tappable (click)="person.followtype = '来访'">
-                    <ion-icon name="{{ person.followtype == '来访' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 来访</span>
-                    <span class="select-item" tappable (click)="person.followtype = '回访'">
-                        <ion-icon name="{{ person.followtype == '回访' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 回访</span>
+                <span class="select-item" *ngFor="let type of followtypes" 
+                  tappable (click)="selectFollowType(type);">
+                    <ion-icon name="{{ currentFollowType == type.value ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> {{type.label}}</span>
                 </div>
           </ion-row>
         </ion-col>
@@ -130,7 +137,7 @@
     </ion-row>
     <ion-item>
       <ion-label>跟进内容</ion-label>
-      <ion-textarea placeholder="输入跟进内容" rows="6">
+      <ion-textarea placeholder="输入跟进内容" rows="6" [(ngModel)]="followcontent">
 
       </ion-textarea>
     </ion-item>
@@ -146,6 +153,6 @@
   </ion-card>
 
   <div padding>
-    <button ion-button full>保存</button>
+    <button ion-button full (click)="save();">保存</button>
   </div>
 </ion-content>

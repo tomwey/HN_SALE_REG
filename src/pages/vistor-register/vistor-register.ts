@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the VistorRegisterPage page.
@@ -36,8 +37,11 @@ export class VistorRegisterPage {
     srctypename: '',
   };
   followtype: any;
+  currentFollowType: any;
 
-  source: any = null;
+  source?: any = null;
+
+  followcontent: any = '';
 
   currentSelectBtn: any = null;
 
@@ -68,13 +72,38 @@ export class VistorRegisterPage {
     },
   ];
 
+  followtypes: any = [
+    {
+      label: '来电',
+      value: '10',
+    },
+    {
+      label: '来访',
+      value: '20'
+    },
+    {
+      label: '回访',
+      value: '30',
+    },
+    {
+      label: '微信',
+      value: '40',
+    },
+    {
+      label: '其他',
+      value: '50'
+    }
+  ];
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
     this.person = this.navParams.data.person;
-    this.person.followtype = this.navParams.data.followtype == 1 ? '来电' : '来访';
+    
+    this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
+    this.currentFollowType = this.followtype;
 
     for (const key in this.person) {
       if (this.person.hasOwnProperty(key)) {
@@ -141,7 +170,14 @@ export class VistorRegisterPage {
   }
 
   selectSourceDetail() {
-    
+    let modal = this.modalCtrl.create('SearchSelectPage', this.source);
+    modal.onDidDismiss((data) => {
+      if (data) {
+        this.source.label = data.label;
+        this.source.value = data.value;
+      }
+    });
+    modal.present();
   }
 
   selectBtn(btn) {
@@ -152,6 +188,43 @@ export class VistorRegisterPage {
     btn.selected = true;
     
     this.currentSelectBtn = btn;
+  }
+
+  save() {
+    let params = {
+      dotype: 'GetData',
+      funname: '案场新建更新访客记录APP',
+      param1: Utils.getQueryString('manid'),
+      param2: Utils.getQueryString('manname'),
+      param3: this.person.callid || 0,
+      param4: this.person.telephone,
+      param5: this.person.custname,
+      param6: this.person.sex,
+      param7: this.person.cardtype,
+      param8: this.person.cardno,
+      param9: this.person.srctypeid,
+      param10: this.source ? this.source.value : '',
+      param11: this.navParams.data.proj_id,
+      param12: this.followtype,
+      param13: this.person.knowway,
+      param14: this.source ? this.source.label : '',
+      param15: this.person.srcmemo,
+      param16: this.currentFollowType,
+      param17: this.currentSelectBtn ? this.currentSelectBtn.value : 0,
+      param18: this.followcontent
+    };
+    this.api.POST(null, params)
+      .then(data => {
+        // console.log(data);
+        this.person.followcnt = parseInt(this.person.followcnt) + 1;
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '服务器出错了~');
+      });
+  }
+
+  selectFollowType(type) {
+    this.currentFollowType = type.value;
   }
 
 }

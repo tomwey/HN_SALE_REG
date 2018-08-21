@@ -131,7 +131,7 @@ export class VistorsQueryPage {
   }
 
   forwardTo(person) {
-    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, followtype: this.followtype });
+    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, followtype: this.followtype, proj_id: this.project.value });
   }
 
 }
