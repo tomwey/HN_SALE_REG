@@ -137,15 +137,15 @@ export class VistorRegisterPage {
       console.log(data);
       if (data && data['data']) {
         let arr = data['data'];
-        this.showSelectPage(arr);
+        this.showSelectPage(arr, '选择客户来源', 1);
       }
     })
     .catch(error => {
-      this.tools.showToast(error.message || '获取项目失败');
+      this.tools.showToast(error.message || '获取数据失败');
     });
   }
 
-  showSelectPage(arr) {
+  showSelectPage(arr, title, type) {
     let data = [];
     // console.log(arr);
     arr.forEach(element => {
@@ -153,27 +153,32 @@ export class VistorRegisterPage {
       data.push(`${element.dic_name}|${element.dic_value}`);  
     });
     let selectedItem = null;
-    if (this.person.srctypename && this.person.srctypeid) {
-      selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
-    }
+    // if (this.person.srctypename && this.person.srctypeid) {
+    //   selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
+    // }
     let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
-                                                          title: '选择来源', data: data })
+                                                          title: title, data: data })
     modal.onDidDismiss((res) => {
       if (res) {
         // this.storage.set('selected.project', JSON.stringify(data));
-        this.person.srctypename = res.label;
-        this.person.srctypeid   = res.value;
+        if (type == 1) { // 客户来源
+          this.person.srctypename = res.label;
+          this.person.srctypeid   = res.value;
 
-        if (res.value == '1') {
-          this.source = { descname: '老业主', field: 'old_person' };
-        } else if (res.value == '3') {
-          this.source = { descname: '转介公司', field: 'company' };
-        } else if (res.value == '5') {
-          this.source = { descname: '公司员工', field: 'employer' };
-        } else if (res.value == '6') {
-          this.source = { descname: '公司员工', field: 'employer' };
-        } else {
-          this.source = null;
+          if (res.value == '1') {
+            this.source = { descname: '老业主', field: 'old_person' };
+          } else if (res.value == '3') {
+            this.source = { descname: '转介公司', field: 'company' };
+          } else if (res.value == '5') {
+            this.source = { descname: '公司员工', field: 'employer' };
+          } else if (res.value == '6') {
+            this.source = { descname: '公司员工', field: 'employer' };
+          } else {
+            this.source = null;
+          }
+        } else if (type == 2) { // 证件类型
+          this.person.cardtypename = res.label;
+          this.person.cardtypeid = res.value;
         }
       }
     });
@@ -202,6 +207,11 @@ export class VistorRegisterPage {
   }
 
   save() {
+    if (!this.followcontent || this.followcontent.trim() == '') {
+      this.tools.showToast('跟进内容不能为空');
+      return;
+    }
+    
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
@@ -211,7 +221,7 @@ export class VistorRegisterPage {
       param4: this.person.telephone,
       param5: this.person.custname,
       param6: this.person.sex,
-      param7: this.person.cardtype,
+      param7: this.person.cardtypeid,
       param8: this.person.cardno,
       param9: this.person.srctypeid,
       param10: this.source ? this.source.value : '',
@@ -242,6 +252,22 @@ export class VistorRegisterPage {
 
   selectFollowType(type) {
     this.currentFollowType = type.value;
+  }
+
+  selectCardType() {
+    this.api.POST(null, { "dotype": "GetData", 
+          "funname": "通用获取数据字典数据APP", 
+          "param1": '88' })
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.showSelectPage(arr, '选择证件类型', 2);
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取证件类型失败');
+      });
   }
 
   viewHistory() {

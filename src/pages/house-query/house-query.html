@@ -11,11 +11,11 @@
   </ion-navbar>
   <ion-toolbar color="white">
     <ion-row class="subnavbar">
-      <ion-col col-6 tappable (click)="selectProject();">
-        枫丹西悦二期 <ion-icon name="md-arrow-dropdown"></ion-icon>
+      <ion-col col-6 tappable (click)="showPanel = true">
+        {{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon>
       </ion-col>
-      <ion-col col-6 tappable (click)="selectIndustry();">
-          住宅 <ion-icon name="md-arrow-dropdown"></ion-icon>
+      <ion-col col-6 tappable (click)="showPanel = true;">
+          {{currentIndustry.name || '选择业态'}} <ion-icon name="md-arrow-dropdown"></ion-icon>
         </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -23,15 +23,57 @@
 
 
 <ion-content>
+  <div class="empty-error-box" *ngIf="!!error"> 
+    {{error}}
+  </div>
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngFor="let item of houses;let i=index;">
         <ion-card class="house-box" tappable (click)="openHouse(item);">
-          <h2>{{item.name}}</h2>
-          <p>可售 <span class="digit">{{item.count}}</span> 套</p>
+          <h2>{{item.building_name}}</h2>
+          <p>可售 <span class="digit">{{item.housecount}}</span> 套</p>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+  <div class="overlay-wrap" [hidden]="!showPanel" tappable (click)="showPanel = false;">
+    <div class="overlay-content" tappable (click)="$event.stopPropagation();">
+        <!-- <ion-toolbar color="white">
+            <ion-searchbar
+            #searchBar
+            [(ngModel)]="keyword"
+            
+            [showCancelButton]="true"
+            cancelButtonText="取消"
+            (ionInput)="startSearch(keyword);"
+            placeholder="输入项目名称"
+            [animated]="false"
+            name="search"
+          >
+          </ion-searchbar>
+        </ion-toolbar> -->
+      <ion-row>
+        <ion-col col-4 class="project-box">
+          <ion-list>
+            <ion-item *ngFor="let project of projects" 
+              tappable (click)="selectProject(project,$event);" 
+              [class.active]="project.project_id == currentProject.id">
+              <p text-wrap>{{project.project_name}}</p>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col col-8>
+          <ion-row class="industries">
+            <ion-col col-4 *ngFor="let ind of industries">
+              <button ion-button full (click)="selectIndustry(ind);" 
+                [class.active2]="ind.usertype_id == currentIndustry.id">
+                {{ind.usertype_name}}
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
 </ion-content>
