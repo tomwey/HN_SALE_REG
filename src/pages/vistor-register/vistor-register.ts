@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
@@ -102,6 +102,7 @@ export class VistorRegisterPage {
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     public navParams: NavParams) {
     this.person = this.navParams.data.person;
 
@@ -129,7 +130,44 @@ export class VistorRegisterPage {
     console.log('ionViewDidLoad VistorRegisterPage');
   }
 
+  sendFlow() {
+    this.api.POST(null, { dotype: 'GetData', 
+                          funname: '客户来源类型变更APP', 
+                          param1: '1',
+                          param2: this.person.callid,
+                          param3: Utils.getQueryString('manid')
+                         })
+      .then(data => {
+        // console.log(data);
+        this.tools.showToast('流程发起成功');
+      })
+      .catch(error => {
+        // console.log(error);
+        this.tools.showToast(error.message || '服务器出错了');
+      });
+  }
+
   selectPersonSource() {
+    if (this.person.srctypename && this.person.srctypename != 'NULL') {
+      this.alertCtrl.create({
+        title: '客户来源修改流程发起',
+        subTitle: '客户来源修改需要发起申请流程，您确定吗？',
+        buttons: [
+          {
+            text: '取消',
+            role: 'Cancel'
+          },
+          {
+            text: '发起流程',
+            handler: () => {
+              this.sendFlow();
+            }
+          }
+        ]
+      }).present();
+      return;
+    }
+
     this.api.POST(null, { "dotype": "GetData", 
         "funname": "通用获取数据字典数据APP", 
         "param1": '415' })
