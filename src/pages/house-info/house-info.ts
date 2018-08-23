@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiService } from '../../provider/api-service';
 
 /**
  * Generated class for the HouseInfoPage page.
@@ -15,27 +16,124 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HouseInfoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  house: any;
+  project: any;
+  industry: any;
+  floors: any = {};
+
+  constructor(public navCtrl: NavController, 
+    private api: ApiService,
+    public navParams: NavParams) {
+    this.house = this.navParams.data.house;
+    this.project = this.navParams.data.project;
+    this.industry = this.navParams.data.industry;
+
+    this.prepareUnits();
+  }
+
+  prepareUnits() {
+    let ids = this.house.unitids.split(',');
+    let names = this.house.unitnames.split(',');
+
+    let count;
+    if (ids.length < names.length) {
+      count = ids.length;
+    } else {
+      count = names.length;
+    }
+
+    let arr = [];
+    for(var i=0; i<count; i++) {
+      arr.push({
+        ID: ids[i],
+        name: names[i]
+      });
+    }
+    this.units = arr;
+    if (this.units.length > 0) {
+      this.unit = this.units[0]['ID'];
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HouseInfoPage');
+    // console.log('ionViewDidLoad HouseInfoPage');
+    this.loadRooms();
   }
+
+
 
   segmentChanged(ev) {
-
+    this.loadRooms();
   }
 
-  GetColor(room) {
-    // this.colors.forEach(element => {
-    //   console.log(element);
-    //   if (element.ID == room.state) {
-    //     return element.value;
-    //   }
-    // });
-    // return null;
-    let index = parseInt(room.state) - 1;
-    return this.colors[index].value;
+  loadRooms() {
+    this.floors = {};
+
+    this.api.POST(null, { dotype: 'GetData', 
+                          funname: '获取房源房间列表APP', 
+                          param1: this.project.id,
+                          param2: this.industry.id,
+                          param3: this.unit
+                         })
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          this.handleData(data['data']);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  handleData(arr) {
+    let temp = [];
+    arr.forEach(item => {
+      const floor = item.floor;
+      
+      if (item.statenum == '100') {
+        item.roomcolor = '#DA9694';
+      } else if (item.pushstate == '0') {
+        item.roomcolor = '#D9D9D9';
+      } else {
+        if (item.statenum == '0') {
+          item.roomcolor = '#fff';
+        } else if (item.statenum == '10') {
+          item.roomcolor = 'rgb(167,184,107)';
+        } else if (item.statenum == '20') {
+          item.roomcolor = '#538DD5';
+        } 
+      }
+      if (this.floors[floor]) {
+        this.floors[floor].push(item);
+      } else {
+        this.floors[floor] = [item];
+      }
+    });
+    
+    for (const key in this.floors) {
+      if (this.floors.hasOwnProperty(key)) {
+        const rooms = this.floors[key];
+        temp.push({
+          floorno: parseInt(key),
+          floor: key + '楼',
+          rooms: rooms
+        });
+      }
+    }
+
+    // this.roomsData = temp;
+    this.roomsData = temp.sort((b,a) => {
+      if (a.floorno < b.floorno) {
+        return -1;
+      }
+
+      if (a.floorno > b.floorno) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
   selectRoom(room) {
@@ -45,20 +143,7 @@ export class HouseInfoPage {
 
   unit: any = '1';
 
-  units: any = [
-    {
-      ID: '1',
-      name: '一单元'
-    },
-    {
-      ID: '2',
-      name: '二单元'
-    },
-    {
-      ID: '3',
-      name: '三单元'
-    },
-  ];
+  units: any = [];
 
   colors: any = [
     {
@@ -88,88 +173,7 @@ export class HouseInfoPage {
     },
   ];
 
-  roomsData: any = [
-    {
-      floor: '10楼',
-      rooms: [
-        {
-          name: '1001',
-          state: '2',
-        },
-        {
-          name: '1002',
-          state: '3',
-        },
-        {
-          name: '1003',
-          state: '1',
-        },
-        {
-          name: '1004',
-          state: '2',
-        },
-        {
-          name: '1005',
-          state: '2',
-        },
-      ],
-    },
-    {
-      floor: '9楼',
-      rooms: [
-        {
-          name: '901',
-          state: '1',
-        },
-        {
-          name: '902',
-          state: '2',
-        },
-        {
-          name: '903',
-          state: '3',
-        },
-        {
-          name: '904',
-          state: '2',
-        },
-        {
-          name: '905',
-          state: '4',
-        },
-        {
-          name: '906',
-          state: '4',
-        },
-      ],
-    },
-
-    {
-      floor: '8楼',
-      rooms: [
-        {
-          name: '801',
-          state: '1',
-        },
-        {
-          name: '802',
-          state: '2',
-        },
-        {
-          name: '803',
-          state: '3',
-        },
-        // {
-        //   name: '804',
-        //   state: '2',
-        // },
-        // {
-        //   name: '805',
-        //   state: '4',
-        // },
-      ],
-    },
-    
-  ];
+  error: any = null;
+  roomsData: any = [];
 
 }

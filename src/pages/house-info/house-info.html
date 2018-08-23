@@ -7,7 +7,7 @@
 <ion-header no-border>
 
   <ion-navbar color="primary">
-    <ion-title>枫丹西悦二期 — 12栋 住宅</ion-title>
+    <ion-title>{{project.name}} — {{house.building_name}} {{industry.name}}</ion-title>
   </ion-navbar>
   <ion-toolbar color="white">
     <ion-segment [(ngModel)]="unit" 
@@ -36,8 +36,8 @@
       <ion-col col-10>
         <ion-row class="rooms">
           <ion-col *ngFor="let room of floor.rooms" class="cell">
-            <div class="room-box" [style.background]="GetColor(room)" tappable (click)="selectRoom(room);">
-              {{room.name}}
+            <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
+              {{room.house_no.split('-')[3]}}
             </div>
           </ion-col>
         </ion-row>

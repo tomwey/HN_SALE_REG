@@ -93,7 +93,8 @@ export class HouseQueryPage {
   }
 
   openHouse(item) {
-    this.app.getRootNavs()[0].push('HouseInfoPage');
+    this.app.getRootNavs()[0].push('HouseInfoPage',
+      { house: item, project: this.currentProject, industry: this.currentIndustry });
   }
 
   selectProject(proj, ev: Event) {
@@ -137,27 +138,6 @@ export class HouseQueryPage {
         } else {
           this.error = '未知错误';
         }
-//         building_id
-// :
-// "12"
-// building_name
-// :
-// "5栋"
-// building_no
-// :
-// "5"
-// housecount
-// :
-// "29"
-// unitids
-// :
-// "12,22"
-// unitnames
-// :
-// "1单元,2单元"
-// unitnos
-// :
-// "1,2"
       })
       .catch(error => {
         this.error = error.message || '服务器出错了';
