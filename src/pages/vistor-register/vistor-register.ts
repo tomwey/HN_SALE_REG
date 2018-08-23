@@ -124,6 +124,8 @@ export class VistorRegisterPage {
         }
       }
     }
+
+    console.log(this.person);
   }
 
   ionViewDidLoad() {

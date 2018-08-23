@@ -39,7 +39,7 @@ export class HouseQueryPage {
     private app: App,
     private api: ApiService,
     public navParams: NavParams) {
-      if (!this.currentIndustry.id || !this.currentProject) {
+      if (!this.currentIndustry.id || !this.currentProject.id) {
         this.error = '选择项目和业态查询房源';
       }
   }
