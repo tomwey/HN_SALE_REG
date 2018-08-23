@@ -138,7 +138,7 @@ export class HouseInfoPage {
 
   selectRoom(room) {
     // console.log(room);
-    this.navCtrl.push('HouseDetailPage', room);
+    this.navCtrl.push('HouseDetailPage', { room: room, project: this.project, industry: this.industry });
   }
 
   unit: any = '1';

@@ -14,16 +14,36 @@
 
 
 <ion-content>
-  <table class="table">
-    <tr *ngFor="let info of data">
-      <td class="label">{{info.label}}</td>
-      <td class="value">
-        <span *ngIf="!info.type">{{info.value}}</span>
-        <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer>
-      </td>
-    </tr>
-  </table>
-  
+  <ion-card>
+    <ion-card-header>
+      基本信息
+    </ion-card-header>
+    <table class="table">
+        <tr *ngFor="let info of data">
+          <td class="label">{{info.label}}</td>
+          <td class="value">
+            <span *ngIf="!info.type">{{info.value}}</span>
+            <!-- <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer> -->
+          </td>
+        </tr>
+      </table>
+  </ion-card>
+
+  <ion-card *ngIf="house.statenum == '10' || house.statenum == '20'">
+    <ion-card-header>
+      成交信息
+    </ion-card-header>
+    <table class="table">
+      <tr *ngFor="let info of data2">
+        <td class="label">{{info.label}}</td>
+        <td class="value">
+          <span>{{info.value}}</span>
+          <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer>
+        </td>
+      </tr>
+    </table>
+  </ion-card>
+
 </ion-content>
 
 <ion-footer>

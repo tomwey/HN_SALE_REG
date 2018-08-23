@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiService } from '../../provider/api-service';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the HouseDetailPage page.
@@ -15,59 +17,135 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HouseDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  house: any;
+  project: any;
+  error: any = null;
+
+  constructor(public navCtrl: NavController, 
+    private api: ApiService,
+    public navParams: NavParams) {
+      this.house = this.navParams.data.room;
+      this.project = this.navParams.data.project;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HouseDetailPage');
+    // console.log('ionViewDidLoad HouseDetailPage');
+    this.loadData();
   }
 
-  data: any = [
-    {
-      label: '房间名称',
-      value: '枫丹西悦二期 2栋一单元 702'
-    },
-    {
-      label: '户型',
-      value: 'A1'
-    },
-    {
-      label: '房间结构',
-      value: '三室两厅双卫'
-    },
-    {
-      label: '楼层',
-      value: '7'
-    },
-    {
-      label: '朝向',
-      value: '朝南'
-    },
-    {
-      label: '建筑面积',
-      value: '112.00m²'
-    },
-    {
-      label: '套内面积',
-      value: '98.00m²'
-    },
-    {
-      label: '建筑单价',
-      value: '9,138.00元/m²'
-    },
-    {
-      label: '套内单价',
-      value: '10,443.00元/m²'
-    },
-    {
-      label: '标准总价',
-      value: '1,023,456.00元'
-    },
-    {
-      label: '户型图',
-      value: 'assets/imgs/hxt.jpg',
-      type: '2',
+  loadData() {
+    this.api.POST(null, { dotype: "GetData", 
+                          funname: '获取房源房间信息APP', 
+                          param1: this.house.house_id, 
+                          param2: Utils.getQueryString('manid')})
+            .then(data => {
+              console.log(data);
+              if (data && data['data']) {
+                let arr = data['data'];
+                if (arr.length > 0) {
+                  this.error = null;
+                  this.prepareData(arr[0]);
+                } else {
+                  this.error = '未知错误';
+                }
+              } else {
+                this.error = '未知错误';
+              }
+            })
+            .catch(error => {
+              this.error = error.message || '服务器出错了~';
+            });
+  }
+
+  prepareData(roomData) {
+
+    let state = '';
+    if (this.house.statenum == '100') {
+      state = '销控';
+    } else if (this.house.pushstate == '0') {
+      state = '收盘';
+    } else {
+      if (this.house.statenum == '0') {
+        state = '待售';
+      } else if (this.house.statenum == '10') {
+        state = '认购';
+      } else if (this.house.statenum == '20') {
+        state = '签约';
+      } 
     }
-  ];
+
+    this.data = [
+      {
+        label: '房间名称',
+        value: `${this.project.name} ${roomData.house_no}`
+      },
+      {
+        label: '房源状态',
+        value: state,
+      },
+      {
+        label: '户型',
+        value: roomData.layout
+      },
+      {
+        label: '楼层',
+        value: roomData.floor
+      },
+      {
+        label: '建筑面积',
+        value: `${roomData.buildarea}m²`
+      },
+      {
+        label: '套内面积',
+        value: `${roomData.setarea}m²`
+      },
+      {
+        label: '标准建面单价',
+        value: `${roomData.stdpriceb == 'NULL' ? '--' : roomData.stdpriceb}元/m²`
+      },
+      {
+        label: '标准套内单价',
+        value: `${roomData.stdprices == 'NULL' ? '--' : roomData.stdprices}元/m²`
+      },
+      {
+        label: '标准总价',
+        value: `${roomData.stdmoney == 'NULL' ? '--' : roomData.stdmoney}元`
+      },
+      {
+        label: '底价建面单价',
+        value: `${roomData.basepriceb == 'NULL' ? '--' : roomData.basepriceb}元/m²`
+      },
+      {
+        label: '底价套内单价',
+        value: `${roomData.baseprices == 'NULL' ? '--' : roomData.baseprices}元/m²`
+      },
+      {
+        label: '底价总价',
+        value: `${roomData.basemoney == 'NULL' ? '--' : roomData.basemoney}元`
+      },
+      {
+        label: '户型图',
+        value: roomData.layoutannexurl || '',
+        type: '2',
+      }
+    ];
+
+    this.data2 = [
+      {
+        label: '成交建筑单价',
+        value: `${roomData.priceb == 'NULL' ? '--' : roomData.priceb}元/m²`
+      },
+      {
+        label: '成交套内单价',
+        value: `${roomData.prices == 'NULL' ? '--' : roomData.prices}元/m²`
+      },
+      {
+        label: '成交总价',
+        value: `${roomData.money == 'NULL' ? '--' : roomData.money}元`
+      }];
+  }
+
+  data2: any = [];
+  data: any = [];
 
 }
