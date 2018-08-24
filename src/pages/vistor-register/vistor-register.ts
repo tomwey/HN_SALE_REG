@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the VistorRegisterPage page.
@@ -98,11 +99,14 @@ export class VistorRegisterPage {
     }
   ];
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.person = this.navParams.data.person;
 
@@ -129,7 +133,8 @@ export class VistorRegisterPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VistorRegisterPage');
+    // console.log('ionViewDidLoad VistorRegisterPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
   }
 
   sendFlow() {

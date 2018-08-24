@@ -3,6 +3,7 @@ import { NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the MyCustomerPage page.
@@ -26,6 +27,7 @@ export class MyCustomerPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private app: App,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     if (!this.currentProject.id) {
       this.error = '请先选择项目';
@@ -35,6 +37,8 @@ export class MyCustomerPage {
   ionViewDidLoad() {
     // console.log('ionViewDidLoad MyCustomerPage');
     // this.error = '暂无数据';
+    this.iosFixed.fixedScrollFreeze(this.content);
+    
     this.loadProjects();
   }
 

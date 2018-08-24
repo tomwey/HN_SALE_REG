@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the HouseInfoPage page.
@@ -21,8 +22,11 @@ export class HouseInfoPage {
   industry: any;
   floors: any = {};
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.house = this.navParams.data.house;
     this.project = this.navParams.data.project;
@@ -57,6 +61,7 @@ export class HouseInfoPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad HouseInfoPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
     this.loadRooms();
   }
 

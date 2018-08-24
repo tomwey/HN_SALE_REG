@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the FollowHistoryPage page.
@@ -20,13 +21,16 @@ export class FollowHistoryPage {
   dataList: any = [];
   error: any = null;
 
+  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController, 
     private api: ApiService,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad FollowHistoryPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
     this.loadData();
     // {"buypossible":"0","callid":"1","content":"测试一条数据","create_date":"2018-08-21T17:37:10+08:00","create_id":"1960","create_name":"唐伟","followtype":"40","id":"8"}
   }
