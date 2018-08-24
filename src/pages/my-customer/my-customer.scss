@@ -1,5 +1,9 @@
 page-my-customer {
     .custom-card {
+        ion-row, ion-col {
+            margin: 0;
+            padding: 0;
+        }
         h2 {
             margin-bottom: 10px;
         }
@@ -65,5 +69,46 @@ page-my-customer {
         }
     }
 
+    .name {
+        font-size: 12px;
+    }
+
+    .people {
+        font-size: 14px;
+        color: #333;
+        // padding-right: 5px;
+    }
+
+    .first-col {
+        padding-right: 5px;
+    }
+
+    .money {
+        font-size: 16px;
+        color: color($colors, primary);
+    }
+    .house-no {
+        font-size: 16px;
+        color: rgb(101,142,223);
+    }
+
+    .unit {
+        font-size: 10px;
+    }
+
+    .date-tip {
+        padding-top: 10px!important;
+    }
+
+    .extra-info {
+        margin-top: 10px;
+        // font-size: 0.5rem;
+        background-color: rgb(247,247,247);
+        padding: 10px;
+        p {
+            font-size: 12px;
+            color: #999;
+        }
+    }
     
 }

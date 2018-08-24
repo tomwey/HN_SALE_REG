@@ -53,16 +53,16 @@
     color: #666;
 }
 
-.ios { .tabs { .tabbar { margin-top:25px; padding-bottom: 0px; } } }
+// .ios { .tabs { .tabbar { margin-top:25px; padding-bottom: 0px; } } }
 
-.header-ios {
-    /* Status bar height on iOS 10 */
-    // padding-top: 20px;
-    /* Status bar height on iOS 11.0 */
-    padding-top: constant(safe-area-inset-top);
-    /* Status bar height on iOS 11+ */
-    padding-top: env(safe-area-inset-top);
-}
+// .header-ios {
+//     /* Status bar height on iOS 10 */
+//     // padding-top: 20px;
+//     /* Status bar height on iOS 11.0 */
+//     padding-top: constant(safe-area-inset-top);
+//     /* Status bar height on iOS 11+ */
+//     padding-top: env(safe-area-inset-top);
+// }
 
 .empty-error-box {
     // display: flex;

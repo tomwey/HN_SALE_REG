@@ -47,7 +47,7 @@
   </div>
   <ion-list>
     <ion-card *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
-      <ion-item tappable (click)="selectItem(item);">
+      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
         <h2>
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
@@ -63,6 +63,48 @@
           <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
           <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
         </div>
+      </ion-item>
+
+      <ion-item *ngIf="menuType == '2' || menuType == '3'">
+        <ion-row>
+          <ion-col col-5>
+            <p class="first-col"><span class="title people">{{item.custnames}}</span><br><span class="name">认购客户</span></p>
+          </ion-col>
+          <ion-col col-4>
+            <p><span class="title house-no">{{item.house_no}}</span><br><span class="name">房号</span></p>
+          </ion-col>
+          <ion-col col-3>
+              <p><span class="title money">{{formatMoney(item.money)}}</span><span class="unit">万</span><br>
+                <span class="name">成交总价</span></p>
+          </ion-col>
+
+        </ion-row>
+        <ion-row *ngIf="menuType == '2'" class="date-tip">
+          <ion-col col-8>
+            <p>签约失效日期: {{item.plancondate.split('T')[0]}}</p>
+          </ion-col>
+          <ion-col col-4 style="text-align:right;">
+            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
+          </ion-col>
+        </ion-row>
+        <div class="extra-info">
+          <p>客户来源: {{item.sourcetype}}</p>
+          <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
+          <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
+          <p>职业顾问: {{item.sellername}}</p>
+        </div>
+        
+        <!-- <div item-left>
+            <h2>房号: {{item.house_no}}</h2>
+            <p>成交总价: {{item.money}}元</p>
+        </div>
+        <div item-right class="right-section">
+            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
+          </div>
+
+        
+         -->
+        
       </ion-item>
     </ion-card>
   </ion-list>

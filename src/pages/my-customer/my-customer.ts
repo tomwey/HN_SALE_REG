@@ -55,8 +55,13 @@ export class MyCustomerPage {
   }
 
   loadData() {
-    this.api.POST(null, { dotype: 'GetData', funname: '获取我的客户列表APP', param1: Utils.getQueryString('manid'),
-    param2: this.currentProject.id, param3: this.menuType })
+    this.api.POST(null, { dotype: 'GetData', 
+                          funname: '获取我的客户列表APP', 
+                          param1: Utils.getQueryString('manid'),
+                          param2: this.currentProject.id, 
+                          param3: this.menuType,
+                          param4: this.keyword
+                         })
       .then(data => {
         console.log(data);
         if (data && data['data']) {
@@ -87,7 +92,7 @@ export class MyCustomerPage {
     // left_days: 1
     let temp = [];
     arr.forEach(element => {
-      let time = element.create_date.replace('+08:00', '').replace('T', ' ');
+      let time = (element.invaliddate || element.plancondate).replace('+08:00', '').replace('T', ' ');
       let days = Utils.dateDiff(time).days;
       let label = '还剩';
       if (days < 0) {
@@ -106,6 +111,11 @@ export class MyCustomerPage {
 
     });
     this.data = temp;
+  }
+
+  formatMoney(money) {
+    money = parseFloat(money) / 10000.0;
+    return money.toFixed(2).toString();
   }
 
   loadProjects() {
@@ -132,21 +142,30 @@ export class MyCustomerPage {
 
   callPhone(item,ev:Event) {
     ev.stopPropagation();
-
+    window.location.href = "tel:" + item.telephone;
+    // window.open("tel:" + item.telephone);
   }
 
   segmentChanged(ev) {
+    if (this.menuType == '4' || 
+        this.menuType == '5') {
+          this.error = '即将上线...';
+          return;
+        }
+
     if (!this.currentProject.id) {
       this.error = '请先选择项目';
       return;
     }
 
     this.data = [];
+    this.error = null;
+
     this.loadData();
   }
 
   startSearch(kw) {
-
+    this.loadData();
   }
 
   openItem(item) {
