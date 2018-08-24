@@ -18,11 +18,14 @@ page-my-customer {
 
         .state {
             // background: red;
+            display: inline-block;
             font-size: 10px;
             padding: 2px 5px;
             border-radius: 2px;
             color: white;
             margin-left: 5px;
+            margin-bottom: 5px;
+            margin-top: 10px;
         }
     
         .state-1 {
@@ -101,10 +104,10 @@ page-my-customer {
     }
 
     .extra-info {
-        margin-top: 10px;
+        margin-top: 5px;
         // font-size: 0.5rem;
         background-color: rgb(247,247,247);
-        padding: 10px;
+        padding: 5px;
         p {
             font-size: 12px;
             color: #999;

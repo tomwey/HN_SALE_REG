@@ -55,11 +55,11 @@
             [class.female]="item.sex == '2'" 
             name="{{item.sex == '1' ? 'ios-male-outline' : 'ios-female-outline'}}">
           </ion-icon>
-          <span class="state state-{{item.type}}">{{item.typename}}</span>
         </h2>
         <p text-wrap>上次跟进内容: {{item.content}}</p>
-        <p>跟进失效时间: {{item.time}}</p>
+        <p>跟进失效时间: {{item.time.split(' ')[0]}}</p>
         <div item-right class="right-section">
+          <span class="state state-{{item.type}}">{{item.typename}}</span>
           <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
           <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
         </div>
@@ -88,9 +88,15 @@
           </ion-col>
         </ion-row>
         <div class="extra-info">
-          <p>客户来源: {{item.sourcetype}}</p>
-          <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
-          <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
+          <ion-row>
+            <ion-col col-6>
+              <p>客户来源: {{item.sourcetype}}</p>
+            </ion-col>
+            <ion-col col-6 style="text-align: right;">
+              <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
+              <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
+            </ion-col>
+          </ion-row>
           <p>职业顾问: {{item.sellername}}</p>
         </div>
         
