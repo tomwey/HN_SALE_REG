@@ -67,6 +67,14 @@
 
       <ion-item *ngIf="menuType == '2' || menuType == '3'">
         <ion-row>
+          <ion-col col-8>
+              {{item.custnames}}
+          </ion-col>
+          <ion-col col-4>
+              {{item.house_no}}
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
           <ion-col col-5>
             <p class="first-col"><span class="title people">{{item.custnames}}</span><br><span class="name">认购客户</span></p>
           </ion-col>
@@ -98,7 +106,7 @@
             </ion-col>
           </ion-row>
           <p>职业顾问: {{item.sellername}}</p>
-        </div>
+        </div> -->
         
         <!-- <div item-left>
             <h2>房号: {{item.house_no}}</h2>

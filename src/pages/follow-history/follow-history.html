@@ -20,9 +20,9 @@
     <ion-item *ngFor="let item of dataList">
       <h2>{{item.content}}</h2>
       <p>购房意向: {{item.buypossible == '0' ? '无' : item.buypossible + '%'}}</p>
-      <ion-note item-right style="text-align: center">
+      <ion-note item-right style="text-align: right;">
         <span class="follow-type follow-type-{{item.followtype}}">{{followTypeName(item)}}</span><br>
-        <span class="time">{{item.create_date | timeAgo: 'YYYY-MM-DDTHH:mm:ss'}}</span>
+        <span class="time">{{item.create_date.replace('+08:00', '').replace('+', ' ').replace('T', ' ')}}</span>
       </ion-note>
     </ion-item>
   </ion-list>

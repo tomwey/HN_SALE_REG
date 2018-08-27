@@ -154,26 +154,28 @@ export class VistorRegisterPage {
       });
   }
 
-  selectPersonSource() {
-    if (this.person.srctypename && this.person.srctypename != 'NULL') {
-      this.alertCtrl.create({
-        title: '客户来源修改流程发起',
-        subTitle: '客户来源修改需要发起申请流程，您确定吗？',
-        buttons: [
-          {
-            text: '取消',
-            role: 'Cancel'
-          },
-          {
-            text: '发起流程',
-            handler: () => {
-              this.sendFlow();
-            }
+  changeSRCType() {
+    this.alertCtrl.create({
+      title: '客户来源修改流程发起',
+      subTitle: '客户来源修改需要发起申请流程，您确定吗？',
+      buttons: [
+        {
+          text: '取消',
+          role: 'Cancel'
+        },
+        {
+          text: '发起流程',
+          handler: () => {
+            this.sendFlow();
           }
-        ]
-      }).present();
-      return;
-    }
+        }
+      ]
+    }).present();
+  }
+
+  selectPersonSource() {
+
+    if (this.person.srctypename && this.person.srctypename != 'NULL') { return; }
 
     this.api.POST(null, { "dotype": "GetData", 
         "funname": "通用获取数据字典数据APP", 

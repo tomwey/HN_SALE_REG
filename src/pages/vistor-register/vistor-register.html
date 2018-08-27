@@ -63,6 +63,9 @@
     <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
       客户来源
       <span class="placeholder">{{person.srctypename || '请选择'}}</span>
+      <button ion-button item-right *ngIf="person.srctypename && person.srctypename != 'NULL'" (click)="changeSRCType();">
+        发起变更
+      </button>
     </button>
     <button ion-item (click)="selectSourceDetail();" *ngIf="followtype == '20' && !!source">
         {{source.descname}}{{source.descname == '老业主' ? '&emsp;' : ''}}
