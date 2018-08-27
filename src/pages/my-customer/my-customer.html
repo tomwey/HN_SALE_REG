@@ -70,11 +70,39 @@
           <ion-col col-8>
               {{item.custnames}}
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-4 style="text-align: right">
               {{item.house_no}}
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
+        <ion-row>
+          <ion-col col-7>
+              <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
+              <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
+          </ion-col>
+          <ion-col col-5 style="text-align: right;">
+            <p>成交总价: <span class="title money">{{formatMoney(item.money)}}</span><span class="unit">万</span></p>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="menuType == '2'">
+          <ion-col col-8>
+            <p>签约失效日期: {{item.plancondate.split('T')[0]}}</p>
+          </ion-col>
+          <ion-col col-4 style="text-align:right;">
+            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-6>
+              <p>客户来源: {{item.sourcetype}}</p>
+          </ion-col>
+          <ion-col col-6 style="text-align: right;">
+              <p>职业顾问: {{item.sellername}}</p>
+          </ion-col>
+        </ion-row>
+
+        <!-- 
+         <ion-row>
           <ion-col col-5>
             <p class="first-col"><span class="title people">{{item.custnames}}</span><br><span class="name">认购客户</span></p>
           </ion-col>
@@ -106,7 +134,8 @@
             </ion-col>
           </ion-row>
           <p>职业顾问: {{item.sellername}}</p>
-        </div> -->
+        </div> 
+      -->
         
         <!-- <div item-left>
             <h2>房号: {{item.house_no}}</h2>
