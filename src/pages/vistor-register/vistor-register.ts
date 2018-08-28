@@ -46,6 +46,8 @@ export class VistorRegisterPage {
 
   currentSelectBtn: any = null;
 
+  proj_id: any;
+
   buttons: any = [
     {
       label: '无',
@@ -117,6 +119,8 @@ export class VistorRegisterPage {
     if (this.navParams.data.isNew == '1') {
       this.mobileReadonly = false;
     }
+
+    this.proj_id = this.navParams.data.proj_id;
     
     this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
     this.currentFollowType = this.followtype;
@@ -251,6 +255,13 @@ export class VistorRegisterPage {
     btn.selected = true;
     
     this.currentSelectBtn = btn;
+  }
+
+  openSurvey() {
+    this.navCtrl.push('SurveyPage', { callid: this.person.callid, 
+                                      tplid: this.followtype == '10' ? 8 : 6,
+                                      proj_id: this.proj_id,
+                                     });
   }
 
   save() {

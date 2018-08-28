@@ -100,6 +100,21 @@ export class VistorsQueryPage {
   }
 
   query(type) {
+    if (!this.project.value) {
+      this.tools.showToast('必须选择项目');
+      return;
+    }
+
+    if (!this.queryModel.mobile) {
+      this.tools.showToast('手机不能为空');
+      return;
+    }
+
+    if (!this.queryModel.name) {
+      this.tools.showToast('姓名不能为空');
+      return;
+    }
+
     this.followtype = type;
 
     this.api.POST(null, {

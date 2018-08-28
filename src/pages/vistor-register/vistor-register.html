@@ -63,7 +63,7 @@
     <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
       客户来源
       <span class="placeholder">{{person.srctypename || '请选择'}}</span>
-      <button ion-button item-right *ngIf="person.srctypename && person.srctypename != 'NULL'" (click)="changeSRCType();">
+      <button ion-button item-right *ngIf="person.callid && person.callid != '0' && person.callid != NULL && person.srctypename && person.srctypename != 'NULL'" (click)="changeSRCType();">
         发起变更
       </button>
     </button>
@@ -150,7 +150,7 @@
       跟进次数
       <ion-note item-right>{{person.followcnt || 0}}次</ion-note>
     </button>
-    <button ion-item>
+    <button ion-item (click)="openSurvey();">
       问卷调查
     </button>
   </ion-card>
