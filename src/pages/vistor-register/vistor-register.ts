@@ -150,7 +150,22 @@ export class VistorRegisterPage {
                          })
       .then(data => {
         // console.log(data);
-        this.tools.showToast('流程发起成功');
+        // this.tools.showToast('流程发起成功');
+        if (data && data['data']) {
+          let arr = data['data'];
+          if (arr.length == 0) {
+            this.tools.showToast('未知错误');
+          } else {
+            let item = arr[0];
+            if (item.code == '0') {
+              this.tools.showToast('发起变更流程成功');
+            } else {
+              this.tools.showToast(item.errmsg);
+            }
+          }
+        } else {
+          this.tools.showToast('未知错误');
+        }
       })
       .catch(error => {
         // console.log(error);
