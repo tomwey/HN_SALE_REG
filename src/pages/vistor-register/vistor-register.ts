@@ -194,7 +194,7 @@ export class VistorRegisterPage {
 
   selectPersonSource() {
 
-    if (this.person.srctypename && this.person.srctypename != 'NULL') { return; }
+    if (this.person.callid && this.person.callid != '0' && this.person.callid != 'NULL' && this.person.srctypename && this.person.srctypename != 'NULL') { return; }
 
     this.api.POST(null, { "dotype": "GetData", 
         "funname": "通用获取数据字典数据APP", 
@@ -252,7 +252,7 @@ export class VistorRegisterPage {
   }
 
   selectSourceDetail() {
-    let modal = this.modalCtrl.create('SearchSelectPage', this.source);
+    let modal = this.modalCtrl.create('SearchSelectPage', { source: this.source, proj_id: this.proj_id });
     modal.onDidDismiss((data) => {
       if (data) {
         this.source.label = data.label;
@@ -273,6 +273,10 @@ export class VistorRegisterPage {
   }
 
   openSurvey() {
+    if (!this.person.callid || this.person.callid == 0 || this.person.callid == 'NULL') {
+      this.tools.showToast('还未做过跟进，不能进行问卷调查');
+      return;
+    }
     this.navCtrl.push('SurveyPage', { callid: this.person.callid, 
                                       tplid: this.followtype == '10' ? 8 : 6,
                                       proj_id: this.proj_id,
@@ -304,7 +308,7 @@ export class VistorRegisterPage {
       param14: this.source ? this.source.label : '',
       param15: this.person.srcmemo,
       param16: this.currentFollowType,
-      param17: this.currentSelectBtn ? this.currentSelectBtn.value : 0,
+      param17: (this.currentSelectBtn ? this.currentSelectBtn.value : 0).toString(),
       param18: this.followcontent
     };
     this.api.POST(null, params)

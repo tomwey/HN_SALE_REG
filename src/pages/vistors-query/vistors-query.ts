@@ -22,7 +22,7 @@ export class VistorsQueryPage {
 
   queryModel: any = {
     // proj_id: '1291564',
-    mobile: '15000000000',
+    mobile: '',
     name: '',
   };
 
@@ -110,10 +110,10 @@ export class VistorsQueryPage {
       return;
     }
 
-    if (!this.queryModel.name) {
-      this.tools.showToast('姓名不能为空');
-      return;
-    }
+    // if (!this.queryModel.name) {
+    //   this.tools.showToast('姓名不能为空');
+    //   return;
+    // }
 
     this.followtype = type;
 

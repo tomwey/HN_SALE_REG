@@ -26,12 +26,15 @@ export class SearchSelectPage {
   data: any = [];
   error: any = null;
 
+  proj_id: any;
+
   constructor(public navCtrl: NavController, 
     private viewCtrl: ViewController,
     private api: ApiService,
     // private tools: Tools
     public navParams: NavParams) {
-      this.source = this.navParams.data;
+      this.source = this.navParams.data.source;
+      this.proj_id = this.navParams.data.proj_id;
 
       if (this.source.field == 'old_person') {
         this.placeholder = '输入老业主姓名搜索';
@@ -46,10 +49,11 @@ export class SearchSelectPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad SearchSelectPage');
+    this.startSearch('');
   }
 
   startSearch(kw) {
-    if (kw.trim() == '') return;
+    if (this.source.field != 'company' && kw.trim() == '') return;
     // 获取转介公司APP
     let params = null;
 
@@ -64,7 +68,7 @@ export class SearchSelectPage {
       params = { dotype: "GetData", 
                  funname: '获取转介公司APP', 
                  param1: kw.trim(), 
-                 param2: Utils.getQueryString('manid') };
+                 param2: /*Utils.getQueryString('manid')*/this.proj_id };
     }
 
     this.api.POST(null, params)

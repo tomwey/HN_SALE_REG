@@ -20,16 +20,20 @@
     <ion-card *ngFor="let item of formData;let i = index;">
       <ion-item>
         <h2 text-wrap>{{i+1}}、{{item.caption}}{{item.ismust == '1' ? '（ *必填 ）' : ''}}</h2>
-        <ion-textarea *ngIf="item.itype == '3'" placeholder="输入内容" rows="6">
+        <ion-textarea *ngIf="item.itype == '3'" [(ngModel)]="item.addvalue" placeholder="输入内容" rows="6">
 
         </ion-textarea>
         <div class="options" *ngIf="item.itype != '3'">
           <p class="opt" *ngFor="let opt of item.titles">
             <span tappable (click)="selectItems(item,opt);">
-              <ion-icon name="{{item.selectedValues && item.selectedValues.indexOf(opt.titleid) != -1 ? 'ios-checkbox-outline' : 'ios-square-outline'}}" *ngIf="item.itype == '2'"></ion-icon>
-            <ion-icon name="{{item.selectedValue == opt.titleid ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline'}}" *ngIf="item.itype == '1'"></ion-icon>
+              <ion-icon name="{{opt.titlevalue == '1' ? 'ios-checkbox-outline' : 'ios-square-outline'}}" *ngIf="item.itype == '2'"></ion-icon>
+            <ion-icon name="{{opt.titlevalue == '1' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline'}}" *ngIf="item.itype == '1'"></ion-icon>
             {{opt.title}}</span>
-            <input type="text" *ngIf="item.needinput == true" placeholder="输入内容" class="custom-input">
+            <input type="text" 
+              [(ngModel)]="opt.addvalue" 
+              *ngIf="opt.needinput == true || opt.itype == '3'" 
+              placeholder="输入内容" 
+              class="custom-input">
             <!-- <ion-input *ngIf="item.needinput == false"></ion-input> -->
           </p>
         </div>
@@ -37,3 +41,9 @@
     </ion-card>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <div padding>
+    <button ion-button block (click)="commit();">提交</button>
+  </div>
+</ion-footer>

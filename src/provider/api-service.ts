@@ -89,6 +89,50 @@ export class ApiService {
      
   } // end get 
 
+  // 发起调查问卷
+  SendSurvey(sql, loadingText = '正在加载', showLoading = true) {
+    if (showLoading) {
+        this.showLoading(loadingText);
+    }
+    
+    let url = API_SERVER + '/savedata'; //+ '/api';//API_HOST + '/' + uri;
+
+    // 参数签名
+    // params.sign = ApiService.signParams(params);
+
+    // // 组装参数
+    // let i  = new Date().getTime();
+    // let ak = this.generateAccessKey(i);
+
+    // params.i  = i;
+    // params.ak = ak; 
+
+    // 封装请求
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let requestOptions = new RequestOptions({ headers: headers });
+    return new Promise((resolve, reject) => {
+      this.http.post(url, sql, requestOptions)
+      .toPromise()
+      .then(resp => {
+        this.hideLoading();
+        // console.log('success');
+        let result = this.handleSuccess(resp);
+        if (parseInt(result.code) == 0) {
+          resolve(result);
+          // resolve({ data: result.data, total: result.total });
+        } else {
+          reject(result);
+        }
+      })
+      .catch(error => {
+        this.hideLoading();
+
+        let err = this.handleError(error);
+        reject(err);
+      });
+    });
+  } // end post
+
   // 处理POST请求
   POST(uri, params, loadingText = '正在加载', showLoading = true) {
     if (showLoading) {

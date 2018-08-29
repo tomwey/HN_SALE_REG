@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the SurveyPage page.
@@ -25,7 +26,7 @@ export class SurveyPage {
   formObj: any = {};
   constructor(public navCtrl: NavController, 
     private api: ApiService,
-    
+    private tools: Tools,
     public navParams: NavParams) {
       this.callid = this.navParams.data.callid;
       this.tplid  = this.navParams.data.tplid;
@@ -42,7 +43,7 @@ export class SurveyPage {
                           funname: '获取问卷明细数据APP',
                           param1: this.callid,
                           param2: this.tplid
-                          })
+                          }, '', false)
             .then(data => {
               console.log(data);
               let mid = 0;
@@ -92,9 +93,14 @@ export class SurveyPage {
   genSurveyForm(arr) {
     let temp = [];
     arr.forEach(element => {
+      let ele = JSON.parse(JSON.stringify(element));
+      if (ele.titlevalue != '1') {
+        ele.addvalue = '';
+      }
+
       const caption = element.caption
       const itype   = element.itype;
-      if (itype == '1' || itype == '2') {
+      // if (itype == '1' || itype == '2') {
         // let titles = this.formObj[caption] || [];
         // titles.push(element);
         // this.formObj[caption] = titles;
@@ -106,15 +112,13 @@ export class SurveyPage {
         }
 
         let titles = target.titles || [];
-        titles.push({ title: element.title, 
-                      titleid: element.titleid, 
-                      titlevalue: element.titlevalue });
+        titles.push(ele);
         target.titles = titles;
 
-      } else {
-        // 填空
-        temp.push(element);
-      }
+      // } else {
+      //   // 填空
+      //   temp.push(element);
+      // }
     });
 
     this.formData = temp;
@@ -123,22 +127,121 @@ export class SurveyPage {
 
   selectItems(item,opt) {
     // console.log(type);
-    console.log(opt);
+    // console.log(opt);
 
     if (item.itype == '1') {
       // 单选
-      item.selectedValue = opt.titleid;
+      // item.selectedValue = opt.titleid;
+
+      item.titles.forEach(obj => {
+        obj.titlevalue = "";
+      });
+      opt.titlevalue = "1";
+
     } else if (item.itype == '2') {
       // 多选
-      const values = item.selectedValues || [];
-      let index = values.indexOf(opt.titleid);
-      if (index == -1) {
-        values.push(opt.titleid);
+      if (opt.titlevalue == "1") {
+        opt.titlevalue = "";
       } else {
-        values.splice(index, 1);
+        opt.titlevalue = "1";
       }
-      item.selectedValues = values;
+      // const values = item.selectedValues || [];
+      // let index = values.indexOf(opt.titleid);
+      // if (index == -1) {
+      //   values.push(opt.titleid);
+      // } else {
+      //   values.splice(index, 1);
+      // }
+      // item.selectedValues = values;
+
+      // item.titles.forEach(obj => {
+      //   if (values.indexOf(obj.titleid) != -1) {
+      //     obj.titlevalue = "1";
+      //   } else {
+      //     obj.titlevalue = "";
+      //   }
+      // });
+
     }
+  }
+
+  commit() {
+    let sql = '';
+    let requiredCount = 0;
+    let needRequiredCount = 0;
+
+    this.formData.forEach(element => {
+      // console.log(element);
+      // if (element.ismust) {
+      //   needRequiredCount ++;
+      // }
+      
+      // if ( (element.selectedValue || element.addvalue || 
+      //     (element.selectedValues && element.selectedValues.length > 0))) {
+      //       requiredCount ++;
+      //     }
+      let titles = element.titles;
+      if (titles) { // 单选或者多选
+        titles.forEach(obj => {
+          console.log(obj);
+          
+          if (obj.ismust) {
+            needRequiredCount ++;
+          }
+          // if ( obj.addvalue || obj.titlevalue ) {
+          //   requiredCount ++;
+          // }
+          if (obj.itype == '3') {
+            if (obj.ismust) {
+              requiredCount ++;
+            }
+          } else {
+            if (obj.titlevalue) {
+              requiredCount ++;
+            }
+          }
+
+          sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
+        });
+      } else { // 填空
+        // if (element.addvalue) {
+          sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
+        // }
+      }
+    });
+    console.log(sql);
+    console.log(requiredCount);
+    console.log(needRequiredCount);
+
+    if (requiredCount != needRequiredCount) {
+      this.tools.showToast('有必填未完成，请确认');
+      return;
+    }
+
+    this.api.SendSurvey(sql)
+      .then(data => {
+        // console.log(data);
+        // if (data && data['data']) {
+        //   let arr = data['data'];
+        //   if (arr.length > 0) {
+        //     let item = arr[0];
+        //     if (item.code == '0') {
+              this.tools.showToast('保存数据成功');
+        //     } else {
+        //       this.tools.showToast(item.codemsg);
+        //     }
+        //   } else {
+        //     this.tools.showToast('未知错误');
+        //   }
+        // } else {
+        //   this.tools.showToast('未知错误');
+        // }
+      })
+      .catch(error => {
+        // console.log(error);
+        this.tools.showToast(error.message || '服务器出错了~');
+      });
+
   }
 
 }
