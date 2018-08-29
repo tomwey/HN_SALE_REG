@@ -85,6 +85,19 @@
       <ion-label>证件号码</ion-label>
       <ion-input [(ngModel)]="person.cardno" placeholder="输入证件号码"></ion-input>
     </ion-item>
+    
+    <ion-row class="custom-item-box" *ngIf="person.statenum == '0'">
+      <ion-col col-3>
+        <span class="custom-label">客户操作</span>
+      </ion-col>
+      <ion-col col-9>
+          <ion-row class="custom-item-right">
+            <button ion-button color="danger" small (click)="handleOper('40', '作废')">作废</button>&emsp;
+            <button ion-button color="dark" small (click)="handleOper('30', '丢失')">丢失</button>
+          </ion-row>
+        </ion-col>
+    </ion-row>
+
   </ion-card>
 
   <ion-card>

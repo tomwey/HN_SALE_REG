@@ -172,34 +172,43 @@ export class SurveyPage {
 
     this.formData.forEach(element => {
       // console.log(element);
-      // if (element.ismust) {
-      //   needRequiredCount ++;
-      // }
+      if (element.ismust) {
+        needRequiredCount ++;
+      }
       
       // if ( (element.selectedValue || element.addvalue || 
       //     (element.selectedValues && element.selectedValues.length > 0))) {
       //       requiredCount ++;
       //     }
       let titles = element.titles;
+      let inputCount = 0;
       if (titles) { // 单选或者多选
         titles.forEach(obj => {
           console.log(obj);
           
-          if (obj.ismust) {
-            needRequiredCount ++;
-          }
+          
           // if ( obj.addvalue || obj.titlevalue ) {
-          //   requiredCount ++;
+          //   inputCount ++;
           // }
-          if (obj.itype == '3') {
-            if (obj.ismust) {
-              requiredCount ++;
+          if (obj.type == '3') {
+            if (obj.addvalue) {
+              inputCount ++;
             }
           } else {
-            if (obj.titlevalue) {
-              requiredCount ++;
+            if (obj.titlevalue && obj.titlevalue == '1') {
+              inputCount ++;
             }
           }
+
+          // if (obj.itype == '3') {
+          //   if (obj.ismust) {
+          //     requiredCount ++;
+          //   }
+          // } else {
+          //   if (obj.titlevalue) {
+          //     requiredCount ++;
+          //   }
+          // }
 
           sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
         });
@@ -208,10 +217,14 @@ export class SurveyPage {
           sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
         // }
       }
+
+      if (inputCount > 0) {
+        requiredCount ++;
+      }
     });
     console.log(sql);
-    console.log(requiredCount);
-    console.log(needRequiredCount);
+    // console.log(requiredCount);
+    // console.log(needRequiredCount);
 
     if (requiredCount != needRequiredCount) {
       this.tools.showToast('有必填未完成，请确认');

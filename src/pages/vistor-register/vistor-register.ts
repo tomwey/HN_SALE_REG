@@ -48,6 +48,9 @@ export class VistorRegisterPage {
 
   proj_id: any;
 
+  state: any = '';
+  statedesc: any = '';
+
   buttons: any = [
     {
       label: '无',
@@ -132,6 +135,21 @@ export class VistorRegisterPage {
         }
       }
     }
+
+    if (this.person.srcname && this.person.srctypeid) {
+
+      if (this.person.srctypeid == '1') {
+        this.source = { descname: '老业主', field: 'old_person', label: this.person.srcname };
+      } else if (this.person.srctypeid == '3') {
+        this.source = { descname: '转介公司', field: 'company', label: this.person.srcname };
+      } else if (this.person.srctypeid == '5') {
+        this.source = { descname: '公司员工', field: 'employer', label: this.person.srcname };
+      } else if (this.person.srctypeid == '6') {
+        this.source = { descname: '公司员工', field: 'employer', label: this.person.srcname };
+      }
+    }
+
+    console.log(this.source);
 
     console.log(this.person);
   }
@@ -251,7 +269,30 @@ export class VistorRegisterPage {
     modal.present();
   }
 
+  handleOper(type, typename) {
+    this.state     = type;
+    this.statedesc = typename;
+
+    this.alertCtrl.create({
+      title: '操作提示',
+      subTitle: `您确定要${typename}该客户吗？`,
+      buttons: [
+        {
+          text: '取消',
+          role: 'Cancel'
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.save();
+          }
+        }
+      ]
+    }).present();
+  }
+
   selectSourceDetail() {
+    if (this.person.srcname) { return; }
     let modal = this.modalCtrl.create('SearchSelectPage', { source: this.source, proj_id: this.proj_id });
     modal.onDidDismiss((data) => {
       if (data) {
@@ -284,9 +325,11 @@ export class VistorRegisterPage {
   }
 
   save() {
-    if (!this.followcontent || this.followcontent.trim() == '') {
-      this.tools.showToast('跟进内容不能为空');
-      return;
+    if (!this.state) {
+      if (!this.followcontent || this.followcontent.trim() == '') {
+        this.tools.showToast('跟进内容不能为空');
+        return;
+      }
     }
     
     let params = {
@@ -309,7 +352,9 @@ export class VistorRegisterPage {
       param15: this.person.srcmemo,
       param16: this.currentFollowType,
       param17: (this.currentSelectBtn ? this.currentSelectBtn.value : 0).toString(),
-      param18: this.followcontent
+      param18: this.followcontent,
+      param19: this.state,
+      param20: this.statedesc,
     };
     this.api.POST(null, params)
       .then(data => {
@@ -318,8 +363,27 @@ export class VistorRegisterPage {
         if (data && data['data']) {
           let arr = data['data'];
           if (arr.length > 0) {
-            this.person.callid = arr[0].callid;
-            this.tools.showToast('保存跟进成功');
+            
+            if (!this.state) { // 表示第一次跟进
+              this.person.callid = arr[0].callid;
+              this.person.state     = '0';
+              this.person.statedesc = '跟进';
+
+              // 重置跟进相关数据
+
+              this.followcontent = '';
+              this.currentSelectBtn.selected = false;
+              this.currentSelectBtn = null;
+
+              this.tools.showToast('保存跟进成功');
+            } else {
+
+              this.person.state     = this.state;
+              this.person.statedesc = this.statedesc;
+
+              this.tools.showToast('操作成功');
+            }
+            
           } else {
             this.tools.showToast('未知错误');
           }
