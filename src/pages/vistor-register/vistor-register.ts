@@ -319,7 +319,12 @@ export class VistorRegisterPage {
           let arr = data['data'];
           if (arr.length > 0) {
             this.person.callid = arr[0].callid;
+            this.tools.showToast('保存跟进成功');
+          } else {
+            this.tools.showToast('未知错误');
           }
+        } else {
+          this.tools.showToast('未知错误');
         }
       })
       .catch(error => {

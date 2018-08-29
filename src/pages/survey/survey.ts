@@ -99,7 +99,7 @@ export class SurveyPage {
       }
 
       const caption = element.caption
-      const itype   = element.itype;
+      // const itype   = element.itype;
       // if (itype == '1' || itype == '2') {
         // let titles = this.formObj[caption] || [];
         // titles.push(element);
