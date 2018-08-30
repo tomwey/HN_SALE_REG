@@ -133,12 +133,14 @@ export class VistorsQueryPage {
       let arr = data['data'];
       if (arr && arr.length > 0) {
         if (arr.length === 1 && arr[0]['canedit'] != '0') { // 可以编辑
+          this.dataList = [];
           this.forwardTo(arr[0]);
         } else {
           this.dataList = arr;
         }
       } else {
         // console.log('2222222');
+        this.dataList = [];
         this.forwardTo( { custname: this.queryModel.name, 
           telephone: this.queryModel.mobile }, true);
       }

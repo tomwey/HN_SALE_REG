@@ -41,8 +41,8 @@ export class SurveyPage {
   loadData() {
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取问卷明细数据APP',
-                          param1: this.callid,
-                          param2: this.tplid
+                          param1: this.callid.toString(),
+                          param2: this.tplid.toString()
                           }, '', false)
             .then(data => {
               console.log(data);
