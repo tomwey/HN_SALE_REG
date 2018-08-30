@@ -48,8 +48,7 @@ export class VistorRegisterPage {
 
   proj_id: any;
 
-  state: any = '';
-  statedesc: any = '';
+  operType: any = '0';
 
   buttons: any = [
     {
@@ -149,9 +148,6 @@ export class VistorRegisterPage {
       }
     }
 
-    console.log(this.source);
-
-    console.log(this.person);
   }
 
   ionViewDidLoad() {
@@ -270,9 +266,6 @@ export class VistorRegisterPage {
   }
 
   handleOper(type, typename) {
-    this.state     = type;
-    this.statedesc = typename;
-
     this.alertCtrl.create({
       title: '操作提示',
       subTitle: `您确定要${typename}该客户吗？`,
@@ -284,7 +277,7 @@ export class VistorRegisterPage {
         {
           text: '确定',
           handler: () => {
-            this.save();
+            this.save(type,typename);
           }
         }
       ]
@@ -324,14 +317,16 @@ export class VistorRegisterPage {
                                      });
   }
 
-  save() {
-    if (!this.state) {
+  save(type, typename) {
+    this.operType = type;
+
+    if (type == '0') {
       if (!this.followcontent || this.followcontent.trim() == '') {
         this.tools.showToast('跟进内容不能为空');
         return;
       }
     }
-    
+
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
@@ -341,7 +336,7 @@ export class VistorRegisterPage {
       param4: this.person.telephone,
       param5: this.person.custname,
       param6: this.person.sex,
-      param7: this.person.cardtypeid,
+      param7: this.person.cardtypeid || this.person.cardtype,
       param8: this.person.cardno,
       param9: this.person.srctypeid,
       param10: this.source ? this.source.value : '',
@@ -353,9 +348,10 @@ export class VistorRegisterPage {
       param16: this.currentFollowType,
       param17: (this.currentSelectBtn ? this.currentSelectBtn.value : 0).toString(),
       param18: this.followcontent,
-      param19: this.state,
-      param20: this.statedesc,
+      param19: type,
+      param20: typename,
     };
+
     this.api.POST(null, params)
       .then(data => {
         // console.log(data);
@@ -364,23 +360,23 @@ export class VistorRegisterPage {
           let arr = data['data'];
           if (arr.length > 0) {
             
-            if (!this.state) { // 表示第一次跟进
-              this.person.callid = arr[0].callid;
-              this.person.state     = '0';
-              this.person.statedesc = '跟进';
+            // 重置跟进相关数据
 
-              // 重置跟进相关数据
+            this.followcontent = '';
 
-              this.followcontent = '';
+            if (this.currentSelectBtn) {
               this.currentSelectBtn.selected = false;
               this.currentSelectBtn = null;
+            }
 
+            if (this.operType == '0') {
+              this.person.callid = this.person.callid || arr[0].callid;
+              this.person.statenum     = this.person.statenum || '0';
+              this.person.statedesc = this.person.statedesc || '跟进';
               this.tools.showToast('保存跟进成功');
             } else {
-
-              this.person.state     = this.state;
-              this.person.statedesc = this.statedesc;
-
+              this.person.statenum     = this.operType;
+              this.person.statedesc = this.operType == '30' ? '丢失' : '作废';
               this.tools.showToast('操作成功');
             }
             
