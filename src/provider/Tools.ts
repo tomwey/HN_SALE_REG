@@ -22,7 +22,8 @@ export class Tools {
         message: message,
         duration: duration,
         position: 'middle',
-        showCloseButton: false
+        showCloseButton: false,
+        cssClass: 'custom-toast',
         }).present();
     }
 
@@ -45,7 +46,7 @@ export class Tools {
         if (!this.loading) {
             let loading = this.loadingCtrl.create({
                 content: content,
-                spinner: 'ios'//'crescent',
+                spinner: 'circles'//'crescent',
             });
             loading.present();
             this.loading = loading;
