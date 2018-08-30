@@ -74,6 +74,10 @@ export class VistorsQueryPage {
   }
 
   selectItem(person) {
+    if (person.canedit == '0') {
+      this.tools.showToast('该客户你无权限编辑');
+      return;
+    }
     this.forwardTo(person);
   }
 
@@ -120,16 +124,15 @@ export class VistorsQueryPage {
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '案场查询客户访问记录APP',
-      param1: this.project.value,
-      param2: this.queryModel.mobile,
-      param3: this.queryModel.name,
-      param4: Utils.getQueryString('manid')
+      param1: Utils.getQueryString('manid'),
+      param2: this.project.value,
+      param3: this.queryModel.mobile,
     })
     .then(data => {
-      // console.log(data);
+      console.log(data);
       let arr = data['data'];
       if (arr && arr.length > 0) {
-        if (arr.length === 1) {
+        if (arr.length === 1 && arr[0]['canedit'] != '0') { // 可以编辑
           this.forwardTo(arr[0]);
         } else {
           this.dataList = arr;

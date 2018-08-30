@@ -39,26 +39,36 @@
     </ion-item> -->
     <button ion-item (click)="selectProject();">
       所属项目
-      <span class="placeholder">{{project.label || '请选择'}}</span>
+      <span class="placeholder" [class.hasvalue]="!!project.label">{{project.label || '请选择'}}</span>
     </button>
-    <!-- </ion-list> -->
-    <div class="query-result" *ngIf="dataList.length > 0">
-      <h2>共找到{{dataList.length}}条记录</h2>
-      <button ion-item *ngFor="let person of dataList" (click)="selectItem(person);">
-        {{person.custname}}&emsp;{{person.telephone}}
-      </button>
-    </div>
-    
-    <div class="buttons">
+
+  </ion-card>
+
+  <ion-card *ngIf="dataList.length > 0">
+    <ion-card-header>找到{{dataList.length}}条记录</ion-card-header>
+    <ion-item *ngFor="let person of dataList" (click)="selectItem(person);" tappable>
+      <h2>{{person.custname}}
+        
+      </h2>
+      <p>职业顾问: {{person.sellername}}</p>
+      <ion-note item-right class="right-sec">
+        <span class="follow-type follow-type-{{person.followtype}}">
+          {{person.followtype == '10' ? '来电' : '来访'}}
+        </span><br>
+        <ion-icon name="ios-create-outline" *ngIf="person.canedit != '0'"></ion-icon>
+        <span *ngIf="person.canedit == '0'">&emsp;&emsp;</span>
+      </ion-note>
+    </ion-item>
+  </ion-card>
+
+  <div class="buttons">
       <ion-row>
-        <ion-col col-6>
+        <ion-col col-6 style="padding: 0 10px 0 15px;">
             <button ion-button outline block (click)="query(1);">来电</button>
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-6 style="padding: 0 15px 0 10px;">
             <button ion-button block (click)="query(2);">来访</button>
         </ion-col>
       </ion-row>
     </div>
-    
-  </ion-card>
 </ion-content>
