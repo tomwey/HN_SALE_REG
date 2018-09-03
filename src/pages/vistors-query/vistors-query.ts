@@ -114,6 +114,12 @@ export class VistorsQueryPage {
       return;
     }
 
+    var phoneReg = /^1[3|4|5|7|8|9]\d{9}$/;
+	  if (!phoneReg.test(this.queryModel.mobile)) {
+		  this.tools.showToast('不正确的手机号');
+		  return
+    }
+
     // if (!this.queryModel.name) {
     //   this.tools.showToast('姓名不能为空');
     //   return;
