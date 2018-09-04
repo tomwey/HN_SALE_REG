@@ -46,6 +46,7 @@ export class VistorRegisterPage {
 
   followcontent: any = '';
   followid: any = '0';
+  callid: any = '';
 
   currentSelectBtn: any = null;
 
@@ -173,7 +174,7 @@ export class VistorRegisterPage {
                 if (data && data['data']) {
                   let arr = data['data'];
                   if (arr.length > 0) {
-                    this.person.callid = arr[0].id;
+                    this.callid = arr[0].id;
                   }
                 }
               })
@@ -333,11 +334,12 @@ export class VistorRegisterPage {
   }
 
   openSurvey() {
-    if (!this.person.callid || this.person.callid == 0 || this.person.callid == 'NULL') {
+    // console.log(this.callid);
+    if (!this.callid && (!this.person.callid || this.person.callid == 0 || this.person.callid == 'NULL')) {
       this.tools.showToast('还未做过跟进，不能进行问卷调查');
       return;
     }
-    this.navCtrl.push('SurveyPage', { callid: this.person.callid, 
+    this.navCtrl.push('SurveyPage', { callid: this.person.callid || this.callid, 
                                       tplid: this.followtype == '10' ? 8 : 6,
                                       proj_id: this.proj_id,
                                       surveyData: this.surveyData,
@@ -359,13 +361,13 @@ export class VistorRegisterPage {
       funname: '案场新建更新访客记录APP',
       param1: Utils.getQueryString('manid'),
       param2: Utils.getQueryString('manname'),
-      param3: this.person.callid || '0',
+      param3: this.person.callid || this.callid || '0',
       param4: this.person.telephone,
       param5: this.person.custname,
       param6: this.person.sex,
       param7: this.person.cardtypeid || this.person.cardtype,
       param8: this.person.cardno,
-      param9: this.person.srctypeid,
+      param9: this.person.srctypeid || '',
       param10: this.source ? this.source.value : '',
       param11: this.navParams.data.proj_id,
       param12: this.followtype,

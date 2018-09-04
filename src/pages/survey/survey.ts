@@ -214,11 +214,12 @@ export class SurveyPage {
           //     requiredCount ++;
           //   }
           // }
-
+          console.log(obj);
           sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
         });
       } else { // 填空
         // if (element.addvalue) {
+          console.log(123);
           sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
         // }
       }
