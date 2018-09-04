@@ -161,6 +161,24 @@ export class VistorRegisterPage {
   ionViewDidLoad() {
     // console.log('ionViewDidLoad VistorRegisterPage');
     this.iosFixed.fixedScrollFreeze(this.content);
+    if (!this.person.callid || this.person.callid == '0') {
+      
+      this.api.POST(null, { dotype: 'GetData', 
+                            funname: '获取表的主键APP', 
+                            param1: Utils.getQueryString('manid'),
+                            param2: 'H_SP_Call',
+                           })
+              .then(data => {
+                console.log(data);
+                if (data && data['data']) {
+                  let arr = data['data'];
+                  if (arr.length > 0) {
+                    this.person.callid = arr[0].id;
+                  }
+                }
+              })
+              .catch(error => {});
+    }
   }
 
   sendFlow() {
@@ -341,7 +359,7 @@ export class VistorRegisterPage {
       funname: '案场新建更新访客记录APP',
       param1: Utils.getQueryString('manid'),
       param2: Utils.getQueryString('manname'),
-      param3: this.person.callid || 0,
+      param3: this.person.callid || '0',
       param4: this.person.telephone,
       param5: this.person.custname,
       param6: this.person.sex,
