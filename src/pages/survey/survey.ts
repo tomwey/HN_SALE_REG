@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
@@ -27,6 +27,7 @@ export class SurveyPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
+    private events: Events,
     public navParams: NavParams) {
       this.callid = this.navParams.data.callid;
       this.tplid  = this.navParams.data.tplid;
@@ -35,7 +36,11 @@ export class SurveyPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad SurveyPage');
-    this.loadData();
+    if (this.navParams.data.surveyData) {
+      this.formData = this.navParams.data.surveyData;
+    } else {
+      this.loadData();
+    }
   }
 
   loadData() {
@@ -231,29 +236,33 @@ export class SurveyPage {
       return;
     }
 
-    this.api.SendSurvey(sql)
-      .then(data => {
-        // console.log(data);
-        // if (data && data['data']) {
-        //   let arr = data['data'];
-        //   if (arr.length > 0) {
-        //     let item = arr[0];
-        //     if (item.code == '0') {
-              this.tools.showToast('保存数据成功');
-        //     } else {
-        //       this.tools.showToast(item.codemsg);
-        //     }
-        //   } else {
-        //     this.tools.showToast('未知错误');
-        //   }
-        // } else {
-        //   this.tools.showToast('未知错误');
-        // }
-      })
-      .catch(error => {
-        // console.log(error);
-        this.tools.showToast(error.message || '服务器出错了~');
-      });
+    this.events.publish('survey:saved', this.formData);
+
+    this.navCtrl.pop();
+
+    // this.api.SendSurvey(sql)
+    //   .then(data => {
+    //     // console.log(data);
+    //     // if (data && data['data']) {
+    //     //   let arr = data['data'];
+    //     //   if (arr.length > 0) {
+    //     //     let item = arr[0];
+    //     //     if (item.code == '0') {
+    //           this.tools.showToast('保存数据成功');
+    //     //     } else {
+    //     //       this.tools.showToast(item.codemsg);
+    //     //     }
+    //     //   } else {
+    //     //     this.tools.showToast('未知错误');
+    //     //   }
+    //     // } else {
+    //     //   this.tools.showToast('未知错误');
+    //     // }
+    //   })
+    //   .catch(error => {
+    //     // console.log(error);
+    //     this.tools.showToast(error.message || '服务器出错了~');
+    //   });
 
   }
 

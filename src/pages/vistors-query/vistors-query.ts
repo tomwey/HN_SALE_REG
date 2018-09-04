@@ -157,6 +157,9 @@ export class VistorsQueryPage {
   }
 
   forwardTo(person, isNew = false) {
+    this.queryModel.name = '';
+    this.queryModel.mobile = '';
+    
     this.app.getRootNavs()[0].push('VistorRegisterPage', { person: person, isNew: isNew ? '1' : '0', followtype: this.followtype, proj_id: this.project.value });
   }
 

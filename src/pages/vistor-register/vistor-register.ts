@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, Content, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
@@ -40,9 +40,12 @@ export class VistorRegisterPage {
   followtype: any;
   currentFollowType: any;
 
+  surveyData: any;
+
   source?: any = null;
 
   followcontent: any = '';
+  followid: any = '0';
 
   currentSelectBtn: any = null;
 
@@ -110,6 +113,7 @@ export class VistorRegisterPage {
     private tools: Tools,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
+    private events: Events,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.person = this.navParams.data.person;
@@ -147,6 +151,10 @@ export class VistorRegisterPage {
         this.source = { descname: '公司员工', field: 'employer', label: this.person.srcname };
       }
     }
+
+    this.events.subscribe('survey:saved', (data) => {
+      this.surveyData = data;
+    });
 
   }
 
@@ -314,6 +322,7 @@ export class VistorRegisterPage {
     this.navCtrl.push('SurveyPage', { callid: this.person.callid, 
                                       tplid: this.followtype == '10' ? 8 : 6,
                                       proj_id: this.proj_id,
+                                      surveyData: this.surveyData,
                                      });
   }
 
@@ -349,46 +358,115 @@ export class VistorRegisterPage {
       param17: (this.currentSelectBtn ? this.currentSelectBtn.value : 0).toString(),
       param18: this.followcontent,
       param19: type,
-      param20: typename,
+      param20: this.followid,
     };
 
-    this.api.POST(null, params)
+    this.tools.showLoading('提交中...');
+
+    this.api.POST(null, params, '', false)
       .then(data => {
         // console.log(data);
-        this.person.followcnt = parseInt(this.person.followcnt || 0) + 1;
+        if (this.followid == '0') {
+          this.person.followcnt = parseInt(this.person.followcnt || 0) + 1;
+        }
+        
         if (data && data['data']) {
           let arr = data['data'];
           if (arr.length > 0) {
             
             // 重置跟进相关数据
 
-            this.followcontent = '';
+            // this.followcontent = '';
 
-            if (this.currentSelectBtn) {
-              this.currentSelectBtn.selected = false;
-              this.currentSelectBtn = null;
-            }
+            // if (this.currentSelectBtn) {
+            //   this.currentSelectBtn.selected = false;
+            //   this.currentSelectBtn = null;
+            // }
 
             if (this.operType == '0') {
               this.person.callid = this.person.callid || arr[0].callid;
+              this.followid = arr[0].followid;
               this.person.statenum     = this.person.statenum || '0';
               this.person.statedesc = this.person.statedesc || '跟进';
-              this.tools.showToast('保存跟进成功');
+              // this.tools.showToast('保存跟进成功');
+              if (this.surveyData) {
+                this.saveSurvey();
+              } else {
+                this.tools.showToast('保存成功');
+                this.tools.hideLoading();
+              }
+              
             } else {
               this.person.statenum     = this.operType;
               this.person.statedesc = this.operType == '30' ? '丢失' : '作废';
               this.tools.showToast('操作成功');
+              this.tools.hideLoading();
             }
             
           } else {
             this.tools.showToast('未知错误');
+            this.tools.hideLoading();
           }
         } else {
           this.tools.showToast('未知错误');
+          this.tools.hideLoading();
         }
       })
       .catch(error => {
         this.tools.showToast(error.message || '服务器出错了~');
+        this.tools.hideLoading();
+      });
+  }
+
+  generateSql2() {
+    let sql = '';
+    this.surveyData.forEach(element => {
+      let titles = element.titles;
+      let inputCount = 0;
+      if (titles) { // 单选或者多选
+        titles.forEach(obj => {
+
+          sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
+        });
+      } else { // 填空
+        // if (element.addvalue) {
+          sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
+        // }
+      }
+    });
+    return sql;
+  }
+
+  saveSurvey() {
+    let sql = this.generateSql2 ();
+
+    this.api.SendSurvey(sql, '', false)
+      .then(data => {
+        // console.log(data);
+        // if (data && data['data']) {
+        //   let arr = data['data'];
+        //   if (arr.length > 0) {
+        //     let item = arr[0];
+        //     if (item.code == '0') {
+              this.tools.showToast('保存成功');
+
+              this.surveyData = null;
+
+              this.tools.hideLoading();
+        //     } else {
+        //       this.tools.showToast(item.codemsg);
+        //     }
+        //   } else {
+        //     this.tools.showToast('未知错误');
+        //   }
+        // } else {
+        //   this.tools.showToast('未知错误');
+        // }
+      })
+      .catch(error => {
+        // console.log(error);
+        this.tools.showToast(error.message || '服务器出错了~');
+        this.tools.hideLoading();
       });
   }
 
