@@ -82,7 +82,9 @@ export class VistorRegisterPage {
   ];
 
   knowwayReadonly: any = false;
-  mobileReadonly: any = true;
+  mobileReadonly: any  = true;
+
+  hasSrcType: boolean = false;
 
   followtypes: any = [
     {
@@ -151,6 +153,10 @@ export class VistorRegisterPage {
       } else if (this.person.srctypeid == '6') {
         this.source = { descname: '公司员工', field: 'employer', label: this.person.srcname };
       }
+    }
+
+    if (this.person.callid && this.person.srctypename) {
+      this.hasSrcType = true;
     }
 
     this.events.subscribe('survey:saved', (data) => {
@@ -235,7 +241,7 @@ export class VistorRegisterPage {
 
   selectPersonSource() {
 
-    if (this.person.callid && this.person.callid != '0' && this.person.callid != 'NULL' && this.person.srctypename && this.person.srctypename != 'NULL') { return; }
+    if (this.hasSrcType) { return; }
 
     this.api.POST(null, { "dotype": "GetData", 
         "funname": "通用获取数据字典数据APP", 
@@ -411,6 +417,8 @@ export class VistorRegisterPage {
 
               this.mobileReadonly  = true;
               this.knowwayReadonly = true;
+
+              this.hasSrcType      = this.person.callid && this.person.srctypename;
 
               // this.tools.showToast('保存跟进成功');
               if (this.surveyData) {
