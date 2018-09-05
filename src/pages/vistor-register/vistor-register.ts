@@ -408,6 +408,10 @@ export class VistorRegisterPage {
               this.followid = arr[0].followid;
               this.person.statenum     = this.person.statenum || '0';
               this.person.statedesc = this.person.statedesc || '跟进';
+
+              this.mobileReadonly  = true;
+              this.knowwayReadonly = true;
+
               // this.tools.showToast('保存跟进成功');
               if (this.surveyData) {
                 this.saveSurvey();
@@ -422,6 +426,8 @@ export class VistorRegisterPage {
               this.tools.showToast('操作成功');
               this.tools.hideLoading();
             }
+
+            this.person.srcname = this.source.label;
             
           } else {
             this.tools.showToast('未知错误');
