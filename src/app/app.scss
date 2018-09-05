@@ -52,6 +52,10 @@
     }
 }
 
+input, textarea{
+    -webkit-appearance: none;
+}
+
 .card-ios {
     box-shadow: none;
 }
