@@ -435,7 +435,9 @@ export class VistorRegisterPage {
               this.tools.hideLoading();
             }
 
-            this.person.srcname = this.source.label;
+            if (this.source && this.source.label) {
+              this.person.srcname = this.source.label;
+            }
             
           } else {
             this.tools.showToast('未知错误');
@@ -456,7 +458,7 @@ export class VistorRegisterPage {
     let sql = '';
     this.surveyData.forEach(element => {
       let titles = element.titles;
-      let inputCount = 0;
+      // let inputCount = 0;
       if (titles) { // 单选或者多选
         titles.forEach(obj => {
 
