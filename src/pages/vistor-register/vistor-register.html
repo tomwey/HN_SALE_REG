@@ -57,7 +57,7 @@
 
     <ion-item>
       <ion-label>知晓途径</ion-label>
-      <ion-input [(ngModel)]="person.knowway" placeholder="请输入" [disabled]="knowwayReadonly"></ion-input>
+      <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
     </ion-item>
 
     <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">

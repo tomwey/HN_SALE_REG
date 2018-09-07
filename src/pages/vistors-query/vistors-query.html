@@ -26,7 +26,7 @@
     </ion-item>
     <ion-item>
       <ion-label>客户手机</ion-label>
-      <ion-input placeholder="输入11位手机" type="number" [(ngModel)]="queryModel.mobile"></ion-input>
+      <ion-input placeholder="输入11位手机" type="number" pattern="[0-9]*" [(ngModel)]="queryModel.mobile"></ion-input>
     </ion-item>
     <!-- <ion-item>
       <ion-label>所属项目</ion-label>
