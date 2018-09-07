@@ -355,6 +355,11 @@ export class VistorRegisterPage {
   save(type, typename) {
     this.operType = type;
 
+    if (!this.person.custname) {
+      this.tools.showToast('客户姓名不能为空');
+        return;
+    }
+
     if (type == '0') {
       if (!this.followcontent || this.followcontent.trim() == '') {
         this.tools.showToast('跟进内容不能为空');

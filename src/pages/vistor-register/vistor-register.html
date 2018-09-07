@@ -23,7 +23,7 @@
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
       <ion-label>客户手机</ion-label>
-      <ion-input [(ngModel)]="person.telephone" [disabled]="mobileReadonly"></ion-input>
+      <ion-input [(ngModel)]="person.telephone" type="number" pattern="[0-9]*" [disabled]="mobileReadonly"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>客户姓名</ion-label>
