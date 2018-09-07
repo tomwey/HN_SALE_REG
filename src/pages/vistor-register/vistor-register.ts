@@ -371,7 +371,8 @@ export class VistorRegisterPage {
         return;
       }
 
-      if (!this.person.srctypename || (this.source && !this.source.value)) {
+      // console.log(this.person.srctypename);
+      if (!this.person.srcname && (this.source && !this.source.value)) {
         this.tools.showToast(`${this.source.descname}不能为空`);
         return;
       }
