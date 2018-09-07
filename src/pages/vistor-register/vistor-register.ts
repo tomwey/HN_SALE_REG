@@ -360,6 +360,23 @@ export class VistorRegisterPage {
         return;
     }
 
+    if (!this.person.sex) {
+      this.tools.showToast('客户性别不能为空');
+        return;
+    }
+
+    if (this.followtype == '20') {
+      if (!this.person.srctypeid) {
+        this.tools.showToast('来源类型不能为空');
+        return;
+      }
+
+      if (!this.person.srctypename || (this.source && !this.source.value)) {
+        this.tools.showToast(`${this.source.descname}不能为空`);
+        return;
+      }
+    }
+
     if (type == '0') {
       if (!this.followcontent || this.followcontent.trim() == '') {
         this.tools.showToast('跟进内容不能为空');

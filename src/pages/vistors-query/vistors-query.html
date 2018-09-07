@@ -21,11 +21,11 @@
   <ion-card>
     <!-- <ion-list> -->
     <ion-item>
-      <ion-label>客户姓名</ion-label>
+      <ion-label fixed>客户姓名</ion-label>
       <ion-input placeholder="输入姓名" [(ngModel)]="queryModel.name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>客户手机</ion-label>
+      <ion-label fixed>客户手机*</ion-label>
       <ion-input placeholder="输入11位手机" type="number" pattern="[0-9]*" [(ngModel)]="queryModel.mobile"></ion-input>
     </ion-item>
     <!-- <ion-item>
@@ -38,8 +38,8 @@
       </ion-select>
     </ion-item> -->
     <button ion-item (click)="selectProject();">
-      所属项目
-      <span class="placeholder" [class.hasvalue]="!!project.label">{{project.label || '请选择'}}</span>
+      <ion-label fixed>所属项目*</ion-label>
+      <span class="placeholder" item-content [class.hasvalue]="!!project.label">{{project.label || '请选择'}}</span>
     </button>
 
   </ion-card>

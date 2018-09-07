@@ -68,6 +68,12 @@ input, textarea{
     margin: 0 12px;
 }
 
+ion-label[fixed] {
+    width: 80px;
+    flex: 0 0 80px;
+    min-width: 80px;
+}
+
 // .ios { .tabs { .tabbar { margin-top:25px; padding-bottom: 0px; } } }
 
 // .toolbar-ios {
