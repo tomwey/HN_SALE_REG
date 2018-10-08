@@ -9,7 +9,7 @@
   <ion-navbar color="primary">
     <ion-title>{{project.name}} — {{house.building_name}} {{industry.name}}</ion-title>
   </ion-navbar>
-  <ion-toolbar color="white">
+  <ion-toolbar color="white" *ngIf="hasUnit">
     <ion-segment [(ngModel)]="unit" 
       mode="md"
       (ionChange)="segmentChanged($event)">
@@ -26,6 +26,9 @@
       {{color.name}}
     </span>
   </div>
+  <div class="empty-error-box" *ngIf="!!error">
+    {{error}}
+  </div>
   <ion-grid>
     <ion-row *ngFor="let floor of roomsData">
       <ion-col col-2>
@@ -37,7 +40,7 @@
         <ion-row class="rooms">
           <ion-col *ngFor="let room of floor.rooms" class="cell">
             <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
-              {{room.house_no.split('-')[3]}}
+              {{formatHouseNumber(room)}}
             </div>
           </ion-col>
         </ion-row>

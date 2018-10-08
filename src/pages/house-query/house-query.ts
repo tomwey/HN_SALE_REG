@@ -40,7 +40,7 @@ export class HouseQueryPage {
     private api: ApiService,
     public navParams: NavParams) {
       if (!this.currentIndustry.id || !this.currentProject.id) {
-        this.error = '选择项目和业态查询房源';
+        this.error = '选择项目和业态查询数据';
       }
   }
 
@@ -102,8 +102,11 @@ export class HouseQueryPage {
     this.currentProject.id = proj.project_id;
     this.currentProject.name = proj.project_name;
 
-    // this.currentIndustry.id = '';
-    // this.currentIndustry.name = '';
+    this.currentIndustry.id = '';
+    this.currentIndustry.name = '';
+
+    this.houses = [];
+    this.error = '选择项目和业态查询数据';
 
     this.loadIndustries(proj);
   }
@@ -122,6 +125,8 @@ export class HouseQueryPage {
   }
 
   loadHouses() {
+    this.error = null;
+    
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取房源楼栋列表APP', 
                           param1: this.currentProject.id, 
@@ -131,7 +136,7 @@ export class HouseQueryPage {
         if (data && data['data']) {
           this.houses = data['data'];
           if (this.houses.length == 0) {
-            this.error = '未找到房源数据';
+            this.error = '暂无数据';
           } else {
             this.error = null;
           }

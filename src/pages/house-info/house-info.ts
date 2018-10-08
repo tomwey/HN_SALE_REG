@@ -21,7 +21,7 @@ export class HouseInfoPage {
   project: any;
   industry: any;
   floors: any = {};
-
+  hasUnit: boolean = true;
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, 
@@ -36,15 +36,22 @@ export class HouseInfoPage {
   }
 
   prepareUnits() {
-    let ids = this.house.unitids.split(',');
-    let names = this.house.unitnames.split(',');
-
-    let count;
+    let ids = this.house.unitids.replace('NULL', '')
+    if (!ids) return;
+    ids = ids.split(',');
+    let names = this.house.unitnames.replace('NULL', '').split(',');
+    // console.log(this.house.unitids);
+    // console.log(names);
+    let count = 0;
     if (ids.length < names.length) {
       count = ids.length;
     } else {
       count = names.length;
     }
+
+    this.hasUnit = this.house.haveunit != '0';
+
+    // console.log(ids);
 
     let arr = [];
     for(var i=0; i<count; i++) {
@@ -73,25 +80,38 @@ export class HouseInfoPage {
 
   loadRooms() {
     this.floors = {};
-
+    this.error = null;
+    this.roomsData = [];
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取房源房间列表APP', 
                           param1: this.project.id,
                           param2: this.industry.id,
-                          param3: this.unit
+                          param3: this.hasUnit ? this.unit : this.house.building_id,
+                          param4: this.house.haveunit
                          })
       .then(data => {
-        console.log(data);
+        // console.log(data);
+        // console.log('#######');
         if (data && data['data']) {
+          // console.log('123');
+          // this.error = null;
           this.handleData(data['data']);
+        } else {
+          // console.log('333333333');
+          this.error = '暂无数据';
         }
       })
       .catch(error => {
-        console.log(error);
+        this.error = error.message || '服务器出错了';
+        // console.log(error);
       });
   }
 
   handleData(arr) {
+    if (arr.length == 0) {
+      this.error = '暂无数据';
+      return;
+    }
     let temp = [];
     arr.forEach(item => {
       const floor = item.floor;
@@ -144,6 +164,15 @@ export class HouseInfoPage {
   selectRoom(room) {
     // console.log(room);
     this.navCtrl.push('HouseDetailPage', { room: room, project: this.project, industry: this.industry });
+  }
+
+  formatHouseNumber(room) {
+    var no = parseInt(room.house_number);
+    if (no < 10) {
+      return `${room.floor}0${no}`;
+    } 
+
+    return `${room.floor}${no}`;
   }
 
   unit: any = '1';
