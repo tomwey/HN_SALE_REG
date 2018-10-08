@@ -74,7 +74,7 @@ export class HouseQueryPage {
   loadIndustries(project) {
     this.api.POST(null, { "dotype": "GetData", "funname": "获取房源业态APP", "param1": project.project_id })
       .then(data => {
-        // console.log(data);
+        console.log(data);
         if (data && data['data']) {
           this.industries = data['data'];
 

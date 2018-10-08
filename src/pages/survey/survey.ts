@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the SurveyPage page.
@@ -24,10 +25,14 @@ export class SurveyPage {
   error: any = null;
   formData: any = [];
   formObj: any = {};
+  
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
     private events: Events,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
       this.callid = this.navParams.data.callid;
       this.tplid  = this.navParams.data.tplid;
@@ -36,6 +41,8 @@ export class SurveyPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad SurveyPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
+    
     if (this.navParams.data.surveyData) {
       this.formData = this.navParams.data.surveyData;
     } else {
@@ -176,7 +183,7 @@ export class SurveyPage {
     let needRequiredCount = 0;
 
     this.formData.forEach(element => {
-      // console.log(element);
+      console.log(element);
       if (element.ismust) {
         needRequiredCount ++;
       }
@@ -189,13 +196,13 @@ export class SurveyPage {
       let inputCount = 0;
       if (titles) { // 单选或者多选
         titles.forEach(obj => {
-          console.log(obj);
+          // console.log(obj);
           
           
           // if ( obj.addvalue || obj.titlevalue ) {
           //   inputCount ++;
           // }
-          if (obj.type == '3') {
+          if (obj.itype == '3') {
             if (obj.addvalue) {
               inputCount ++;
             }
@@ -214,12 +221,12 @@ export class SurveyPage {
           //     requiredCount ++;
           //   }
           // }
-          console.log(obj);
+          // console.log(obj);
           sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
         });
       } else { // 填空
         // if (element.addvalue) {
-          console.log(123);
+          // console.log(123);
           sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
         // }
       }
@@ -228,9 +235,9 @@ export class SurveyPage {
         requiredCount ++;
       }
     });
-    console.log(sql);
-    // console.log(requiredCount);
-    // console.log(needRequiredCount);
+    // console.log(sql);
+    console.log(requiredCount);
+    console.log(needRequiredCount);
 
     if (requiredCount != needRequiredCount) {
       this.tools.showToast('有必填未完成，请确认');
