@@ -61,7 +61,7 @@ export class HouseInfoPage {
           emptyUnitIDs.push('');
           allUnit = {
             ID: '-1',
-            name: '全部'
+            name: ''
           };
         }
       } else {
