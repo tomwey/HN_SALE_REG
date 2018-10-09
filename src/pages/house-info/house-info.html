@@ -9,7 +9,7 @@
   <ion-navbar color="primary">
     <ion-title>{{project.name}} — {{house.building_name}} {{industry.name}}</ion-title>
   </ion-navbar>
-  <ion-toolbar color="white" *ngIf="hasUnit">
+  <ion-toolbar color="white">
     <ion-segment [(ngModel)]="unit" 
       mode="md"
       (ionChange)="segmentChanged($event)">

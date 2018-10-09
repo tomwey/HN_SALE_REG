@@ -21,7 +21,7 @@ export class HouseInfoPage {
   project: any;
   industry: any;
   floors: any = {};
-  hasUnit: boolean = true;
+  // hasUnit: boolean = true;
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, 
@@ -49,17 +49,33 @@ export class HouseInfoPage {
       count = names.length;
     }
 
-    this.hasUnit = this.house.haveunit != '0';
-
-    // console.log(ids);
-
     let arr = [];
+    let emptyUnitIDs = [];
+    let allUnit = null;
     for(var i=0; i<count; i++) {
-      arr.push({
-        ID: ids[i],
-        name: names[i]
-      });
+      let _id = ids[i];
+      if (_id == '') {
+        if (emptyUnitIDs.indexOf(_id) != -1) {
+          continue;
+        } else {
+          emptyUnitIDs.push('');
+          allUnit = {
+            ID: '-1',
+            name: '全部'
+          };
+        }
+      } else {
+        arr.push({
+          ID: ids[i],
+          name: names[i]
+        });
+      }
     }
+
+    if (allUnit) {
+      arr.unshift(allUnit);
+    }
+
     this.units = arr;
     if (this.units.length > 0) {
       this.unit = this.units[0]['ID'];
@@ -86,8 +102,8 @@ export class HouseInfoPage {
                           funname: '获取房源房间列表APP', 
                           param1: this.project.id,
                           param2: this.industry.id,
-                          param3: this.hasUnit ? this.unit : this.house.building_id,
-                          param4: this.house.haveunit
+                          param3: this.unit,
+                          param4: this.house.building_id
                          })
       .then(data => {
         // console.log(data);
