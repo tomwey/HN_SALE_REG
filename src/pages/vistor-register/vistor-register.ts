@@ -221,22 +221,23 @@ export class VistorRegisterPage {
   }
 
   changeSRCType() {
-    this.alertCtrl.create({
-      title: '客户来源修改流程发起',
-      subTitle: '客户来源修改需要发起申请流程，您确定吗？',
-      buttons: [
-        {
-          text: '取消',
-          role: 'Cancel'
-        },
-        {
-          text: '发起流程',
-          handler: () => {
-            this.sendFlow();
-          }
-        }
-      ]
-    }).present();
+    this.navCtrl.push('SourceChangePage', { source: this.source, person: this.person, proj_id: this.proj_id });
+    // this.alertCtrl.create({
+    //   title: '客户来源修改流程发起',
+    //   subTitle: '客户来源修改需要发起申请流程，您确定吗？',
+    //   buttons: [
+    //     {
+    //       text: '取消',
+    //       role: 'Cancel'
+    //     },
+    //     {
+    //       text: '发起流程',
+    //       handler: () => {
+    //         this.sendFlow();
+    //       }
+    //     }
+    //   ]
+    // }).present();
   }
 
   selectPersonSource() {
