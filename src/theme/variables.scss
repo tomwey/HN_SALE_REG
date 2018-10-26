@@ -40,6 +40,20 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   white:      white,
+  
+  ajstate-10: rgb(169, 199, 243), // 未到银行
+  ajstate-20: rgb(154, 159, 170), // 网上备案中
+  ajstate-30: rgb(180, 236, 174), // 预告预抵 
+  ajstate-40: rgb(238, 182, 187), // 转现场全权处理
+  ajstate-50: rgb(231,90,22), // 现场处理完成
+  ajstate-60: rgb(83, 77, 77), // 银行受理中
+  ajstate-70: rgb(125, 63, 63), // 待放款
+  ajstate-80: rgb(49, 124, 204), // 修改备案中
+  ajstate-90: rgb(184, 149, 96), // 异常待处理
+  ajstate-95: rgb(148, 25, 209), // 异常退法务处理
+  ajstate-100: rgb(37, 186, 219), // 待撤消备案
+  ajstate-110: rgb(150, 22, 22), // 按揭中断
+  ajstate-120: rgb(143, 180, 56), // 已回款
 );
 
 

@@ -11,7 +11,8 @@ export class TabsPage {
   tab1Root = VistorsQueryPage;
   tab2Root = HouseQueryPage;
   tab3Root = MyCustomerPage;
-
+  tab4Root = 'MortgageListPage';
+  
   constructor() {
 
   }

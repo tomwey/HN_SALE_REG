@@ -1,0 +1,61 @@
+<!--
+  Generated template for the MortgageListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>按揭台账</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button (click)="showPanel1();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+    </ion-buttons> -->
+  </ion-navbar>
+  <ion-toolbar color="white">
+    <ion-row class="subnavbar">
+      <ion-col col-6 tappable (click)="showPanel1(1);">
+        {{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon>
+      </ion-col>
+      <ion-col col-6 tappable (click)="showPanel1(2);">
+        {{currentState.name || '选择按揭状态'}} <ion-icon name="md-arrow-dropdown"></ion-icon>
+        </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  <ion-toolbar color="white" class="searchbar">
+    <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
+    <form action=".">
+      <ion-searchbar
+        #searchBar
+        [(ngModel)]="keyword"
+        cancelButtonText="取消"
+        [ngModelOptions]="{standalone: true}"
+        [showCancelButton]="true"
+        (search)="startSearch(keyword)"
+        placeholder="输入姓名、房号、银行关键字搜索"
+        [animated]="false"
+        name="search"
+      >
+      </ion-searchbar>
+  </form>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="empty-error-box" *ngIf="!!error">
+    {{error}}
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let item of dataList" tappable (click)="openDetail(item);">
+      <h2>{{item.project_name}}&emsp;{{item.house_no}}</h2>
+      <p>客户: {{item.custnames}}</p>
+      <ion-note item-right>
+        
+        <p class="money-box"><!--span class="help-text">贷款金额</span -->
+          <span class="money">{{item.ajmoney | formatWan}}万</span></p>
+        <ion-badge color="ajstate-{{item.ajstate}}" class="custom-badge">{{item.ajstate_desc}}</ion-badge>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
