@@ -8,10 +8,37 @@
 
   <ion-navbar color="primary">
     <ion-title>按揭详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openTraceList();">
+        跟进记录
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
-  
+    <ion-card>
+      <table class="table">
+          <tr *ngFor="let info of items">
+            <td class="label">{{info.label}}</td>
+            <td class="value">
+              <span text-wrap>{{info.value}}</span>
+            </td>
+          </tr>
+        </table>
+      </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button block outline>转异常</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button block>新增跟进</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,3 +1,26 @@
 page-mortgage-detail {
+    .detail-box {
+        padding: 10px;
+    }
 
+    .table {
+        width: 100%;
+        // padding: 10px;
+        // margin-top: 15px;
+        font-size: 14px;
+
+        .label {
+            width: 30%;
+            padding: 5px 10px;
+            text-align: right;
+            color: #666;
+            vertical-align: top;
+        }
+        .value {
+            padding-left: 10px;
+            padding-right: 10px;
+            color: #333;
+
+        }
+    }
 }
