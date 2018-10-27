@@ -45,7 +45,7 @@ export class MortgageDetailPage {
   }
 
   openTraceList() {
-
+    this.app.getRootNavs()[0].push('ProgressHistoryPage', this.mortgage);
   }
 
   gotoFollow() {
