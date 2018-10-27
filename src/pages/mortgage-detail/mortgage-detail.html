@@ -18,16 +18,14 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
+    <div class="detail-box">
       <table class="table">
           <tr *ngFor="let info of items">
             <td class="label">{{info.label}}</td>
-            <td class="value">
-              <span text-wrap>{{info.value}}</span>
-            </td>
+            <td class="value">{{info.value}}</td>
           </tr>
         </table>
-      </ion-card>
+      </div>
 </ion-content>
 
 <ion-footer>
