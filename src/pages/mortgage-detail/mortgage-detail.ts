@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 
 /**
  * Generated class for the MortgageDetailPage page.
@@ -17,7 +17,9 @@ export class MortgageDetailPage {
 
   items: any = [];
   mortgage: any = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    private app: App,
+    public navParams: NavParams) {
     this.mortgage = this.navParams.data;
   }
 
@@ -45,5 +47,15 @@ export class MortgageDetailPage {
   openTraceList() {
 
   }
+
+  gotoFollow() {
+    this.app.getRootNavs()[0].push('NewFollowPage', this.mortgage);
+  }
+
+  gotoException() {
+    this.app.getRootNavs()[0].push('NewExceptionPage', this.mortgage);
+  }
+
+
 
 }
