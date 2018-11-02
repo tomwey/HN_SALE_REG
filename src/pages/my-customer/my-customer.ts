@@ -152,7 +152,9 @@ export class MyCustomerPage {
 
   segmentChanged(ev) {
     if (this.menuType == '4' || 
-        this.menuType == '5') {
+        this.menuType == '5' ||
+        this.menuType == '6' 
+        ) {
           this.error = '即将上线...';
           return;
         }
@@ -207,7 +209,7 @@ export class MyCustomerPage {
   menues: any = [
     {
       ID: '1',
-      name: '来访',
+      name: '来电来访',
     },
     {
       ID: '2',
@@ -216,6 +218,10 @@ export class MyCustomerPage {
     {
       ID: '3',
       name: '签约',
+    },
+    {
+      ID: '6',
+      name: '异常',
     },
     {
       ID: '4',

@@ -220,7 +220,6 @@ export class NewFollowPage {
       });
     });
 
-    let memo = this.isException ? '' : this.item.memo;
     let exDesc = this.isException ? this.item.memo : '';
 
     this.api.POST(null, {
@@ -230,7 +229,7 @@ export class NewFollowPage {
       param2: this.mortgageData.id || '0',
       param3: this.item.state_id,
       param4: this.item.start_date,
-      param5: memo,
+      param5: this.item.memo,
       param6: this.parentExceptionIDs.join(','),
       param7: this.parentExceptionNames.join(','),
       param8: subExIDs.join(','),
