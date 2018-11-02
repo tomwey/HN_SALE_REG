@@ -152,12 +152,48 @@ export class MyCustomerPage {
 
   segmentChanged(ev) {
     if (this.menuType == '4' || 
-        this.menuType == '5' ||
-        this.menuType == '6' 
+        this.menuType == '5' 
         ) {
           this.error = '即将上线...';
           return;
         }
+    
+    if (this.menuType == '6') {
+      this.error = null;
+      this.data = [
+        {
+          telephone: '13012345678',
+          custname: '张三',
+          sex: '1',
+          house_no: '1-2-3-4',
+          is_reply: '0',
+          followupdesc: '',
+          abnormalsubname: '补充户口资料',
+          replydesc: ''
+        },
+        {
+          telephone: '13012345678',
+          custname: '张三',
+          sex: '1',
+          house_no: '1-2-3-4',
+          is_reply: '0',
+          followupdesc: '',
+          abnormalsubname: '补充户口资料',
+          replydesc: ''
+        },
+        {
+          telephone: '13012345678',
+          custname: '张三',
+          sex: '1',
+          house_no: '1-2-3-4',
+          is_reply: '0',
+          followupdesc: '',
+          abnormalsubname: '补充户口资料',
+          replydesc: ''
+        }
+      ];
+      return;
+    }
 
     if (!this.currentProject.id) {
       this.error = '请先选择项目';

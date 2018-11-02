@@ -65,6 +65,20 @@
         </div>
       </ion-item>
 
+      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
+        <h2>
+          {{item.telephone}} {{item.custname}} 
+          <ion-icon 
+            [class.male]="item.sex == '1'" 
+            [class.female]="item.sex == '2'" 
+            name="{{item.sex == '1' ? 'ios-male-outline' : 'ios-female-outline'}}">
+          </ion-icon>
+        </h2>
+        <p>房号: {{item.house_no}}</p>
+        <p text-wrap>{{item.abnormalsubname}}</p>
+        <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
+      </ion-item>
+
       <ion-item *ngIf="menuType == '2' || menuType == '3'">
         <ion-row>
           <ion-col col-8>
