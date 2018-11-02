@@ -15,22 +15,56 @@
 <ion-content>
   <ion-card>
     <button ion-item (click)="selectState();">
-      按揭状态
-      <ion-note item-right>
+      按揭状态*
+      <div item-right style="color: #999;">
         {{item.state_name || '请选择'}}
-      </ion-note>
+      </div>
     </button>
-    <ion-item>
-      <ion-label>开始日期</ion-label>
+    <button ion-item>
+      <ion-label>开始日期*</ion-label>
       <ion-datetime displayFormat="YYYY-MM-DD" 
         pickerFormat="YYYY-MM-DD" 
         cancelText="取消"
         doneText="确定"
+        placeholder="请设置"
         [(ngModel)]="item.start_date"></ion-datetime>
-    </ion-item>
+    </button>
+    <button ion-item (click)="selectException();" *ngIf="isException">
+      异常类型*
+      <div class="exception-box" style="color: #999;" item-right>
+        <!-- {{item.exception_types || '请选择'}} -->
+        <div *ngIf="parentExceptionIDs.length === 0" style="text-align: right;">请选择</div>
+        <ul class="exceptions" *ngIf="parentExceptionIDs.length > 0">
+          <li *ngFor="let name of parentExceptionNames">
+            {{name}}
+            <ul class="subexceptions">
+              <li *ngFor="let item of subExceptions[name]">
+                {{item.dic_name}}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </button>
+    <button ion-item *ngIf="isException">
+      <ion-label>异常开始时间*</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" 
+        pickerFormat="YYYY-MM-DD" 
+        cancelText="取消"
+        doneText="确定"
+        [(ngModel)]="item.ex_start_date" placeholder="请设置"></ion-datetime>
+    </button>
+    <button ion-item *ngIf="isException">
+        <ion-label>计划完成时间*</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" 
+          pickerFormat="YYYY-MM-DD" 
+          cancelText="取消"
+          doneText="确定"
+          [(ngModel)]="item.ex_done_date" placeholder="请设置"></ion-datetime>
+    </button>
     <ion-item>
-      <ion-label>备注</ion-label>
-      <ion-textarea rows="6" [(ngModel)]="item.memo" placeholder="输入备注"></ion-textarea>
+      <ion-label>备注/异常说明</ion-label>
+      <ion-textarea rows="6" [(ngModel)]="item.memo" placeholder="输入备注/异常说明"></ion-textarea>
     </ion-item>
     <div padding>
       <button ion-button block (click)="commit();">提交</button>

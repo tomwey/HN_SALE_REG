@@ -1,0 +1,84 @@
+<!--
+  Generated template for the TreeSelectPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close();">
+        <ion-icon name="ios-close-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="done()" [disabled]="selectedItems.length === 0">
+        {{selectedItems.length === 0 ? '确定' : '确定(' + selectedItems.length + ')'}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <!-- <ion-toolbar color="white">
+      <ion-searchbar
+      #searchBar
+      [(ngModel)]="keyword"
+      
+      [showCancelButton]="true"
+      cancelButtonText="取消"
+      (ionInput)="startSearch(keyword);"
+      placeholder="搜索"
+      [animated]="false"
+      name="search"
+    >
+    </ion-searchbar>
+  </ion-toolbar> -->
+
+</ion-header>
+
+<ion-content>
+  <div class="empty-error-box" *ngIf="!!error">
+    {{error}}
+  </div>
+  <ion-list>
+    <ion-card *ngFor="let item of parents" tappable (click)="expandItem(item);">
+      <ion-card-header style="color: #666;">
+        {{item.dic_name}}
+        <span class="icon-arrow">
+          <ion-icon name="{{item.expanded ? 'ios-arrow-down-outline' : 'ios-arrow-forward-outline'}}"></ion-icon>
+        </span>
+        <!-- <ion-item>
+          <ion-label>{{item.dic_name}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+          <ion-note item-right>
+              <ion-icon name="{{item.expanded ? 'ios-arrow-down-outline' : 'ios-arrow-forward-outline'}}"></ion-icon>
+          </ion-note>
+        </ion-item> -->
+      </ion-card-header>
+      <accordion-list [expanded]="item.expanded" [expandedHeight]="0">
+          <!-- <div class="child-item" *ngFor="let child of item.children">
+            <label for="{{child.dic_id}}">
+              <input type="checkbox" id="{{child.dic_id}}"> {{child.dic_name}}
+            </label>
+          </div> -->
+          <ion-item *ngFor="let child of item.children">
+            <ion-label text-wrap>{{child.dic_name}}</ion-label>
+            <ion-checkbox (ionChange)="selectedItem($event, child);" [checked]="child.checked"></ion-checkbox>
+          </ion-item>
+        </accordion-list>
+    </ion-card>
+    <!-- <button ion-item *ngFor="let item of parents" detail-none (click)="expandItem(item);">
+      {{item.dic_name}}
+      <accordion-list [expanded]="item.expanded" [expandedHeight]="0">
+        <div class="child-item" *ngFor="let child of item.children">
+          <label for="{{child.dic_id}}">
+            <input type="checkbox" id="{{child.dic_id}}"> {{child.dic_name}}
+          </label>
+        </div>
+      </accordion-list>
+      
+    </button> -->
+  </ion-list>
+</ion-content>

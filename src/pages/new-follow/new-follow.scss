@@ -4,4 +4,21 @@ page-new-follow {
             border-bottom: 0.55px solid #e6e6e6!important;
         }
     }
+
+    .exception-box {
+        width: calc(100% - 100px);
+        // text-align: left;
+        .exceptions {
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+        .subexceptions {
+            font-size: 12px;
+            color: #999;
+            margin: 0;
+            padding: 0;
+            // list-style: none;
+        }
+    }
 }

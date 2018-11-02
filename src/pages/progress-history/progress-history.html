@@ -19,7 +19,7 @@
   <ion-list>
     <ion-item *ngFor="let item of data">
       <h2>{{item.followupdesc}}</h2>
-      <p>{{item.followupdate}}</p>
+      <p>{{item.followupdate.split('T')[0]}}</p>
       <!-- <ion-note item-right> -->
         <ion-badge item-right class="custom-badge" color="ajstate-{{item.ajstate}}">{{item.ajstatedesc}}</ion-badge>
       <!-- </ion-note> -->

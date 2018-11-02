@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the NewExceptionPage page.
@@ -25,11 +26,13 @@ export class NewExceptionPage {
     memo: ''
   };
 
+  mortgageData: any;
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
+      this.mortgageData = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -82,7 +85,48 @@ export class NewExceptionPage {
   }
 
   commit() {
+    if (!this.item.type_id) {
+      this.tools.showToast('异常类型不能为空');
+      return;
+    }
 
+    if (!this.item.start_date) {
+      this.tools.showToast('异常开始日期不能为空');
+      return;
+    }
+
+    if (!this.item.done_date) {
+      this.tools.showToast('计划完成日期不能为空');
+      return;
+    }
+
+    if (!this.item.memo) {
+      this.tools.showToast('异常说明不能为空');
+      return;
+    }
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '新增按揭台账跟进或异常记录APP',
+      param1: Utils.getQueryString('manid'),
+      param2: this.mortgageData.id || '0',
+      param3: '',
+      param4: '',
+      param5: '',
+      param6: this.item.type_id,
+      param7: this.item.type_name,
+      param8: this.item.start_date,
+      param9: this.item.done_date,
+      param10: this.item.memo,
+    })
+    .then(data => {
+      this.tools.showToast('提交成功!');
+
+      this.navCtrl.pop();
+    })
+    .catch(error => {
+      this.tools.showToast(error.message || '服务器出错了');
+    });
   }
 
 }

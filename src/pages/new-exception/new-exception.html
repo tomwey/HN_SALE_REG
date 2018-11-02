@@ -15,7 +15,7 @@
 <ion-content>
     <ion-card>
         <ion-item>
-            <ion-label>异常开始时间</ion-label>
+            <ion-label>异常开始时间*</ion-label>
             <ion-datetime displayFormat="YYYY-MM-DD" 
               pickerFormat="YYYY-MM-DD" 
               cancelText="取消"
@@ -23,7 +23,7 @@
               [(ngModel)]="item.start_date" placeholder="设置"></ion-datetime>
           </ion-item>
           <ion-item>
-              <ion-label>计划完成时间</ion-label>
+              <ion-label>计划完成时间*</ion-label>
               <ion-datetime displayFormat="YYYY-MM-DD" 
                 pickerFormat="YYYY-MM-DD" 
                 cancelText="取消"
@@ -32,13 +32,13 @@
             </ion-item>
 
         <button ion-item (click)="selectExType();">
-          异常类型
+          异常类型*
           <ion-note item-right>
             {{item.type_name || '请选择'}}
           </ion-note>
         </button>
         <ion-item>
-          <ion-label>异常说明</ion-label>
+          <ion-label>异常说明*</ion-label>
           <ion-textarea rows="6" [(ngModel)]="item.memo" placeholder="输入异常说明"></ion-textarea>
         </ion-item>
         <div padding>
