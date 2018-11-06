@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
+import { NavController, NavParams, Content, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the MyCustomerPage page.
@@ -27,6 +28,8 @@ export class MyCustomerPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private app: App,
+    private tools: Tools,
+    private modalCtrl: ModalController,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     if (!this.currentProject.id) {
@@ -47,18 +50,65 @@ export class MyCustomerPage {
     this.content.resize();
   }
 
-  selectProject(proj, ev:Event) {
-    ev.stopPropagation();
-    this.currentProject.id = proj.project_id;
-    this.currentProject.name = proj.project_name;
-
-    this.showPanel = false;
-    this.content.resize();
-
-    this.loadData();
+  selectProject() {
+    this.api.POST(null, { "dotype": "GetData", 
+          "funname": "案场获取项目列表APP", 
+          "param1": Utils.getQueryString("manid") })
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          // console.log(arr);
+          // this.projects = arr;
+          if (arr.length == 0) {
+            this.tools.showToast('暂无项目数据');
+          } else {
+            this.forwardToPage(arr);
+          }
+          // this.showSelectPage(arr);
+          // this.loadIndustries(this.projects[0]);
+        } else {
+          this.tools.showToast('非法错误!');
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取项目失败');
+      });
   }
 
+  forwardToPage(arr) {
+    let temp = [];
+
+    arr.forEach(element => {
+      temp.push(`${element.project_name}|${element.project_id}`);
+    });
+    
+    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
+      title: '选择项目', data: temp });
+      modal.onDidDismiss((res) => {
+        // console.log(res);
+        if (!res) return;
+
+        this.currentProject.name = res.label;
+        this.currentProject.id   = res.value;
+
+        this.loadData();
+      });
+    modal.present();
+  }
+
+  // selectProject(proj, ev:Event) {
+  //   ev.stopPropagation();
+  //   this.currentProject.id = proj.project_id;
+  //   this.currentProject.name = proj.project_name;
+
+  //   this.showPanel = false;
+  //   this.content.resize();
+
+  //   this.loadData();
+  // }
+
   loadData() {
+    this.data = [];
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
                           param1: Utils.getQueryString('manid'),
@@ -76,6 +126,40 @@ export class MyCustomerPage {
           } else {
             this.error = '暂无数据';
           }
+        } else {
+          this.error = "未知错误";
+        }
+      })
+      .catch(error => {
+        this.error = error.message || '服务器出错了~';
+      })
+  }
+
+  loadExCustomers() {
+    this.data = [];
+
+    this.api.POST(null, { dotype: 'GetData', 
+                          funname: '查询我的异常客户APP', 
+                          param1: Utils.getQueryString('manid'),
+                          param2: '', 
+                          param3: '',
+                          param4: this.keyword
+                         })
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          this.data = data['data'];
+          // this.prepareData(arr);
+          // this.data = data;
+
+          // if (arr.length > 0) {
+          //   this.error = null;
+          // } else {
+          //   this.error = '暂无数据';
+          // }
+          this.error = this.data.length === 0 ? '暂无数据' : null;
+
+          console.log(this.data);
         } else {
           this.error = "未知错误";
         }
@@ -141,7 +225,12 @@ export class MyCustomerPage {
   }
 
   selectItem(item) {
-    this.app.getRootNavs()[0].push('VistorRegisterPage', { person: item });
+    if (this.menuType == '6') {
+      this.app.getRootNavs()[0].push('ExCustomerReplyPage', item);
+
+    } else {
+      this.app.getRootNavs()[0].push('VistorRegisterPage', { person: item });
+    }
   }
 
   callPhone(item,ev:Event) {
@@ -160,38 +249,39 @@ export class MyCustomerPage {
     
     if (this.menuType == '6') {
       this.error = null;
-      this.data = [
-        {
-          telephone: '13012345678',
-          custname: '张三',
-          sex: '1',
-          house_no: '1-2-3-4',
-          is_reply: '0',
-          followupdesc: '',
-          abnormalsubname: '补充户口资料',
-          replydesc: ''
-        },
-        {
-          telephone: '13012345678',
-          custname: '张三',
-          sex: '1',
-          house_no: '1-2-3-4',
-          is_reply: '0',
-          followupdesc: '',
-          abnormalsubname: '补充户口资料',
-          replydesc: ''
-        },
-        {
-          telephone: '13012345678',
-          custname: '张三',
-          sex: '1',
-          house_no: '1-2-3-4',
-          is_reply: '0',
-          followupdesc: '',
-          abnormalsubname: '补充户口资料',
-          replydesc: ''
-        }
-      ];
+      this.loadExCustomers();
+      // this.data = [
+      //   {
+      //     telephone: '13012345678',
+      //     custname: '张三',
+      //     sex: '1',
+      //     house_no: '1-2-3-4',
+      //     is_reply: '0',
+      //     followupdesc: '',
+      //     abnormalsubname: '补充户口资料',
+      //     replydesc: ''
+      //   },
+      //   {
+      //     telephone: '13012345678',
+      //     custname: '张三',
+      //     sex: '1',
+      //     house_no: '1-2-3-4',
+      //     is_reply: '0',
+      //     followupdesc: '',
+      //     abnormalsubname: '补充户口资料',
+      //     replydesc: ''
+      //   },
+      //   {
+      //     telephone: '13012345678',
+      //     custname: '张三',
+      //     sex: '1',
+      //     house_no: '1-2-3-4',
+      //     is_reply: '0',
+      //     followupdesc: '',
+      //     abnormalsubname: '补充户口资料',
+      //     replydesc: ''
+      //   }
+      // ];
       return;
     }
 
@@ -207,7 +297,11 @@ export class MyCustomerPage {
   }
 
   startSearch(kw) {
-    this.loadData();
+    if (this.menuType == '6') {
+      this.loadExCustomers();
+    } else {
+      this.loadData();
+    }
   }
 
   openItem(item) {

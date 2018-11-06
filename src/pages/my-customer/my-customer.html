@@ -9,7 +9,7 @@
   <ion-navbar color="primary">
     <ion-title>我的客户</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="showPanel1();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar color="white">
@@ -166,7 +166,7 @@
     </ion-card>
   </ion-list>
 
-  <div class="overlay-wrap" [hidden]="!showPanel" tappable (click)="showPanel = false;">
+  <!-- <div class="overlay-wrap" [hidden]="!showPanel" tappable (click)="showPanel = false;">
       <div class="overlay-content" tappable (click)="$event.stopPropagation();">
           <ion-list>
             <ion-item *ngFor="let proj of projects" tappable (click)="selectProject(proj,$event);">
@@ -174,5 +174,5 @@
             </ion-item>
           </ion-list>
       </div>
-    </div>
+    </div> -->
 </ion-content>
