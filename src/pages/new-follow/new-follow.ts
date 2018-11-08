@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
@@ -41,6 +41,7 @@ export class NewFollowPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private tools: Tools,
+    private events: Events,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
       this.mortgageData = this.navParams.data;
@@ -240,6 +241,11 @@ export class NewFollowPage {
     })
     .then(data => {
       this.tools.showToast('提交成功!');
+      
+      // this.mortgageData.ajstate = this.item.state_id;
+      this.mortgageData.ajstate_desc = this.item.state_name;
+
+      this.events.publish('state:changed');
 
       this.navCtrl.pop();
     })

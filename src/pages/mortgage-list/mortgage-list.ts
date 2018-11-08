@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, App, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, App, Content, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
@@ -42,10 +42,17 @@ export class MortgageListPage {
     private api: ApiService,
     private tools: Tools,
     private app: App,
+    private events: Events,
     private store: AppStore,
     private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
+
+      this.events.subscribe('state:changed', () => {
+        // this.items = [];
+        // this.prepareData();
+        this.loadData();
+      });
   }
 
   ionViewDidLoad() {
