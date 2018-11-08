@@ -183,6 +183,9 @@ export class HouseInfoPage {
   }
 
   formatHouseNumber(room) {
+    if (!room.house_number) return '--';
+    if (room.house_number.length > 2) return room.house_number;
+
     var no = parseInt(room.house_number);
     if (no < 10) {
       return `${room.floor}0${no}`;
