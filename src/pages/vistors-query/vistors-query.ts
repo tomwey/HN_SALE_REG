@@ -4,7 +4,7 @@ import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
 import { Tools } from '../../provider/Tools';
-import { Storage } from '@ionic/storage';
+import { AppStore } from '../../provider/app-store';
 
 /**
  * Generated class for the VistorsQueryPage page.
@@ -39,12 +39,12 @@ export class VistorsQueryPage {
     private api: ApiService,
     private app: App,
     private tools: Tools,
-    private storage: Storage,
+    private store: AppStore,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
-      this.storage.get('selected.project').then(data => {
+      this.store.getProject((data) => {
         if (data) {
-          this.project = JSON.parse(data);
+          this.project = data;
         }
       });
   }
@@ -93,11 +93,12 @@ export class VistorsQueryPage {
       selectedItem = `${this.project.label}|${this.project.value}`;
     }
     let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
-                                                          title: '选择项目', data: data })
+                                                          title: '选择项目', data: data, need_save: true })
     modal.onDidDismiss((data) => {
       if (data) {
-        this.storage.set('selected.project', JSON.stringify(data));
         this.project = data;
+
+        this.store.saveProject(data);
       }
     });
     modal.present();

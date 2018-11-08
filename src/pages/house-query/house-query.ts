@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, App } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, App, ModalController, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { AppStore } from '../../provider/app-store';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the HouseQueryPage page.
@@ -23,37 +25,54 @@ export class HouseQueryPage {
   error2: any = null;
   
   industries: any = [];
+
   keyword: any = '';
 
   currentProject: any = {
     id: '',
     name: ''
   };
-  
-  currentIndustry: any = {
-    id: '',
-    name: '',
-  };
+
+  industryID: any;
+
+  @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, 
     private app: App,
+    private store: AppStore,
+    private tools: Tools,
+    private modalCtrl: ModalController,
     private api: ApiService,
     public navParams: NavParams) {
-      if (!this.currentIndustry.id || !this.currentProject.id) {
-        this.error = '选择项目和业态查询数据';
-      }
+
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad HouseQueryPage');
-    this.loadProjects();
+    // this.loadProjects();
+
+    // this.loadIndustries(this.currentProject.id);
+
+    this.store.getProject((data) => {
+      if (data) {
+        this.currentProject.id = data.value;
+        this.currentProject.name = data.label;
+      }
+
+      if (!this.currentProject.id) {
+        this.error = '请选择项目';
+      }
+
+      // console.log(this.currentProject);
+      this.loadIndustries(this.currentProject.id);
+    });
   }
 
-  ionViewWillLeave() {
-    this.showPanel = false;
-  }
+  // ionViewWillLeave() {
+  //   this.showPanel = false;
+  // }
 
-  loadProjects() {
+  selectProject() {
     this.api.POST(null, { "dotype": "GetData", 
           "funname": "案场获取项目列表APP", 
           "param1": Utils.getQueryString("manid") })
@@ -61,31 +80,122 @@ export class HouseQueryPage {
         if (data && data['data']) {
           let arr = data['data'];
           // console.log(arr);
-          this.projects = arr;
+          // this.projects = arr;
+          if (arr.length == 0) {
+            this.tools.showToast('暂无项目数据');
+          } else {
+            this.forwardToPage(arr);
+          }
           // this.showSelectPage(arr);
           // this.loadIndustries(this.projects[0]);
+        } else {
+          this.tools.showToast('非法错误!');
         }
       })
       .catch(error => {
-        // this.tools.showToast(error.message || '获取项目失败');
+        this.tools.showToast(error.message || '获取项目失败');
       });
   }
 
-  loadIndustries(project) {
-    this.api.POST(null, { "dotype": "GetData", "funname": "获取房源业态APP", "param1": project.project_id })
-      .then(data => {
-        console.log(data);
-        if (data && data['data']) {
-          this.industries = data['data'];
+  forwardToPage(arr) {
+    let temp = [];
 
-          if (this.industries.length == 0) {
+    arr.forEach(element => {
+      temp.push(`${element.project_name}|${element.project_id}`);
+    });
+    
+    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
+      title: '选择项目', data: temp });
+      modal.onDidDismiss((res) => {
+        // console.log(res);
+        if (!res) return;
+
+        this.currentProject.name = res.label;
+        this.currentProject.id   = res.value;
+
+        this.store.saveProject(res);
+
+        this.industries = [];
+
+        this.loadIndustries(this.currentProject.id);
+
+        // this.loadData();
+      });
+    modal.present();
+  }
+
+  // loadProjects() {
+  //   this.api.POST(null, { "dotype": "GetData", 
+  //         "funname": "案场获取项目列表APP", 
+  //         "param1": Utils.getQueryString("manid") })
+  //     .then(data => {
+  //       if (data && data['data']) {
+  //         let arr = data['data'];
+  //         // console.log(arr);
+  //         this.projects = arr;
+  //         // this.showSelectPage(arr);
+  //         // this.loadIndustries(this.projects[0]);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       // this.tools.showToast(error.message || '获取项目失败');
+  //     });
+  // }
+
+  loadIndustries(project_id) {
+    // console.log(project_id);
+    if (!project_id) {
+      return;
+    }
+
+    this.api.POST(null, { "dotype": "GetData", "funname": "获取房源业态APP", "param1": project_id }, '', false)
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+
+          if (arr.length == 0) {
             this.error2 = '暂无业态数据';
           } else {
             this.error2 = null;
           }
+
+          let temp = [];
+          arr.forEach(element => {
+            temp.push({
+              id: element.usertype_id,
+              name: element.usertype_name
+            });
+          });
+
+          this.industries = temp;
+
+          // this.content.resize();
+
+          // console.log(this.industries);
+
+          if (this.industries.length > 0) {
+            this.industryID = this.industries[0].id;
+          }
+
+          this.loadHouses();
+
         } else {
           this.error2 = '未知错误';
         }
+
+        
+
+        // if (this.industries.length > 0) {
+        //   let ind = this.industries[0];
+        //   // this.currentIndustry.id = ind.usertype_id;
+        //   // this.currentIndustry.name = ind.usertype_name;
+
+        //   this.industryID = (ind.usertype_id || '').toString();
+          
+        //   this.loadHouses();
+        // }
+        
       })
       .catch(error => {
         this.error2 = error.message || '服务器出错了~';
@@ -93,35 +203,47 @@ export class HouseQueryPage {
   }
 
   openHouse(item) {
+    let industry = null;
+    this.industries.forEach(element => {
+      if (this.industryID === element.id ) {
+        industry = element;
+      }
+    });
     this.app.getRootNavs()[0].push('HouseInfoPage',
-      { house: item, project: this.currentProject, industry: this.currentIndustry });
+      { house: item, project: this.currentProject, industry: industry });
   }
 
-  selectProject(proj, ev: Event) {
-    ev.stopPropagation();
-    this.currentProject.id = proj.project_id;
-    this.currentProject.name = proj.project_name;
+  // selectProject(proj, ev: Event) {
+  //   ev.stopPropagation();
+  //   this.currentProject.id = proj.project_id;
+  //   this.currentProject.name = proj.project_name;
 
-    this.currentIndustry.id = '';
-    this.currentIndustry.name = '';
+  //   this.currentIndustry.id = '';
+  //   this.currentIndustry.name = '';
 
-    this.houses = [];
-    this.error = '选择项目和业态查询数据';
+  //   this.houses = [];
+  //   this.error = '选择项目和业态查询数据';
 
-    this.loadIndustries(proj);
-  }
+  //   this.loadIndustries(proj);
+  // }
 
-  selectIndustry(ind) {
+  // selectIndustry(ind) {
 
-    this.showPanel = false;
+  //   this.showPanel = false;
 
-    // if (ind.usertype_id != this.currentIndustry.id) {
-      this.currentIndustry.id = ind.usertype_id;
-      this.currentIndustry.name = ind.usertype_name;
+  //   // if (ind.usertype_id != this.currentIndustry.id) {
+  //     this.currentIndustry.id = ind.usertype_id;
+  //     this.currentIndustry.name = ind.usertype_name;
 
-      this.loadHouses();
-    // }
+  //     this.loadHouses();
+  //   // }
 
+  // }
+
+  segmentChanged(ev) {
+    console.log(ev);
+
+    this.loadHouses();
   }
 
   loadHouses() {
@@ -130,9 +252,9 @@ export class HouseQueryPage {
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取房源楼栋列表APP', 
                           param1: this.currentProject.id, 
-                          param2: this.currentIndustry.id })
+                          param2: this.industryID }, '正在加载', true)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           this.houses = data['data'];
           if (this.houses.length == 0) {

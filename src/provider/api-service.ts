@@ -292,15 +292,18 @@ export class ApiService {
   }
 
   private showLoading(loadingText) {
-    if (++this.count === 1) {
+    // console.log(this.count);
+    // if (++this.count === 1) {
       this.tools.showLoading(loadingText);
-    }
+    // }
   }
 
   private hideLoading() {
-    if (--this.count === 0) {
+    // console.log('hide');
+    // console.log(this.count);
+    // if (--this.count === 0) {
       this.tools.hideLoading();
-    }
+    // }
   }
 
 }

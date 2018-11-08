@@ -18,6 +18,7 @@ import { MyCustomerPage } from '../pages/my-customer/my-customer';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { iOSFixedScrollFreeze } from '../provider/iOSFixedScrollFreeze';
 import { IonicStorageModule } from '@ionic/storage';
+import { AppStore } from '../provider/app-store';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { IonicStorageModule } from '@ionic/storage';
     ApiService,
     Tools,
     iOSFixedScrollFreeze,
+    AppStore,
   ]
 })
 export class AppModule {}

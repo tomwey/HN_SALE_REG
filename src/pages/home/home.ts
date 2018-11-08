@@ -28,21 +28,25 @@ export class HomePage {
         icon: 'ios-laifang',
         name: '来访登记',
         page: VistorsQueryPage,
+        size: 22,
       },
       {
         icon: 'ios-list-box-outline',
-        name: '按揭台账',
+        name: ' 按揭台账',
         page: 'MortgageListPage',
+        size: 34,
       },
       {
         icon: 'ios-house',
         name: '房源查询',
         page: HouseQueryPage,
+        size: 22,
       },
       {
         icon: 'ios-customer',
         name: '我的客户',
         page: MyCustomerPage,
+        size: 22,
       },
     ];
   }

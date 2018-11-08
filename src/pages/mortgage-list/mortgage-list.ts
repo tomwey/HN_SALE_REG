@@ -4,6 +4,7 @@ import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { AppStore } from '../../provider/app-store';
 
 /**
  * Generated class for the MortgageListPage page.
@@ -41,6 +42,7 @@ export class MortgageListPage {
     private api: ApiService,
     private tools: Tools,
     private app: App,
+    private store: AppStore,
     private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
@@ -49,8 +51,23 @@ export class MortgageListPage {
   ionViewDidLoad() {
     // console.log('ionViewDidLoad MortgageListPage');
     this.iosFixed.fixedScrollFreeze(this.content);
-    
-    this.error = '请先选择项目';
+
+    // this.error = '请先选择项目';
+
+    this.store.getProject(data => {
+      if (data) {
+        // const proj = JSON.parse(data);
+        this.currentProject.id = data.value;
+        this.currentProject.name = data.label;
+      }
+
+      if (!this.currentProject.id) {
+        this.error = '请先选择项目';
+      }
+
+      this.loadData();
+      
+    });
   }
 
   loadMortgageStates(type) {
@@ -94,7 +111,7 @@ export class MortgageListPage {
     this.api.POST(null, { "dotype": "GetData", 
                           "funname": "查询按揭台账信息APP",
                           "param1": Utils.getQueryString('manid'),
-                          "param2": '1289750',//this.currentProject.id,
+                          "param2": this.currentProject.id,
                           "param3": "-1",
                           "param4": "-1",
                           "param5": this.keyword,
@@ -170,6 +187,9 @@ export class MortgageListPage {
         if (type == 1) {
           this.currentProject.name = res.label;
           this.currentProject.id   = res.value;
+
+          this.store.saveProject(res);
+          
         } else if (type == 2) {
           this.currentState.name   = res.label;
           this.currentState.id     = res.value;

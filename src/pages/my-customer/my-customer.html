@@ -51,9 +51,9 @@
         <h2>
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
-            [class.male]="item.sex == '1'" 
-            [class.female]="item.sex == '2'" 
-            name="{{item.sex == '1' ? 'ios-male-outline' : 'ios-female-outline'}}">
+            [class.male]="item.sex == '1' || item.sex == '男'" 
+            [class.female]="item.sex == '2' || item.sex == '女'" 
+            name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
           </ion-icon>
         </h2>
         <p text-wrap>上次跟进内容: {{item.content}}</p>
@@ -69,9 +69,9 @@
         <h2>
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
-            [class.male]="item.sex == '1'" 
-            [class.female]="item.sex == '2'" 
-            name="{{item.sex == '1' ? 'ios-male-outline' : 'ios-female-outline'}}">
+            [class.male]="item.sex == '1' || item.sex == '男'" 
+            [class.female]="item.sex == '2' || item.sex == '女'" 
+            name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
           </ion-icon>
         </h2>
         <p>房号: {{item.house_no}}</p>

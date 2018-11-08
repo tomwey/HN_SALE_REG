@@ -5,6 +5,7 @@ import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 import { Tools } from '../../provider/Tools';
+import { AppStore } from '../../provider/app-store';
 
 /**
  * Generated class for the MyCustomerPage page.
@@ -29,12 +30,24 @@ export class MyCustomerPage {
     private api: ApiService,
     private app: App,
     private tools: Tools,
+    private store: AppStore,
     private modalCtrl: ModalController,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
-    if (!this.currentProject.id) {
-      this.error = '请先选择项目';
-    }
+
+      // 加载选中的项目
+      this.store.getProject(data => {
+        if (data) {
+          // const proj = JSON.parse(data);
+          this.currentProject.id = data.value;
+          this.currentProject.name = data.label;
+        }
+
+        if (!this.currentProject.id) {
+          this.error = '请先选择项目';
+        }
+      });
+    
   }
 
   ionViewDidLoad() {
@@ -42,7 +55,11 @@ export class MyCustomerPage {
     // this.error = '暂无数据';
     this.iosFixed.fixedScrollFreeze(this.content);
     
-    this.loadProjects();
+    // this.loadProjects();
+    setTimeout(() => {
+      this.loadData();
+    }, 200);
+    
   }
 
   showPanel1() {
@@ -90,6 +107,8 @@ export class MyCustomerPage {
 
         this.currentProject.name = res.label;
         this.currentProject.id   = res.value;
+
+        this.store.saveProject(res);
 
         this.loadData();
       });
@@ -207,21 +226,21 @@ export class MyCustomerPage {
   }
 
   loadProjects() {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
-      .then(data => {
-        if (data && data['data']) {
-          let arr = data['data'];
-          // console.log(arr);
-          this.projects = arr;
-          // this.showSelectPage(arr);
-          // this.loadIndustries(this.projects[0]);
-        }
-      })
-      .catch(error => {
-        // this.tools.showToast(error.message || '获取项目失败');
-      });
+    // this.api.POST(null, { "dotype": "GetData", 
+    //       "funname": "案场获取项目列表APP", 
+    //       "param1": Utils.getQueryString("manid") })
+    //   .then(data => {
+    //     if (data && data['data']) {
+    //       let arr = data['data'];
+    //       // console.log(arr);
+    //       this.projects = arr;
+    //       // this.showSelectPage(arr);
+    //       // this.loadIndustries(this.projects[0]);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     // this.tools.showToast(error.message || '获取项目失败');
+    //   });
   }
 
   selectItem(item) {
@@ -339,7 +358,7 @@ export class MyCustomerPage {
   menues: any = [
     {
       ID: '1',
-      name: '来电来访',
+      name: '来访',
     },
     {
       ID: '2',
