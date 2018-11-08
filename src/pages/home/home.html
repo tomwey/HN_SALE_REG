@@ -20,7 +20,7 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of data" (click)="forwardTo(item);">
-      <ion-icon name="{{item.icon}}" item-left [style.fontSize]="item.size + 'px'"></ion-icon>
+      <ion-icon name="{{item.icon}}" item-left></ion-icon>
       {{item.name}}
     </button>
   </ion-list>

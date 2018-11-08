@@ -34,17 +34,38 @@
   @extend .icons;
 }
 
+// .ion-ios-laifang:before,
+// .ion-ios-laifang-outline:before {
+//   content: "\e900";
+//   font-size: 28px;
+//   padding-top: 3px;
+// }
+
+// .ion-ios-house:before,
+// .ion-ios-house-outline:before {
+//   content: "\e901";
+//   font-size: 34px;
+//   // padding-top: 5px;
+// }
+
+// .ion-ios-customer:before,
+// .ion-ios-customer-outline:before {
+//   content: "\e902";
+//   font-size: 28px;
+//   padding-top: 3px;
+// }
+
 .ion-ios-laifang:before,
 .ion-ios-laifang-outline:before {
   content: "\e900";
-  font-size: 28px;
-  padding-top: 3px;
+  font-size: 26px;
+  // padding-top: 3px;
 }
 
 .ion-ios-house:before,
 .ion-ios-house-outline:before {
   content: "\e901";
-  font-size: 34px;
+  font-size: 30px;
   // padding-top: 5px;
 }
 
@@ -52,5 +73,5 @@
 .ion-ios-customer-outline:before {
   content: "\e902";
   font-size: 28px;
-  padding-top: 3px;
+  // padding-top: 3px;
 }
