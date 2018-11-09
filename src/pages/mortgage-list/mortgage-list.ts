@@ -72,8 +72,9 @@ export class MortgageListPage {
         this.error = '请先选择项目';
       }
 
-      this.loadData();
-      
+      setTimeout(() => {
+        this.loadData();
+      }, 300);
     });
   }
 

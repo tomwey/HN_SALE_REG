@@ -58,7 +58,7 @@ export class MyCustomerPage {
     // this.loadProjects();
     setTimeout(() => {
       this.loadData();
-    }, 200);
+    }, 300);
     
   }
 

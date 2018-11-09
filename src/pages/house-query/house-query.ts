@@ -64,7 +64,10 @@ export class HouseQueryPage {
       }
 
       // console.log(this.currentProject);
-      this.loadIndustries(this.currentProject.id);
+      setTimeout(() => {
+        this.loadIndustries(this.currentProject.id);
+      }, 300);
+      
     });
   }
 

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { VistorsQueryPage } from '../vistors-query/vistors-query';
-import { MortgageDetailPage } from '../mortgage-detail/mortgage-detail';
-import { MortgageListPage } from '../mortgage-list/mortgage-list';
 import { HouseQueryPage } from '../house-query/house-query';
 import { MyCustomerPage } from '../my-customer/my-customer';
 

@@ -37,19 +37,19 @@ export class MortgageDetailPage {
   prepareData() {
     let temp = [];
 
-    temp.push({ label: '客户名称', value: this.mortgage.custnames });
-    temp.push({ label: '房间号', value: this.mortgage.house_no });
-    temp.push({ label: '证件号码', value: this.mortgage.cardnos });
-    temp.push({ label: '贷款金额', value: this.mortgage.ajmoney });
-    temp.push({ label: '贷款方式', value: this.mortgage.paytypename });
-    temp.push({ label: '按揭银行', value: this.mortgage.ajbankname });
-    temp.push({ label: '贷款年限', value: this.mortgage.ajyears });
-    temp.push({ label: '按揭状态', value: this.mortgage.ajstate_desc });
+    temp.push({ label: '客户名称', value: this.mortgage.custnames.replace('NULL', '--') });
+    temp.push({ label: '房间号', value: this.mortgage.house_no.replace('NULL', '--') });
+    temp.push({ label: '证件号码', value: this.mortgage.cardnos.replace('NULL', '--') });
+    temp.push({ label: '贷款金额', value: this.mortgage.ajmoney.replace('NULL', '--') });
+    temp.push({ label: '贷款方式', value: this.mortgage.paytypename.replace('NULL', '--') });
+    temp.push({ label: '按揭银行', value: this.mortgage.ajbankname.replace('NULL', '--') });
+    temp.push({ label: '贷款年限', value: this.mortgage.ajyears.replace('NULL', '--') });
+    temp.push({ label: '按揭状态', value: this.mortgage.ajstate_desc.replace('NULL', '--') });
     temp.push({ label: '回款时间', value: this.mortgage.repaydate.replace('NULL', '--') });
     temp.push({ label: '是否断供', value: parseInt(this.mortgage.isabort) == 0 ? '否' : '是'  });
-    temp.push({ label: '异常类型', value: this.mortgage.abnormalname });
-    temp.push({ label: '异常说明', value: this.mortgage.frontdesc });
-    temp.push({ label: '销售员', value: this.mortgage.sellername });
+    temp.push({ label: '异常类型', value: this.mortgage.abnormalname.replace('NULL', '--') });
+    temp.push({ label: '异常说明', value: this.mortgage.frontdesc.replace('NULL', '--') });
+    temp.push({ label: '销售员', value: this.mortgage.sellername.replace('NULL', '--') });
 
     this.items = temp;
   }
