@@ -51,7 +51,7 @@ export class MortgageListPage {
       this.events.subscribe('state:changed', () => {
         // this.items = [];
         // this.prepareData();
-        this.loadData();
+        this.loadData(false);
       });
   }
 
@@ -108,10 +108,11 @@ export class MortgageListPage {
   }
 
   openDetail(item) {
+    item.mid = item.id;
     this.app.getRootNavs()[0].push('MortgageDetailPage', item);
   }
 
-  loadData() {
+  loadData(loading = true) {
     if (!this.currentProject.id) return;
     this.error = null;
 
@@ -123,7 +124,7 @@ export class MortgageListPage {
                           "param4": "-1",
                           "param5": this.keyword,
                           "param6": this.currentState.id || '-1',
-                         })
+                         }, '正在加载', loading)
       .then(data => {
         // console.log(data);
         if (data && data['data']) {

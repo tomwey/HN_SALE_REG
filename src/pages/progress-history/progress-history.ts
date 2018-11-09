@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 import { Utils } from '../../provider/Utils';
@@ -27,6 +27,7 @@ export class ProgressHistoryPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private iosFixed: iOSFixedScrollFreeze,
+    private events: Events,
     public navParams: NavParams) {
       this.mortData = this.navParams.data;
   }
@@ -38,6 +39,10 @@ export class ProgressHistoryPage {
     setTimeout(() => {
       this.loadData();
     }, 300);
+
+    this.events.subscribe('state:changed', () => {
+      this.loadData();
+    });
   }
 
   loadData() {
@@ -45,7 +50,7 @@ export class ProgressHistoryPage {
       dotype: 'GetData',
       funname: '查询按揭台账跟进记录APP',
       param1: Utils.getQueryString('manid'),
-      param2: this.mortData.id
+      param2: this.mortData.mid
     })
     .then(data => {
       if (data && data['data']) {
@@ -66,6 +71,12 @@ export class ProgressHistoryPage {
     //     ajstatedesc: '现场受理中'
     //   }
     // ];
+  }
+
+  openItem(item) {
+    // console.log(item);
+    item['_type'] = 'edit';
+    this.navCtrl.push('NewFollowPage', item);
   }
 
 }

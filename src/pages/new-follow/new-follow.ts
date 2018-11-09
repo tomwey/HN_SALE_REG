@@ -45,6 +45,80 @@ export class NewFollowPage {
     private modalCtrl: ModalController,
     public navParams: NavParams) {
       this.mortgageData = this.navParams.data;
+
+      if (this.mortgageData._type === 'edit') {
+        this.isException = this.mortgageData.ajstate === '40' || this.mortgageData.ajstate === '90';
+        this.item.state_name = this.mortgageData.ajstate_desc;
+        this.item.state_id = this.mortgageData.ajstate;
+        this.item.start_date = this.mortgageData.followupdate;
+        this.item.memo = this.mortgageData.followupdesc;
+        this.item.ex_start_date = this.mortgageData.abnormaldate
+              .replace('NULL', '')
+              .replace('1900-01-01', '');
+        this.item.ex_done_date = this.mortgageData.abnormaldodate.replace('NULL', '').replace('1900-01-01', '');
+
+        // console.log(this.mortgageData);
+
+        let abnormaltypedesc = this.mortgageData.abnormaltypedesc.replace('NULL', '');
+        let abnormaltypeids  = this.mortgageData.abnormaltypeids.replace('NULL', '');
+
+        let arr1 = abnormaltypedesc.split(';');
+        let arr_1 = abnormaltypeids.split(';');
+        
+        let len = arr1.length;
+        if (len > arr_1.length) {
+          len = arr_1.length;
+        }
+
+        let temp = [];
+        for (var i=0; i<len; i++) {
+          let desc1 = arr1[i];
+          let id1   = arr_1[i];
+
+          let par1 = desc1.split(':');
+          let par2 = id1.split(':');
+          
+          let parent = { dic_name: par1[0], dic_id: par2[0] };
+
+          let sub1 = par1[1];
+          let sub2 = par2[1];
+
+          if (sub1 && sub2) {
+            let subArr = sub1.split(',');
+            let subArr2 = sub2.split(',');
+
+            for (var j=0; j<subArr.length; j++) {
+              temp.push({ dic_name: subArr[j], dic_id: subArr2[j], parent: parent });
+            }
+          }
+        }
+
+        this.selectedItems = temp;
+
+        this.handleSelectedItems(this.selectedItems);
+        // console.log(abnormaltypedesc)
+
+        // let parent = 
+// abnormaldate: "2018-11-10"
+// abnormaldesc: "sadc"
+// abnormaldodate: "2018-11-13"
+// abnormaldomanid: "NULL"
+// abnormalname: "办理手续问题"
+// abnormalsubname: "增加首付,补银行办理费用"
+// abnormalsubtype: "3407,3405"
+// abnormaltype: "3403"
+// ajstate: "90"
+// ajstate_desc: "异常待处理"
+// create_date: "2018-11-09T09:40:45+08:00"
+// create_id: "286"
+// followupdate: "2018-10-09"
+// followupdesc: "sadc"
+// id: "782"
+// mid: "517"
+// replydesc: "NULL"
+// statetypeid: "NULL"
+// statetypename: "NULL"
+      }
   }
 
   ionViewDidLoad() {
@@ -215,10 +289,12 @@ export class NewFollowPage {
 
     this.parentExceptionNames.forEach(name => {
       const arr = this.subExceptions[name];
+
       arr.forEach(element => {
         subExIDs.push(element.dic_id);
         subExNames.push(element.dic_name);
       });
+
     });
 
     let exDesc = this.isException ? this.item.memo : '';
@@ -227,7 +303,7 @@ export class NewFollowPage {
       dotype: 'GetData',
       funname: '新增按揭台账跟进或异常记录APP',
       param1: Utils.getQueryString('manid'),
-      param2: this.mortgageData.id || '0',
+      param2: this.mortgageData.mid || '0',
       param3: this.item.state_id,
       param4: this.item.start_date,
       param5: this.item.memo,
@@ -238,6 +314,7 @@ export class NewFollowPage {
       param10: this.item.ex_start_date,
       param11: this.item.ex_done_date,
       param12: exDesc,
+      param13: this.mortgageData._type === 'edit' ? this.mortgageData.id : '',
     })
     .then(data => {
       this.tools.showToast('提交成功!');
