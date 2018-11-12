@@ -1,8 +1,90 @@
 page-progress-history {
-    .custom-badge {
-        border-radius: 4px;
-        padding: 4px 6px;
-        font-size: 12px;
-        color: white;
+    // .custom-badge {
+    //     border-radius: 4px;
+    //     padding: 4px 6px;
+    //     font-size: 12px;
+    //     color: white;
+    // }
+    .history-wrap {
+        padding: 20px;
+        .timeline {
+            margin: 0;
+            padding: 0;
+
+            position: relative;
+
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                height: 100%;
+                width: 2px;
+                background:#ccc;
+                left: calc(50% - 1px);
+                top: 0;
+            }
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 10px;
+            padding: 10px;
+            // display: -webkit-flex;
+            // display: -ms-flex;
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+        }
+
+        .time {
+            // flex: 0 0 120px;
+            flex: 1;
+            // width: 120px;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 16px;
+            vertical-align: top;
+            color: #333;
+            text-align: right;
+            margin-right: 15px;
+        }
+
+        .content {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            margin-left: 15px;
+            .title, .summary {
+                margin: 0;
+                padding: 0;
+            }
+
+            .title {
+                font-size: 16px;
+                font-weight: 700;
+                
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .summary {
+                font-size: 14px;
+                color: #666;
+            }
+
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 3px;
+                left: -21px;
+
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                background: #ccc;
+            }
+        }
     }
 }
