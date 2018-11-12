@@ -47,8 +47,14 @@ export class MortgageDetailPage {
     temp.push({ label: '按揭状态', value: this.mortgage.ajstate_desc.replace('NULL', '--') });
     temp.push({ label: '回款时间', value: this.mortgage.repaydate.replace('NULL', '--') });
     temp.push({ label: '是否断供', value: parseInt(this.mortgage.isabort) == 0 ? '否' : '是'  });
-    temp.push({ label: '异常类型', value: this.mortgage.abnormalname.replace('NULL', '--') });
-    temp.push({ label: '异常说明', value: this.mortgage.frontdesc.replace('NULL', '--') });
+    
+    let exDesc = this.mortgage.abnormalname.replace('NULL', '--');
+    if (exDesc !== '--') {
+      temp.push({ label: '异常类型', value: this.mortgage.abnormalname.replace('NULL', '--') });
+      temp.push({ label: '异常说明', value:  this.mortgage.abnormaldesc.replace('NULL', '--')});
+    }
+
+    temp.push({ label: '备注', value: this.mortgage.followupdesc.replace('NULL', '--') });
     temp.push({ label: '销售员', value: this.mortgage.sellername.replace('NULL', '--') });
 
     this.items = temp;

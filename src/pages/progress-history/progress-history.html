@@ -19,7 +19,7 @@
 
   <div class="history-wrap">
     <ul class="timeline">
-      <li class="timeline-item" *ngFor="let item of data">
+      <li class="timeline-item" *ngFor="let item of data;let i = index;" tappable (click)="openItem(item,i);">
         <span class="time">{{item.followupdate.split('T')[0]}}</span>
         <div class="content">
           <h2 class="title">{{item.ajstate_desc}}</h2>

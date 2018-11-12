@@ -20,7 +20,7 @@
         {{item.state_name || '请选择'}}
       </div>
     </button>
-    <button ion-item>
+    <!-- <button ion-item>
       <ion-label>开始日期*</ion-label>
       <ion-datetime displayFormat="YYYY-MM-DD" 
         pickerFormat="YYYY-MM-DD" 
@@ -28,7 +28,7 @@
         doneText="确定"
         placeholder="请设置"
         [(ngModel)]="item.start_date"></ion-datetime>
-    </button>
+    </button> -->
     <button ion-item (click)="selectException();" *ngIf="isException">
       异常类型*
       <div class="exception-box" style="color: #999;" item-right>
@@ -46,14 +46,14 @@
         </ul>
       </div>
     </button>
-    <button ion-item *ngIf="isException">
+    <!-- <button ion-item *ngIf="isException">
       <ion-label>异常开始时间*</ion-label>
       <ion-datetime displayFormat="YYYY-MM-DD" 
         pickerFormat="YYYY-MM-DD" 
         cancelText="取消"
         doneText="确定"
         [(ngModel)]="item.ex_start_date" placeholder="请设置"></ion-datetime>
-    </button>
+    </button> -->
     <button ion-item *ngIf="isException">
         <ion-label>计划完成时间*</ion-label>
         <ion-datetime displayFormat="YYYY-MM-DD" 

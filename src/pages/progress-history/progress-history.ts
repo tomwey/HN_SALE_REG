@@ -73,7 +73,7 @@ export class ProgressHistoryPage {
     // ];
   }
 
-  openItem(item) {
+  openItem(item,idx) {
     // console.log(item);
     item['_type'] = 'edit';
     this.navCtrl.push('NewFollowPage', item);
