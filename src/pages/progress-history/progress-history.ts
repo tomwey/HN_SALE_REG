@@ -75,8 +75,13 @@ export class ProgressHistoryPage {
 
   openItem(item,idx) {
     // console.log(item);
-    item['_type'] = 'edit';
-    this.navCtrl.push('NewFollowPage', item);
+    if (idx === 0) {
+      item['_type'] = 'edit';
+      this.navCtrl.push('NewFollowPage', item);
+    } else {
+      this.navCtrl.push('FollowDetailPage', item);
+    }
+    
   }
 
 }

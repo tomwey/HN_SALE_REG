@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular';
+// import { Tools } from '../../provider/Tools';
+// import { ApiService } from '../../provider/api-service';
+// import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the MortgageDetailPage page.
@@ -15,8 +18,9 @@ import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular'
 })
 export class MortgageDetailPage {
 
-  items: any = [];
+  items: any[] = [];
   mortgage: any = null;
+
   constructor(public navCtrl: NavController, 
     private app: App,
     private events: Events,
@@ -71,7 +75,5 @@ export class MortgageDetailPage {
   gotoException() {
     this.app.getRootNavs()[0].push('NewExceptionPage', this.mortgage);
   }
-
-
 
 }

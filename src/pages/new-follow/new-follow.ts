@@ -249,10 +249,10 @@ export class NewFollowPage {
       return;
     }
 
-    if (!this.item.start_date) {
-      this.tools.showToast('开始日期不能为空');
-      return;
-    }
+    // if (!this.item.start_date) {
+    //   this.tools.showToast('开始日期不能为空');
+    //   return;
+    // }
 
     if (!this.item.memo) {
       this.tools.showToast('备注不能为空');
@@ -265,10 +265,10 @@ export class NewFollowPage {
         return;
       }
 
-      if (!this.item.ex_start_date) {
-        this.tools.showToast('异常开始时间不能为空');
-        return;
-      }
+      // if (!this.item.ex_start_date) {
+      //   this.tools.showToast('异常开始时间不能为空');
+      //   return;
+      // }
 
       if (!this.item.ex_done_date) {
         this.tools.showToast('计划完成时间不能为空');

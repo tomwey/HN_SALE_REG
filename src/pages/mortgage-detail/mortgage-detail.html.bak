@@ -1,0 +1,147 @@
+<!--
+  Generated template for the MortgageDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>按揭详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openTraceList();">
+        跟进记录
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content style="background: white">
+  <div class="detail-box">
+    <!-- <table class="table">
+      <tr *ngFor="let info of items">
+        <td class="label">{{info.label}}</td>
+        <td class="value">{{info.value}}</td>
+      </tr>
+    </table> -->
+    <table class="table">
+      <tr>
+        <td class="label">客户姓名</td>
+        <td class="value">{{mortgage.custnames}}</td>
+        <td class="label">房间号</td>
+        <td class="value">{{mortgage.house_no}}</td>
+      </tr>
+      <tr>
+        <td class="label">证件号码</td>
+        <td class="value" colspan="3">{{mortgage.cardnos}}</td>
+      </tr>
+      <tr>
+          <td class="label">贷款金额</td>
+          <td class="value">{{mortgage.ajmoney | formatWan}}万</td>
+          <td class="label">贷款方式</td>
+          <td class="value">{{mortgage.paytypename | formatNull: '--'}}</td>
+      </tr>
+      <tr>
+          <td class="label">按揭银行</td>
+          <td class="value">{{mortgage.ajbankname | formatNull: '--'}}</td>
+          <td class="label">贷款年限</td>
+          <td class="value">{{mortgage.ajyears | formatNull: '--'}}</td>
+      </tr>
+      <tr>
+          <td class="label">按揭状态</td>
+          <td class="value">{{mortgage.ajstate_desc | formatNull: '--'}}</td>
+          <td class="label">回款时间</td>
+          <td class="value">{{mortgage.repaydate | formatNull: '--'}}</td>
+      </tr>
+      <tr>
+          <td class="label">是否断供</td>
+          <td class="value">{{mortgage.isabort === '0' ? '否' : '是'}}</td>
+          <td class="label">销售员</td>
+          <td class="value">{{mortgage.sellername | formatNull: '--'}}</td>
+      </tr>
+      <tr *ngIf="mortgage.abnormalname && mortgage.abnormalname !== 'NULL'">
+        <td class="label">异常类型</td>
+        <td class="value" colspan="3">{{mortgage.abnormalname | formatNull: '--'}}</td>
+      </tr>
+      <tr *ngIf="mortgage.abnormalname && mortgage.abnormalname !== 'NULL'">
+        <td class="label">异常说明</td>
+        <td class="value" colspan="3">{{mortgage.abnormaldesc | formatNull: '--'}}</td>
+      </tr>
+      <tr>
+        <td class="label">备注</td>
+        <td class="value" colspan="3">{{mortgage.followupdesc | formatNull: '--'}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="new-follow">
+    <ion-card>
+        <h2 class="title">新增跟进</h2>
+        <button ion-item (click)="selectState();">
+          按揭状态*
+          <div item-right style="color: #999;">
+            {{item.state_name || '请选择'}}
+          </div>
+        </button>
+        <!-- <button ion-item>
+          <ion-label>开始日期*</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" 
+            pickerFormat="YYYY-MM-DD" 
+            cancelText="取消"
+            doneText="确定"
+            placeholder="请设置"
+            [(ngModel)]="item.start_date"></ion-datetime>
+        </button> -->
+        <button ion-item (click)="selectException();" *ngIf="isException">
+          异常类型*
+          <div class="exception-box" style="color: #999;" item-right>
+            <!-- {{item.exception_types || '请选择'}} -->
+            <div *ngIf="parentExceptionIDs.length === 0" style="text-align: right;">请选择</div>
+            <ul class="exceptions" *ngIf="parentExceptionIDs.length > 0">
+              <li *ngFor="let name of parentExceptionNames">
+                {{name}}
+                <ul class="subexceptions">
+                  <li *ngFor="let item of subExceptions[name]">
+                    {{item.dic_name}}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </button>
+        <!-- <button ion-item *ngIf="isException">
+          <ion-label>异常开始时间*</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" 
+            pickerFormat="YYYY-MM-DD" 
+            cancelText="取消"
+            doneText="确定"
+            [(ngModel)]="item.ex_start_date" placeholder="请设置"></ion-datetime>
+        </button> -->
+        <button ion-item *ngIf="isException">
+            <ion-label>计划完成时间*</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD" 
+              pickerFormat="YYYY-MM-DD" 
+              cancelText="取消"
+              doneText="确定"
+              [(ngModel)]="item.ex_done_date" placeholder="请设置"></ion-datetime>
+        </button>
+        <ion-item>
+          <!-- <ion-label>备注/异常说明</ion-label> -->
+          <ion-textarea rows="6" [(ngModel)]="item.memo" placeholder="输入备注/异常说明"></ion-textarea>
+        </ion-item>
+        <div padding>
+          <button ion-button block (click)="commit();">提交</button>
+        </div>
+      </ion-card>
+  </div>
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button block (click)="gotoFollow();">变更状态</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer> -->
