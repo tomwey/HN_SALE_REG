@@ -323,6 +323,13 @@ export class NewFollowPage {
       
       // this.mortgageData.ajstate = this.item.state_id;
       this.mortgageData.ajstate_desc = this.item.state_name;
+      this.mortgageData.followupdesc = this.item.memo;
+
+      if (this.isException) {
+        this.mortgageData.abnormalname = this.parentExceptionNames.join(',');
+        this.mortgageData.abnormaldesc = exDesc;
+      }
+      
 
       this.events.publish('state:changed');
 
