@@ -119,7 +119,7 @@ export class VistorRegisterPage {
     private events: Events,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
-    this.person = this.navParams.data.person;
+    this.person = JSON.parse(JSON.stringify(this.navParams.data.person));
 
     if (this.person.knowway) {
       this.knowwayReadonly = true;
@@ -462,6 +462,9 @@ export class VistorRegisterPage {
             if (this.source && this.source.label) {
               this.person.srcname = this.source.label;
             }
+
+            this.events.publish('follow:saved');
+            // this.navParams.data.person = this.person;
             
           } else {
             this.tools.showToast('未知错误');

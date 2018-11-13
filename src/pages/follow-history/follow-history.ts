@@ -49,7 +49,7 @@ export class FollowHistoryPage {
               if (this.dataList.length > 0) {
                 this.error = null;
               } else {
-                this.error = '暂无跟进历史';
+                this.error = '您还未做过跟进~';
               }
             })
             .catch(error => {

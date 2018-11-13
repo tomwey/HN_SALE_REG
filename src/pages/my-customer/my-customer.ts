@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content, ModalController } from 'ionic-angular';
+import { NavController, NavParams, Content, ModalController, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
@@ -31,6 +31,7 @@ export class MyCustomerPage {
     private app: App,
     private tools: Tools,
     private store: AppStore,
+    private events: Events,
     private modalCtrl: ModalController,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
@@ -46,6 +47,10 @@ export class MyCustomerPage {
         if (!this.currentProject.id) {
           this.error = '请先选择项目';
         }
+      });
+
+      this.events.subscribe('follow:saved', () => {
+        this.loadData(false);
       });
     
   }
@@ -126,7 +131,7 @@ export class MyCustomerPage {
   //   this.loadData();
   // }
 
-  loadData() {
+  loadData(loading = true) {
     this.data = [];
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
@@ -134,7 +139,7 @@ export class MyCustomerPage {
                           param2: this.currentProject.id, 
                           param3: this.menuType,
                           param4: this.keyword
-                         })
+                         }, '正在加载', loading)
       .then(data => {
         console.log(data);
         if (data && data['data']) {

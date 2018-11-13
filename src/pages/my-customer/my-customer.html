@@ -48,7 +48,7 @@
   <ion-list>
     <ion-card *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
-        <h2>
+        <h2 text-wrap>
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
@@ -66,7 +66,7 @@
       </ion-item>
 
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
-        <h2>
+        <h2 text-wrap>
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
