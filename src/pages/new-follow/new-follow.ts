@@ -330,7 +330,6 @@ export class NewFollowPage {
         this.mortgageData.abnormaldesc = exDesc;
       }
       
-
       this.events.publish('state:changed');
 
       this.navCtrl.pop();
