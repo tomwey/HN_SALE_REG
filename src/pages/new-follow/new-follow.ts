@@ -159,7 +159,9 @@ export class NewFollowPage {
   forwardToPage(arr, type = 0) {
     let temp = [];
     arr.forEach(element => {
-      temp.push(`${element.dic_name}|${element.dic_value}`);
+      if (element.dic_value !== '95') { // 屏蔽掉异常退法务
+        temp.push(`${element.dic_name}|${element.dic_value}`);
+      }
     });
     
     let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
