@@ -36,7 +36,7 @@ export class VistorRegisterPage {
     knowway: '',
     sex: '',
     srctypename: '',
-    birth: '',
+    birthday: '',
     address: ''
   };
   followtype: any;
@@ -391,7 +391,7 @@ export class VistorRegisterPage {
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
-      param1: `${Utils.getQueryString('manid')},${Utils.getQueryString('manname')},${this.person.birth}`,
+      param1: `${Utils.getQueryString('manid')},${Utils.getQueryString('manname')},${this.person.birthday}`,
       param2: this.person.address || '',
       param3: this.person.callid || this.callid || '0',
       param4: this.person.telephone,

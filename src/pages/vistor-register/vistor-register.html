@@ -77,7 +77,7 @@
           pickerFormat="YYYY-MM-DD" 
           cancelText="取消"
           doneText="确定"
-          [(ngModel)]="person.birth" placeholder="请设置"></ion-datetime>
+          [(ngModel)]="person.birthday" placeholder="请设置"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -89,7 +89,7 @@
       <ion-label>来源类型*</ion-label>
       <div class="custom-controls-wrap" item-content>
         <span class="placeholder">{{person.srctypename || '请选择'}}</span>
-        <button ion-button item-right 
+        <button ion-button
           *ngIf="hasSrcType" 
           (click)="changeSRCType();">
           发起变更
