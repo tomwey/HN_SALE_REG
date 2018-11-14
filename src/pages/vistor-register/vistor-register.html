@@ -71,6 +71,20 @@
       <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label>出生日期</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" 
+          pickerFormat="YYYY-MM-DD" 
+          cancelText="取消"
+          doneText="确定"
+          [(ngModel)]="person.birth" placeholder="请设置"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>通讯地址</ion-label>
+      <ion-input [(ngModel)]="person.address" placeholder="请输入"></ion-input>
+    </ion-item>
+
     <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
       <ion-label>来源类型*</ion-label>
       <div class="custom-controls-wrap" item-content>
