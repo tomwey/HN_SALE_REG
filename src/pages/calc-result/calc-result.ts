@@ -68,7 +68,7 @@ export class CalcResultPage {
         // 等额本息
         monthBack = this.getBXMonthMoney(currRate, loanTotal * 10000.0, months)
         backTotal = monthBack * months;
-        lxTotal = Math.round((backTotal - loanTotal) * 100) / 100;
+        lxTotal = Math.round((backTotal - loanTotal * 10000.0) * 100) / 100;
       } else {
         // 等额本金
         for(let i = 0; i < months; i++){
@@ -79,7 +79,7 @@ export class CalcResultPage {
         }
 
         backTotal = Math.round(backTotal * 100) / 100;
-        lxTotal = Math.round((backTotal - loanTotal) * 100) / 100
+        lxTotal = Math.round((backTotal - loanTotal * 10000.0) * 100) / 100
       }
 
       // console.log(monthBack);

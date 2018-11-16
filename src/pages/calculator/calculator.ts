@@ -43,6 +43,7 @@ export class CalculatorPage {
 
   calculate() {
     this.navCtrl.push('CalcResultPage', { loanType: this.loanType, 
+                                          loanTypename: this.loanTypes[parseInt(this.loanType)]['label'],
                                           loanTotal: parseInt(this.formData.loanTotal),
                                           sdTotal: parseInt(this.formData.sdTotal),
                                           gjjTotal: parseInt(this.formData.gjjTotal),
