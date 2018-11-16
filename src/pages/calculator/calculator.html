@@ -4,15 +4,92 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
-  <ion-navbar>
-    <ion-title>Calculator</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>房贷计算器</ion-title>
   </ion-navbar>
+  <ion-toolbar color="white">
+    <ion-segment [(ngModel)]="loanType" 
+      mode="md">
+      <ion-segment-button value="{{type.value}}" *ngFor="let type of loanTypes">
+        {{type.label}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-label>计算方式</ion-label>
+      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        [(ngModel)]="formData.calcType">
+        <ion-option *ngFor="let type of calcTypes" value="{{type.value}}">{{type.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="formData.calcType === '0'">
+      <ion-label>贷款总额</ion-label>
+      <ion-input [(ngModel)]="formData.loanTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-note item-right>万</ion-note>
+    </ion-item>
 
-<ion-content padding>
+    <ion-item *ngIf="formData.calcType === '1'">
+      <ion-label>房屋总额</ion-label>
+      <ion-input [(ngModel)]="formData.houseTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-note item-right>万</ion-note>
+    </ion-item>
+    <ion-item *ngIf="formData.calcType === '1'">
+      <ion-label>贷款比例</ion-label>
+      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        [(ngModel)]="formData.loanRatio">
+        <ion-option *ngFor="let type of loanRatios" value="{{type.value}}">{{type.label}}</ion-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item *ngIf="loanType === '0' || loanType === '2'">
+      <ion-label>商贷利率</ion-label>
+      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        [(ngModel)]="formData.sdRate">
+        <ion-option *ngFor="let type of sdRates" value="{{type.value}}">{{type.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="loanType === '2'">
+      <ion-label>商业贷款</ion-label>
+      <ion-input [(ngModel)]="formData.sdTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-note item-right>万</ion-note>
+    </ion-item>
+    <ion-item *ngIf="loanType === '1' || loanType === '2'">
+      <ion-label>公积金利率</ion-label>
+      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        [(ngModel)]="formData.gjjRate">
+        <ion-option *ngFor="let type of gjjRates" value="{{type.value}}">{{type.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="loanType === '2'">
+      <ion-label>公积金贷款</ion-label>
+      <ion-input [(ngModel)]="formData.gjjTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-note item-right>万</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>贷款期限</ion-label>
+      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        [(ngModel)]="formData.loanYear">
+        <ion-option *ngFor="let type of loanYears" value="{{type.value}}">{{type.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button block outline (click)="reset()">重置</button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button block (click)="calculate()">开始计算</button>
+        </ion-col>
+      </ion-row>
+      <p class="warn-text" text-wrap>贷款利率仅供计算使用，实际交易利率折扣由银行评估</p>
+    </ion-card-header>
+  </ion-card>
 </ion-content>

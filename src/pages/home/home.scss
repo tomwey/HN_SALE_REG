@@ -1,4 +1,32 @@
 page-home {
+    .stats {
+        background: color($colors, primary);
+        padding: 5px 15px 15px 15px;
+        color: white;
+        ion-grid, ion-row, ion-col, p {
+            margin: 0;
+            padding: 0;
+        }
+        .stat-box {
+            width: 100%;
+            text-align: center;
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            .digit {
+                font-size: 18px;
+            }
+            .name {
+                font-size: 12px;
+            }
+        }
+
+        .today {
+            margin-bottom: 15px;
+            .size-28 {
+                font-size: 28px;
+                // font-weight: 700;
+            }
+        }
+    }
     .sections {
         // padding: 15px;
         ion-grid {

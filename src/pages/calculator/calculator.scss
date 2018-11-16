@@ -1,3 +1,37 @@
 page-calculator {
+    .item-ios {
+        border-bottom: 0.55px solid #e6e6e6;
+    }
 
+    ion-select {
+        max-width: 65%!important;
+        color: #666;
+    }
+
+    ion-label, ion-select, ion-input {
+        font-size: 14px;
+    }
+
+    .segment-md .segment-button {
+        height: 44px;
+    }
+    
+    ion-input {
+        input {
+            text-align: right;
+            color: #666;
+            /* IF YOU ALSO WANT TO PUSH PLACHEHOLDER TO THE RIGHT USE THE FOLLOWING, IF NOT JUST DELETE THE ::-webkit-input-placeholder*/
+            ::-webkit-input-placeholder {
+            text-align: right;
+            }
+        }
+    }
+
+    .warn-text {
+        font-size: 10px;
+        color: #bbb;
+        text-align: center;
+        margin-top: 5px;
+        padding: 0 15px;
+    }
 }

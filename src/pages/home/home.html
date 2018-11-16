@@ -24,11 +24,41 @@
       {{item.name}}
     </button>
   </ion-list> -->
+  <div class="stats">
+    <div class="today stat-box">
+      <p class="digit size-28">54</p>
+      <p class="name">今日访客</p>
+    </div>
+    <div class="other">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <div class="stat-box">
+              <p class="digit size-28">33</p>
+              <p class="name">昨日访客</p>
+            </div>
+          </ion-col>
+          <ion-col col-4>
+            <div class="stat-box">
+              <p class="digit">223</p>
+              <p class="name">本月访客</p>
+            </div>
+          </ion-col>
+          <ion-col col-4>
+            <div class="stat-box">
+              <p class="digit">323</p>
+              <p class="name">上月访客</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
   <div class="sections">
     <ion-grid>
       <ion-row>
         <ion-col col-4 *ngFor="let item of data">
-          <div class="section">
+          <div class="section" tappable (click)="forwardTo(item);">
             <p class="icon-wrap">
               <ion-icon name="{{item.icon}}"></ion-icon>
             </p>
