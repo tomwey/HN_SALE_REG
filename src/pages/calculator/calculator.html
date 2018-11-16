@@ -25,27 +25,32 @@
     <ion-item>
       <ion-label>计算方式</ion-label>
       <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        (ionChange)="selectChanged('calcType')"
         [(ngModel)]="formData.calcType">
         <ion-option *ngFor="let type of calcTypes" value="{{type.value}}">{{type.label}}</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item *ngIf="formData.calcType === '0'">
-      <ion-label>贷款总额</ion-label>
-      <ion-input [(ngModel)]="formData.loanTotal" type="tel" placeholder="请输入"></ion-input>
-      <ion-note item-right>万</ion-note>
-    </ion-item>
-
     <ion-item *ngIf="formData.calcType === '1'">
       <ion-label>房屋总额</ion-label>
-      <ion-input [(ngModel)]="formData.houseTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-input [(ngModel)]="formData.houseTotal" 
+        (ngModelChange)="inputChanged('houseTotal',$event)"
+        type="tel" placeholder="请输入"></ion-input>
       <ion-note item-right>万</ion-note>
     </ion-item>
     <ion-item *ngIf="formData.calcType === '1'">
       <ion-label>贷款比例</ion-label>
       <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+        (ionChange)="selectChanged('loanRatio')"
         [(ngModel)]="formData.loanRatio">
         <ion-option *ngFor="let type of loanRatios" value="{{type.value}}">{{type.label}}</ion-option>
       </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>贷款总额</ion-label>
+      <ion-input [(ngModel)]="formData.loanTotal" 
+        (ngModelChange)="inputChanged('loanTotal',$event)"
+        type="tel" pattern="[0-9]*" placeholder="请输入"></ion-input>
+      <ion-note item-right>万</ion-note>
     </ion-item>
 
     <ion-item *ngIf="loanType === '0' || loanType === '2'">
@@ -57,7 +62,9 @@
     </ion-item>
     <ion-item *ngIf="loanType === '2'">
       <ion-label>商业贷款</ion-label>
-      <ion-input [(ngModel)]="formData.sdTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-input [(ngModel)]="formData.sdTotal" 
+      (ngModelChange)="inputChanged('sdTotal',$event)"
+        type="tel" placeholder="请输入"></ion-input>
       <ion-note item-right>万</ion-note>
     </ion-item>
     <ion-item *ngIf="loanType === '1' || loanType === '2'">
@@ -69,7 +76,9 @@
     </ion-item>
     <ion-item *ngIf="loanType === '2'">
       <ion-label>公积金贷款</ion-label>
-      <ion-input [(ngModel)]="formData.gjjTotal" type="tel" placeholder="请输入"></ion-input>
+      <ion-input [(ngModel)]="formData.gjjTotal" 
+        (ngModelChange)="inputChanged('gjjTotal',$event)"
+        type="tel" placeholder="请输入"></ion-input>
       <ion-note item-right>万</ion-note>
     </ion-item>
 

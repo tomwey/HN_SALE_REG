@@ -8,6 +8,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+const SD_FIXED_RATE = 0.049;
+const GJJ_FIXED_RATE = 0.0325;
+
 @IonicPage()
 @Component({
   selector: 'page-calculator',
@@ -30,7 +33,8 @@ export class CalculatorPage {
     sdRate: '1',
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -38,7 +42,14 @@ export class CalculatorPage {
   }
 
   calculate() {
-    
+    this.navCtrl.push('CalcResultPage', { loanType: this.loanType, 
+                                          loanTotal: parseInt(this.formData.loanTotal),
+                                          sdTotal: parseInt(this.formData.sdTotal),
+                                          gjjTotal: parseInt(this.formData.gjjTotal),
+                                          sdRate: parseFloat(this.formData.sdRate) * SD_FIXED_RATE,
+                                          gjjRate: parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE,
+                                          loanYear: parseInt(this.formData.loanYear)
+                                         });
   }
 
   reset() {
@@ -53,6 +64,52 @@ export class CalculatorPage {
       sdTotal: 0,
       sdRate: '1',
     };
+  }
+
+  inputChanged(field, ev) {
+    // console.log(field);
+    let val = parseInt(ev);
+    console.log(ev);
+
+    if (this.loanType === '2') {
+      if (field === 'loanTotal') {
+        this.formData.sdTotal = this.formData.loanTotal;
+        this.formData.gjjTotal = 0;
+      } else if (field === 'sdTotal') {
+        let sdTotal = parseInt(this.formData.sdTotal);
+        let loanTotal = parseInt(this.formData.loanTotal);
+        if (sdTotal <= loanTotal) {
+          this.formData.gjjTotal = loanTotal - sdTotal;
+        }
+      } else if (field === 'gjjTotal') {
+        let sdTotal = parseInt(this.formData.gjjTotal);
+        let loanTotal = parseInt(this.formData.loanTotal);
+        if (sdTotal <= loanTotal) {
+          this.formData.sdTotal = loanTotal - sdTotal;
+        }
+      } 
+    }
+
+    if (field === 'houseTotal') {
+      this.calcLoanTotal();
+    }
+  }
+
+  selectChanged(field) {
+    if (field === 'calcType') {
+    } else if (field === 'loanRatio') {
+      this.calcLoanTotal();
+    }
+  }
+
+  calcLoanTotal() {
+    let houseTotal = parseInt(this.formData.houseTotal);
+    let ratio = parseInt(this.formData.loanRatio) * 10;
+    let loanTotal = Math.round(houseTotal * ratio / 100.0);
+    console.log(loanTotal);
+    this.formData.loanTotal = loanTotal;
+    this.formData.sdTotal = this.formData.loanTotal;
+    this.formData.gjjTotal = 0;
   }
 
   loanTypes: any = [
