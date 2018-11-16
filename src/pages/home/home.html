@@ -17,11 +17,25 @@
 
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content style="background: #fff;">
+  <!-- <ion-list>
     <button ion-item *ngFor="let item of data" (click)="forwardTo(item);">
       <ion-icon name="{{item.icon}}" item-left></ion-icon>
       {{item.name}}
     </button>
-  </ion-list>
+  </ion-list> -->
+  <div class="sections">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 *ngFor="let item of data">
+          <div class="section">
+            <p class="icon-wrap">
+              <ion-icon name="{{item.icon}}"></ion-icon>
+            </p>
+            <p class="name">{{item.name}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

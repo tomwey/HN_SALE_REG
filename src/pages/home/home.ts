@@ -42,6 +42,11 @@ export class HomePage {
         name: '我的客户',
         page: MyCustomerPage,
       },
+      {
+        icon: 'md-calculator',
+        name: '房贷计算器',
+        page: 'CalculatorPage',
+      },
     ];
   }
 
