@@ -144,6 +144,10 @@ export class VistorRegisterPage {
       }
     }
 
+    if (this.person.birthday && this.person.birthday === '1900-01-01') {
+      this.person.birthday = '';
+    }
+
     if (this.person.srcname && this.person.srctypeid) {
 
       if (this.person.srctypeid == '1') {
@@ -391,7 +395,7 @@ export class VistorRegisterPage {
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
-      param1: `${Utils.getQueryString('manid')},${Utils.getQueryString('manname')},${this.person.birthday}`,
+      param1: `${Utils.getQueryString('manid')},${Utils.getQueryString('manname')},${this.person.birthday || ''}`,
       param2: this.person.address || '',
       param3: this.person.callid || this.callid || '0',
       param4: this.person.telephone,
