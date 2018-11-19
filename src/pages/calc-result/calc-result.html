@@ -27,7 +27,7 @@
       <tr *ngFor="let info of calcLoanData">
         <td class="label">{{info.label}}</td>
         <td class="value">
-          <span>{{info.value}}</span>
+          <span>{{info.value}}</span><span class="diff-value" *ngIf="calcType === '1' && info.label === '首月还款'">(每月递减{{distMoney}}元)</span>
         </td>
       </tr>
     </table>

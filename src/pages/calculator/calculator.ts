@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the CalculatorPage page.
@@ -34,7 +35,15 @@ export class CalculatorPage {
   };
 
   constructor(public navCtrl: NavController, 
+    private tools: Tools,
     public navParams: NavParams) {
+      if (this.navParams.data.calcType) {
+        this.formData.calcType = this.navParams.data.calcType;
+      }
+
+      if (this.navParams.data.houseTotal) {
+        this.formData.houseTotal = this.navParams.data.houseTotal;
+      }
   }
 
   ionViewDidLoad() {
@@ -42,15 +51,32 @@ export class CalculatorPage {
   }
 
   calculate() {
-    this.navCtrl.push('CalcResultPage', { loanType: this.loanType, 
-                                          loanTypename: this.loanTypes[parseInt(this.loanType)]['label'],
-                                          loanTotal: parseInt(this.formData.loanTotal),
-                                          sdTotal: parseInt(this.formData.sdTotal),
-                                          gjjTotal: parseInt(this.formData.gjjTotal),
-                                          sdRate: parseFloat(this.formData.sdRate) * SD_FIXED_RATE,
-                                          gjjRate: parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE,
-                                          loanYear: parseInt(this.formData.loanYear)
-                                         });
+    let params = { 
+      loanType: this.loanType, 
+      loanTypename: this.loanTypes[parseInt(this.loanType)]['label'],
+      loanTotal: parseInt(this.formData.loanTotal),
+      sdTotal: parseInt(this.formData.sdTotal),
+      gjjTotal: parseInt(this.formData.gjjTotal),
+      sdRate: Math.round(10000 * parseFloat(this.formData.sdRate) * SD_FIXED_RATE) / 10000,
+      gjjRate:  Math.round(10000 * parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE) / 10000,
+      loanYear: parseInt(this.formData.loanYear)
+    };
+    
+    if (this.formData.calcType === '1') {
+      // 按房屋总价
+      params['houseTotal'] = this.formData.houseTotal;
+      if (parseInt(this.formData.houseTotal) <= 0) {
+        this.tools.showToast('房屋总价必须大于0万');
+        return;
+      }
+    }
+
+    if (parseInt(this.formData.loanTotal) <= 0) {
+      this.tools.showToast('贷款总价必须大于0万');
+      return;
+    }
+
+    this.navCtrl.push('CalcResultPage', params);
   }
 
   reset() {
@@ -107,7 +133,7 @@ export class CalculatorPage {
     let houseTotal = parseInt(this.formData.houseTotal);
     let ratio = parseInt(this.formData.loanRatio) * 10;
     let loanTotal = Math.round(houseTotal * ratio / 100.0);
-    console.log(loanTotal);
+    // console.log(loanTotal);
     this.formData.loanTotal = loanTotal;
     this.formData.sdTotal = this.formData.loanTotal;
     this.formData.gjjTotal = 0;

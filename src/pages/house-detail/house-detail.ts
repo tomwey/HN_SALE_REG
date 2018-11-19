@@ -22,6 +22,7 @@ export class HouseDetailPage {
   project: any;
   error: any = null;
 
+  roomData: any = {};
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, 
@@ -63,7 +64,12 @@ export class HouseDetailPage {
             });
   }
 
+  gotoCalc() {
+    this.navCtrl.push('CalculatorPage', { calcType: '1', houseTotal: parseInt(this.roomData.stdmoney) });
+  }
+
   prepareData(roomData) {
+    this.roomData = roomData;
 
     let state = '';
     if (this.house.statenum == '100') {
