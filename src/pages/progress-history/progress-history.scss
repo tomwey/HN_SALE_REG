@@ -39,9 +39,9 @@ page-progress-history {
             flex: 1;
             // width: 120px;
             display: inline-block;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
-            line-height: 16px;
+            line-height: 14px;
             vertical-align: top;
             color: #333;
             text-align: right;
@@ -59,7 +59,7 @@ page-progress-history {
             }
 
             .title {
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 700;
                 
                 color: #333;
@@ -67,7 +67,7 @@ page-progress-history {
             }
 
             .summary {
-                font-size: 14px;
+                font-size: 12px;
                 color: #666;
             }
 
@@ -75,7 +75,7 @@ page-progress-history {
                 content: '';
                 display: block;
                 position: absolute;
-                top: 3px;
+                top: 0px;
                 left: -21px;
 
                 width: 12px;

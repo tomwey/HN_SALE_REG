@@ -48,13 +48,14 @@
 
   <ion-list>
     <ion-item *ngFor="let item of dataList" tappable (click)="openDetail(item);">
-      <h2>{{item.project_name}}&emsp;{{item.house_no}}</h2>
-      <p>客户: {{item.custnames}}</p>
+      <h2 class="title">{{item.project_name}}&emsp;{{item.house_no}}</h2>
+      <p class="custname">客户: {{item.custnames}}</p>
       <ion-note item-right>
         
         <p class="money-box"><!--span class="help-text">贷款金额</span -->
           <span class="money">{{item.ajmoney | formatWan}}万</span></p>
-        <ion-badge color="ajstate-{{item.ajstate}}" class="custom-badge">{{item.ajstate_desc}}</ion-badge>
+        <span class="custom-badge ajstate-{{item.ajstate}}">{{item.ajstate_desc}}</span>
+        <!-- <ion-badge color="ajstate-{{item.ajstate}}" class="custom-badge">{{item.ajstate_desc}}</ion-badge> -->
       </ion-note>
     </ion-item>
   </ion-list>

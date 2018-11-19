@@ -48,7 +48,7 @@
   <ion-list>
     <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
-        <h2 text-wrap>
+        <h2 text-wrap class="title">
           {{item.telephone}}&nbsp;{{item.custname}}
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
@@ -63,7 +63,7 @@
           <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
           <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
           <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
-            <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天过期</span>
+            <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
             <span *ngIf="item.left_days === 0">即将过期</span>
           </p>
         </div>
@@ -71,7 +71,7 @@
       </ion-item>
 
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
-        <h2 text-wrap>
+        <h2 text-wrap class="title">
           {{item.telephone}} {{item.custname}} 
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
@@ -87,10 +87,10 @@
       <ion-item *ngIf="menuType == '2' || menuType == '3'">
         <ion-row>
           <ion-col col-8>
-              {{item.custnames}}
+              <span class="custname">{{item.custnames}}</span>
           </ion-col>
           <ion-col col-4 style="text-align: right">
-              {{item.house_no}}
+              <span class="house-no">{{item.house_no}}</span>
           </ion-col>
         </ion-row>
         <ion-row>

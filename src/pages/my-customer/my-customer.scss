@@ -4,8 +4,19 @@ page-my-customer {
             margin: 0;
             padding: 0;
         }
-        h2 {
+        .title {
             margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        .custname, .house-no {
+            font-size: 14px;
+            color: #333;
         }
 
         .male {
