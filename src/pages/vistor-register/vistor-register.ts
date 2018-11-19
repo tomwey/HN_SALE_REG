@@ -51,6 +51,7 @@ export class VistorRegisterPage {
   callid: any = '';
 
   currentSelectBtn: any = null;
+  currentYTID: any = null;
 
   proj_id: any;
 
@@ -111,6 +112,8 @@ export class VistorRegisterPage {
     }
   ];
 
+  ytButtons: any = [];
+
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, 
@@ -135,6 +138,10 @@ export class VistorRegisterPage {
     
     this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
     this.currentFollowType = this.followtype;
+
+    if (this.person.usertype_id && this.person.usertype_id !== 'NULL') {
+      this.currentYTID = this.person.usertype_id;
+    }
 
     for (const key in this.person) {
       if (this.person.hasOwnProperty(key)) {
@@ -191,6 +198,27 @@ export class VistorRegisterPage {
                 }
               })
               .catch(error => {});
+    }
+
+    if (this.followtype === '20') {
+      this.api.POST(null, { dotype: 'GetData', 
+                    funname: '获取房源业态APP', 
+                    param1: this.proj_id,
+                    // param2: 'H_SP_Call',
+                  }, '正在加载', false)
+              .then(data => {
+              console.log(data);
+                if (data && data['data']) {
+                  // let arr = data['data'];
+                  // if (arr.length > 0) {
+                  //   this.callid = arr[0].id;
+                  // }
+                  // console.log(data);
+                  this.ytButtons = data['data'];
+                }
+              })
+              .catch(error => {});
+      
     }
   }
 
@@ -346,6 +374,17 @@ export class VistorRegisterPage {
     this.currentSelectBtn = btn;
   }
 
+  selectBtn2(btn) {
+    // if (this.currentYtBtn) {
+    //   this.currentYtBtn.selected = false;
+    // }
+
+    // btn.selected = true;
+    
+    // this.currentYtBtn = btn;
+    this.currentYTID = btn.usertype_id;
+  }
+
   openSurvey() {
     // console.log(this.callid);
     if (!this.callid && (!this.person.callid || this.person.callid == 0 || this.person.callid == 'NULL')) {
@@ -392,10 +431,15 @@ export class VistorRegisterPage {
       }
     }
 
+    if (this.followtype === '20' && !this.currentYTID) {
+      this.tools.showToast('所属业态不能为空');
+      return;
+    }
+
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
-      param1: `${Utils.getQueryString('manid')},${Utils.getQueryString('manname')},${this.person.birthday || ''}`,
+      param1: `${Utils.getQueryString('manid')},${this.currentYTID},${Utils.getQueryString('manname')},${this.person.birthday || ''}`,
       param2: this.person.address || '',
       param3: this.person.callid || this.callid || '0',
       param4: this.person.telephone,

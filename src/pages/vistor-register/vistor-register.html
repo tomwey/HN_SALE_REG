@@ -66,6 +66,40 @@
       </div>
     </ion-item>
 
+    <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
+      <ion-label>来源类型*</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{person.srctypename || '请选择'}}</span>
+        <button ion-button
+          *ngIf="hasSrcType" 
+          (click)="changeSRCType();" class="change-btn">
+          发起变更
+        </button>
+      </div>
+    </button>
+
+    <button ion-item (click)="selectSourceDetail();" *ngIf="followtype == '20' && !!source">
+      <ion-label>{{source.descname}}</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{source.label || '请选择'}}</span>
+      </div>
+    </button>
+    <ion-item *ngIf="followtype == '20'">
+      <ion-label>来源备注</ion-label>
+      <ion-input [(ngModel)]="person.srcmemo" placeholder="输入客户来源备注"></ion-input>
+    </ion-item>
+
+    <ion-item class="vertical-top-label-2" *ngIf="followtype == '20' && ytButtons.length > 0">
+      <ion-label>所属业态*</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <ion-row class="custom-item-right">
+          <ion-col col-4 *ngFor="let btn of ytButtons">
+            <span class="custom-btn" [class.active]="btn.usertype_id === currentYTID" tappable (click)="selectBtn2(btn);">{{btn.usertype_name}}</span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item>
+
     <ion-item>
       <ion-label>知晓途径</ion-label>
       <ion-input [(ngModel)]="person.knowway" placeholder="请输入"></ion-input>
@@ -83,29 +117,6 @@
     <ion-item>
       <ion-label>通讯地址</ion-label>
       <ion-input [(ngModel)]="person.address" placeholder="请输入"></ion-input>
-    </ion-item>
-
-    <button ion-item (click)="selectPersonSource();" *ngIf="followtype == '20'">
-      <ion-label>来源类型*</ion-label>
-      <div class="custom-controls-wrap" item-content>
-        <span class="placeholder">{{person.srctypename || '请选择'}}</span>
-        <button ion-button
-          *ngIf="hasSrcType" 
-          (click)="changeSRCType();" class="change-btn">
-          发起变更
-        </button>
-      </div>
-      
-    </button>
-    <button ion-item (click)="selectSourceDetail();" *ngIf="followtype == '20' && !!source">
-      <ion-label>{{source.descname}}</ion-label>
-      <div class="custom-controls-wrap" item-content>
-        <span class="placeholder">{{source.label || '请选择'}}</span>
-      </div>
-    </button>
-    <ion-item *ngIf="followtype == '20'">
-      <ion-label>来源备注</ion-label>
-      <ion-input [(ngModel)]="person.srcmemo" placeholder="输入客户来源备注"></ion-input>
     </ion-item>
 
     <button ion-item (click)="selectCardType();" *ngIf="followtype == '20'">
