@@ -204,20 +204,53 @@ export class MyCustomerPage {
     // left_days: 1
     let temp = [];
     arr.forEach(element => {
-      let time = (element.invaliddate || element.plancondate).replace('+08:00', '').replace('T', ' ');
-      let days = Utils.dateDiff(time).days;
-      let label = '还剩';
-      if (days < 0) {
-        days = - days;
-        label = '过期';
-      }
-      
       let item = element;
       item['type'] = element.followtype == '10' ? '1' : '2';
       item['typename'] = element.followtype == '10' ? '来电' : '来访';
+      // item['time'] = time;
+      // item['left_days'] = days;
+      // item['left_days_label'] = label;
+
+      if (element.invaliddate && element.invaliddate === 'NULL') {
+        element.invaliddate = '';
+      }
+
+      if (element.plancondate && element.plancondate === 'NULL') {
+        element.plancondate = '';
+      }
+
+      let time = (element.invaliddate || element.plancondate);
+      if (time) {
+        time = time.replace('+08:00', '').replace('T', ' ');
+      } else {
+        time = '--';
+      }
+      
       item['time'] = time;
-      item['left_days'] = days;
-      item['left_days_label'] = label;
+
+      if (time === '--') {
+        item['left_days'] = '--';
+        item['left_days_label'] = '';
+      } else {
+        let tempDate = time.split(' ')[0];
+
+        let dateBegin = new Date(tempDate.replace(/-/g, "/"));//将-转化为/，使用new Date
+        let dateEnd   = new Date();//获取当前时间
+        let dateDiff  = dateBegin.getTime() - dateEnd.getTime() + 24 * 60 * 60 * 1000;//时间差的毫秒数
+        // console.log(dateDiff);
+        let days      = Math.floor(dateDiff / (24*3600*1000));
+
+        if (days < 0) {
+          item['left_days'] = -days;
+          item['left_days_label'] = '过期';
+        } else if (days === 0) {
+          item['left_days'] = 0;
+          item['left_days_label'] = '即将过期';
+        } else {
+          item['left_days'] = days;
+          item['left_days_label'] = '还剩';
+        }
+      }
       
       temp.push(item);
 

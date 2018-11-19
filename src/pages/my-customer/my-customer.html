@@ -46,10 +46,10 @@
     {{error}}
   </div>
   <ion-list>
-    <ion-card *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
+    <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
         <h2 text-wrap>
-          {{item.telephone}} {{item.custname}} 
+          {{item.telephone}}&nbsp;{{item.custname}}
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
             [class.female]="item.sex == '2' || item.sex == '女'" 
@@ -57,12 +57,17 @@
           </ion-icon>
         </h2>
         <p text-wrap>上次跟进内容: {{item.content}}</p>
-        <p>跟进失效时间: {{item.time.split(' ')[0]}}</p>
+        <p>上次跟进时间: {{item.lastfollowdate | formatDate:'1'}}</p>
         <div item-right class="right-section">
-          <span class="state state-{{item.type}}">{{item.typename}}</span>
-          <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
+          <!-- <span class="state state-{{item.type}}">{{item.typename}}</span> -->
+          <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
           <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
+          <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
+            <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天过期</span>
+            <span *ngIf="item.left_days === 0">即将过期</span>
+          </p>
         </div>
+        
       </ion-item>
 
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
@@ -163,7 +168,7 @@
          -->
         
       </ion-item>
-    </ion-card>
+    </div>
   </ion-list>
 
   <!-- <div class="overlay-wrap" [hidden]="!showPanel" tappable (click)="showPanel = false;">

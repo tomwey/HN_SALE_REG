@@ -8,6 +8,7 @@ import { MyCustomerPage } from './my-customer';
   ],
   imports: [
     IonicPageModule.forChild(MyCustomerPage),
+    
   ],
 })
 export class MyCustomerPageModule {}
