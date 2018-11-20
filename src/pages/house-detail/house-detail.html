@@ -14,7 +14,7 @@
 
 
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="data.length > 0">
     <ion-card-header>
       基本信息
     </ion-card-header>
@@ -29,7 +29,7 @@
       </table>
   </ion-card>
 
-  <ion-card *ngIf="house.statenum == '10' || house.statenum == '20'">
+  <ion-card *ngIf="data2.length > 0 && (house.statenum == '10' || house.statenum == '20')">
     <ion-card-header>
       成交信息
     </ion-card-header>
@@ -47,7 +47,7 @@
 </ion-content>
 
 <ion-footer>
-  <div padding>
+  <div padding *ngIf="data.length > 0">
     <button ion-button block (click)="gotoCalc();">房贷计算器</button>
   </div>
 </ion-footer>

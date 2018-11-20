@@ -111,35 +111,19 @@ export class HouseDetailPage {
         label: '套内面积',
         value: `${roomData.setarea}m²`
       },
-      {
-        label: '标准建面单价',
-        value: `${roomData.stdpriceb == 'NULL' ? '--' : roomData.stdpriceb}元/m²`
-      },
-      {
-        label: '标准套内单价',
-        value: `${roomData.stdprices == 'NULL' ? '--' : roomData.stdprices}元/m²`
-      },
-      {
-        label: '标准总价',
-        value: `${roomData.stdmoney == 'NULL' ? '--' : roomData.stdmoney}元`
-      },
-      {
-        label: '底价建面单价',
-        value: `${roomData.basepriceb == 'NULL' ? '--' : roomData.basepriceb}元/m²`
-      },
-      {
-        label: '底价套内单价',
-        value: `${roomData.baseprices == 'NULL' ? '--' : roomData.baseprices}元/m²`
-      },
-      {
-        label: '底价总价',
-        value: `${roomData.basemoney == 'NULL' ? '--' : roomData.basemoney}元`
-      },
-      {
-        label: '户型图',
-        value: roomData.layoutannexurl || '',
-        type: '2',
-      }
+      // {
+      //   label: '底价建面单价',
+      //   value: `${roomData.basepriceb == 'NULL' ? '--' : roomData.basepriceb}元/m²`
+      // },
+      // {
+      //   label: '底价套内单价',
+      //   value: `${roomData.baseprices == 'NULL' ? '--' : roomData.baseprices}元/m²`
+      // },
+      // {
+      //   label: '底价总价',
+      //   value: `${roomData.basemoney == 'NULL' ? '--' : roomData.basemoney}元`
+      // },
+      
     ];
 
     this.data2 = [
@@ -155,6 +139,30 @@ export class HouseDetailPage {
         label: '成交总价',
         value: `${roomData.money == 'NULL' ? '--' : roomData.money}元`
       }];
+
+      if (this.house.statenum === '0' ||
+          this.house.statenum === '10' ||
+          this.house.statenum === '20'
+      ) {
+        this.data.push({
+          label: '标准建面单价',
+          value: `${roomData.stdpriceb == 'NULL' ? '--' : roomData.stdpriceb}元/m²`
+        });
+        this.data.push({
+          label: '标准套内单价',
+          value: `${roomData.stdprices == 'NULL' ? '--' : roomData.stdprices}元/m²`
+        });
+        this.data.push({
+          label: '标准总价',
+          value: `${roomData.stdmoney == 'NULL' ? '--' : roomData.stdmoney}元`
+        });
+      }
+
+      this.data.push({
+        label: '户型图',
+        value: roomData.layoutannexurl || '',
+        type: '2',
+      });
   }
 
   data2: any = [];
