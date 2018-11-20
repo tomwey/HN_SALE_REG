@@ -46,6 +46,15 @@
     {{error}}
   </div>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="ios-arrow-round-down-outline"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles" 
+      refreshingText="正在刷新">
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <ion-list>
     <ion-item *ngFor="let item of dataList" tappable (click)="openDetail(item);">
       <h2 class="title">{{item.project_name}}&emsp;{{item.house_no}}</h2>

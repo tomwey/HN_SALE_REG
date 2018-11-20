@@ -148,6 +148,40 @@ export class MortgageListPage {
     }
   }
 
+  doRefresh(ev) {
+    if (!this.currentProject.id) {
+      ev.complete();
+      return;
+    } 
+    this.error = null;
+
+    this.api.POST(null, { "dotype": "GetData", 
+                          "funname": "查询按揭台账信息APP",
+                          "param1": Utils.getQueryString('manid'),
+                          "param2": this.currentProject.id,
+                          "param3": "-1",
+                          "param4": "-1",
+                          "param5": this.keyword,
+                          "param6": this.currentState.id || '-1',
+                         }, '正在刷新', false)
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          this.dataList = data['data'];
+          this.error = this.dataList.length == 0 ? '暂无按揭数据' : null;
+        } else {
+          this.error = '非法错误!';
+        }
+
+        ev.complete();
+      })
+      .catch(error => {
+        this.error = error.message || '服务器出错了';
+
+        ev.complete();
+      });
+  }
+
   loadProjects(type) {
     this.api.POST(null, { "dotype": "GetData", 
           "funname": "案场获取项目列表APP", 

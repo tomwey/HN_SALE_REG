@@ -45,6 +45,14 @@
   <div class="empty-error-box" *ngIf="!!error">
     {{error}}
   </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="ios-arrow-round-down-outline"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles" 
+      refreshingText="正在刷新">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">

@@ -133,6 +133,7 @@ export class MyCustomerPage {
 
   loadData(loading = true) {
     this.data = [];
+    
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
                           param1: Utils.getQueryString('manid'),
@@ -288,6 +289,35 @@ export class MyCustomerPage {
     } else {
       this.app.getRootNavs()[0].push('VistorRegisterPage', { person: item });
     }
+  }
+
+  doRefresh(ev) {
+    this.api.POST(null, { dotype: 'GetData', 
+        funname: '获取我的客户列表APP', 
+        param1: Utils.getQueryString('manid'),
+        param2: this.currentProject.id, 
+        param3: this.menuType,
+        param4: this.keyword
+      }, '正在加载', false)
+    .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+        let arr = data['data'];
+        this.prepareData(arr);
+        if (arr.length > 0) {
+          this.error = null;
+        } else {
+          this.error = '暂无数据';
+        }
+        } else {
+          this.error = "未知错误";
+        }
+        ev.complete();
+    })
+    .catch(error => {
+      this.error = error.message || '服务器出错了~';
+      ev.complete();
+    })
   }
 
   callPhone(item,ev:Event) {
