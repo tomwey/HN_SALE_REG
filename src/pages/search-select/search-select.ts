@@ -127,7 +127,7 @@ export class SearchSelectPage {
     if (this.source.field == 'employer') {
       return item.station_name;
     } else if (this.source.field == 'old_person') {
-      return item.name;
+      return item.custname;
     } else if (this.source.field == 'company') {
       return item.areaname;
     }

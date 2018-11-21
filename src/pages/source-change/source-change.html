@@ -16,28 +16,48 @@
   <ion-card>
     <ion-card-header>变更前信息</ion-card-header>
     <ion-item>
-      来源类型
-      <span class="placeholder">{{person.srctypename}}</span>
+      <ion-label>来源类型</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{person.srctypename}}</span>
+      </div>
     </ion-item>
     <ion-item *ngIf="!!source">
-        {{source.descname}}{{source.descname == '老业主' ? '&emsp;' : ''}}
-      <span class="placeholder">{{source.label}}</span>
+      <ion-label>{{source.descname}}</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{source.label}}</span>
+      </div>
     </ion-item>
     <ion-item>
       <ion-label>来源备注</ion-label>
-      <span class="placeholder">{{person.srcmemo}}</span>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{person.srcmemo}}</span>
+      </div>
     </ion-item>
   </ion-card>
   <ion-card>
     <ion-card-header>变更后信息</ion-card-header>
-    <button ion-item (click)="selectPersonSource();">
+    <!-- <button ion-item (click)="selectPersonSource();">
       来源类型*
       <span class="placeholder">{{person.srctypename2 || '请选择'}}</span>
     </button>
     <button ion-item (click)="selectSourceDetail();" *ngIf="!!newSource">
         {{newSource.descname}}{{newSource.descname == '老业主' ? '&emsp;' : ''}}
       <span class="placeholder">{{newSource.label || '请选择'}}</span>
+    </button> -->
+    <button ion-item (click)="selectPersonSource();">
+      <ion-label>来源类型*</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{person.srctypename2 || '请选择'}}</span>
+      </div>
     </button>
+
+    <button ion-item (click)="selectSourceDetail();" *ngIf="!!newSource">
+      <ion-label>{{newSource.descname}}</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{newSource.label || '请选择'}}</span>
+      </div>
+    </button>
+
     <ion-item>
       <ion-label>来源备注</ion-label>
       <ion-input [(ngModel)]="person.srcmemo2" placeholder="输入客户来源备注"></ion-input>
