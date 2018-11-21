@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { Tools } from '../../provider/Tools';
+import { AppStore } from '../../provider/app-store';
 // import { Tools } from '../../provider/Tools';
 
 /**
@@ -28,10 +30,17 @@ export class SearchSelectPage {
 
   proj_id: any;
 
+  currentProject: any = {
+    id: '',
+    name: ''
+  };
+
   constructor(public navCtrl: NavController, 
     private viewCtrl: ViewController,
     private api: ApiService,
-    // private tools: Tools
+    private modalCtrl: ModalController,
+    private tools: Tools,
+    private store: AppStore,
     public navParams: NavParams) {
       this.source = this.navParams.data.source;
       this.proj_id = this.navParams.data.proj_id;
@@ -45,6 +54,15 @@ export class SearchSelectPage {
       }
 
       this.error = this.placeholder;
+
+      // 加载选中的项目
+      this.store.getProject(data => {
+        if (data) {
+          // const proj = JSON.parse(data);
+          this.currentProject.id = data.value;
+          this.currentProject.name = data.label;
+        }
+      });
   }
 
   ionViewDidLoad() {
@@ -63,7 +81,8 @@ export class SearchSelectPage {
       params = { dotype: "GetData", 
                  funname: '获取老客户APP', 
                  param1: kw.trim(), 
-                 param2: Utils.getQueryString('manid') };
+                 param2: this.currentProject.id,
+                 param3: Utils.getQueryString('manid') };
     } else if (this.source.field == 'company') {
       params = { dotype: "GetData", 
                  funname: '获取转介公司APP', 
@@ -94,6 +113,56 @@ export class SearchSelectPage {
     this.viewCtrl.dismiss().catch();
   }
 
+  selectProject() {
+    this.api.POST(null, { "dotype": "GetData", 
+          "funname": "案场获取项目列表APP", 
+          "param1": Utils.getQueryString("manid") })
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          // console.log(arr);
+          // this.projects = arr;
+          if (arr.length == 0) {
+            this.tools.showToast('暂无项目数据');
+          } else {
+            this.forwardToPage(arr);
+          }
+          // this.showSelectPage(arr);
+          // this.loadIndustries(this.projects[0]);
+        } else {
+          this.tools.showToast('非法错误!');
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取项目失败');
+      });
+  }
+
+  forwardToPage(arr) {
+    let temp = [];
+
+    arr.forEach(element => {
+      temp.push(`${element.project_name}|${element.project_id}`);
+    });
+    
+    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
+      title: '选择项目', data: temp });
+      modal.onDidDismiss((res) => {
+        // console.log(res);
+        if (!res) return;
+
+        this.currentProject.name = res.label;
+        this.currentProject.id   = res.value;
+
+        // this.store.saveProject(res);
+
+        this.startSearch(this.keyword);
+
+        // this.loadData();
+      });
+    modal.present();
+  }
+
   selectItem(item) {
     if (this.source.field == 'employer') {
       this.viewCtrl.dismiss({
@@ -102,6 +171,10 @@ export class SearchSelectPage {
       })
     } else if (this.source.field == 'old_person') {
       // return item.name;
+      this.viewCtrl.dismiss({
+        label: item.custname,
+        value: item.conid
+      })
     } else if (this.source.field == 'company') {
       // return item.name;
       this.viewCtrl.dismiss({
@@ -115,7 +188,7 @@ export class SearchSelectPage {
     if (this.source.field == 'employer') {
       return item.man_name;
     } else if (this.source.field == 'old_person') {
-      return item.name;
+      return `${item.project_name} ${item.house_no}`;
     } else if (this.source.field == 'company') {
       return item.comname;
     }
