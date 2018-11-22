@@ -36,6 +36,16 @@ page-vistor-register {
         margin: 6px 0 0 10px;
     }
 
+    .float-right {
+        float: right;
+        height: 18px;
+        font-size: 10px;
+        padding: 0 5px;
+        border-radius: 2px;
+        opacity: 1.0!important;
+        margin-top: 2px;
+    }
+
     .placeholder {
         color: #999;
         display: inline-block;
@@ -48,39 +58,6 @@ page-vistor-register {
 
     ion-card-header {
         color: #666!important;
-    }
-
-    .state {
-        display: block;
-        float: right;
-        font-size: 10px;
-        line-height: 10px;
-        // vertical-align: top;
-        // text-align: center;
-        font-weight: normal;
-        font-family: Arial, Helvetica, sans-serif;
-        // background: red;
-        padding: 4px 6px;
-        border-radius: 2px;
-        // color: white;
-        border: 0.55px solid #ccc;
-    }
-
-    .state-0 {
-        border-color: color($colors, primary);
-        color: color($colors, primary);
-    }
-
-    .state-30 {
-        // background: color($colors, dark);
-        border-color: color($colors, dark);
-        color: color($colors, dark);
-    }
-
-    .state-40 {
-        // background: color($colors, danger);
-        border-color: color($colors, danger);
-        color: color($colors, danger);
     }
 
     .select-box {

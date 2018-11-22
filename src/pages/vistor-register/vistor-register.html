@@ -18,7 +18,10 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <span>客户基本资料</span><span class="state state-{{person.statenum}}">{{person.statedesc}}</span>
+      <span>客户基本资料</span>
+      <button ion-button class="float-right" 
+        small outline color="btn-state-{{person.statenum}}" 
+        [disabled]="true">{{person.statedesc}}</button>
     </ion-card-header>
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
