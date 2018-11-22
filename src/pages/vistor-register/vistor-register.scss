@@ -3,7 +3,7 @@ page-vistor-register {
         border-bottom: 0.55px solid #e6e6e6;
         padding-top: 5px;
         padding-bottom: 5px;
-        font-size: 16px !important; 
+        font-size: 14px !important; 
         .label-ios {
             width: 80px!important;
             flex: 0 0 80px !important;
@@ -24,7 +24,16 @@ page-vistor-register {
     }
 
     .change-btn {
-        margin-top: 7px;
+        display: inline-block;
+        // margin-top: 7px;
+        font-size: 12px;
+        // line-height: 14px;
+        vertical-align: top;
+        padding: 5px;
+        border-radius: 2px;
+        background: color($colors, primary);
+        color: #fff;
+        margin: 6px 0 0 10px;
     }
 
     .placeholder {
@@ -44,25 +53,34 @@ page-vistor-register {
     .state {
         display: block;
         float: right;
-        font-size: 12px;
-        text-align: center;
+        font-size: 10px;
+        line-height: 10px;
+        // vertical-align: top;
+        // text-align: center;
         font-weight: normal;
+        font-family: Arial, Helvetica, sans-serif;
         // background: red;
-        padding: 2px 5px;
+        padding: 4px 6px;
         border-radius: 2px;
-        color: white;
+        // color: white;
+        border: 0.55px solid #ccc;
     }
 
     .state-0 {
-        background: color($colors, primary);
+        border-color: color($colors, primary);
+        color: color($colors, primary);
     }
 
     .state-30 {
-        background: color($colors, dark);
+        // background: color($colors, dark);
+        border-color: color($colors, dark);
+        color: color($colors, dark);
     }
 
     .state-40 {
-        background: color($colors, danger);
+        // background: color($colors, danger);
+        border-color: color($colors, danger);
+        color: color($colors, danger);
     }
 
     .select-box {
@@ -70,10 +88,20 @@ page-vistor-register {
         // margin-left: -16px;
         // padding-right: 10px;
         // margin-left: 50px;
+        // margin-top: 2px;
+        margin-top: 3px;
         .select-item {
+            display: inline-block;
             padding-right: 10px;
             color: #666;
-            font-size: 18px;
+            font-size: 14px;
+            line-height: 14px;
+            vertical-align: top;
+        }
+
+        ion-icon {
+            vertical-align: top;
+            line-height: 14px;
         }
     }
 

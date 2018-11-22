@@ -15,6 +15,27 @@ page-calculator {
     .segment-md .segment-button {
         height: 44px;
     }
+
+    .select-box {
+        // background: red;
+        // margin-left: -16px;
+        // padding-right: 10px;
+        // margin-left: 50px;
+        margin-top: 8px;
+        .select-item {
+            display: inline-block;
+            padding-right: 5px;
+            color: #666;
+            font-size: 14px;
+            line-height: 14px;
+            vertical-align: top;
+        }
+
+        ion-icon {
+            vertical-align: top;
+            line-height: 14px;
+        }
+    }
     
     ion-input {
         input {

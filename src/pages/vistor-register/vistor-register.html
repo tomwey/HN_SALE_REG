@@ -18,7 +18,7 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span>
+      <span>客户基本资料</span><span class="state state-{{person.statenum}}">{{person.statedesc}}</span>
     </ion-card-header>
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
@@ -70,11 +70,14 @@
       <ion-label>来源类型*</ion-label>
       <div class="custom-controls-wrap" item-content>
         <span class="placeholder">{{person.srctypename || '请选择'}}</span>
-        <button ion-button
+        <!-- <button ion-button
           *ngIf="hasSrcType" 
           (click)="changeSRCType();" class="change-btn">
           发起变更
-        </button>
+        </button> -->
+        <span class="change-btn" *ngIf="hasSrcType" tappable (click)="changeSRCType();">
+          发起变更
+        </span>
       </div>
     </button>
 

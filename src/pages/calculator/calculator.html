@@ -24,11 +24,19 @@
   <ion-card>
     <ion-item>
       <ion-label>计算方式</ion-label>
-      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+      <div class="custom-controls-wrap" item-content>
+        <div class="select-box">
+          <span class="select-item" tappable (click)="formData.calcType = '0'">
+            <ion-icon name="{{ formData.calcType === '0' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 按贷款总价</span>
+          <span class="select-item" tappable (click)="formData.calcType = '1'">
+            <ion-icon name="{{ formData.calcType === '1' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 按房屋总价</span>
+        </div>
+      </div>
+      <!-- <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
         (ionChange)="selectChanged('calcType')"
         [(ngModel)]="formData.calcType">
         <ion-option *ngFor="let type of calcTypes" value="{{type.value}}">{{type.label}}</ion-option>
-      </ion-select>
+      </ion-select> -->
     </ion-item>
     <ion-item *ngIf="formData.calcType === '1'">
       <ion-label>房屋总额</ion-label>

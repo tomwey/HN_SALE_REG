@@ -23,14 +23,14 @@ export class CalculatorPage {
 
   formData: any = {
     calcType: '0',
-    houseTotal: 0,
+    houseTotal: '',
     loanRatio: '7',
-    loanTotal: 0,
+    loanTotal: '',
     loanYear: '30',
     // loanRate: '0',
-    gjjTotal: 0,
+    gjjTotal: '',
     gjjRate: '1',
-    sdTotal: 0,
+    sdTotal: '',
     sdRate: '1',
   };
 
@@ -82,13 +82,13 @@ export class CalculatorPage {
   reset() {
     this.formData = {
       calcType: '0',
-      houseTotal: 0,
+      houseTotal: '',
       loanRatio: '7',
-      loanTotal: 0,
+      loanTotal: '',
       loanYear: '30',
-      gjjTotal: 0,
+      gjjTotal: '',
       gjjRate: '1',
-      sdTotal: 0,
+      sdTotal: '',
       sdRate: '1',
     };
   }
