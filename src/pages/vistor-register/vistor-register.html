@@ -235,8 +235,11 @@
       跟进历史
       <ion-note item-right>{{person.followcnt || 0}}次</ion-note>
     </button>
-    <button ion-item (click)="openSurvey();">
-      问卷调查
+    <button ion-item (click)="openSurvey('8');" *ngIf="person.havesurvey">
+      来电问卷
+    </button>
+    <button ion-item (click)="openSurvey('6');" *ngIf="person.havesurvey">
+      来访问卷
     </button>
   </ion-card>
 

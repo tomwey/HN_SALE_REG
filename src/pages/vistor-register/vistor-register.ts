@@ -184,7 +184,7 @@ export class VistorRegisterPage {
       this.mobileReadonly = false;
     }
 
-    this.proj_id = this.navParams.data.proj_id;
+    this.proj_id = this.navParams.data.proj_id || this.person.project_id;
     
     this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
     this.currentFollowType = this.followtype;
@@ -221,6 +221,9 @@ export class VistorRegisterPage {
     if (this.person.callid && this.person.srctypename) {
       this.hasSrcType = true;
     }
+
+    const ldSurvey = this.person.haveldsurvey && this.person.havelfsurvey;
+    this.person.havesurvey = ldSurvey || this.person.havesurvey;
 
     this.events.subscribe('survey:saved', (data) => {
       this.surveyData = data;
@@ -330,14 +333,14 @@ export class VistorRegisterPage {
   }
 
   // 打开问卷调查
-  openSurvey() {
+  openSurvey(type) {
     // console.log(this.callid);
     if (!this.callid && (!this.person.callid || this.person.callid == 0 || this.person.callid == 'NULL')) {
       this.tools.showToast('还未做过跟进，不能进行问卷调查');
       return;
     }
     this.navCtrl.push('SurveyPage', { callid: this.person.callid || this.callid, 
-                                      tplid: this.followtype == '10' ? 8 : 6,
+                                      tplid: type,
                                       proj_id: this.proj_id,
                                       surveyData: this.surveyData,
                                      });

@@ -3,7 +3,7 @@ page-survey {
         margin-top: 15px;
         .opt {
             margin-top: 10px;
-
+            font-size: 14px!important;
             .custom-input {
                 border: 0.55px solid #e6e6e6;
                 padding: 8px;
@@ -14,6 +14,10 @@ page-survey {
                 // margin-top: 0;
             }
 
+            span,ion-icon {
+                vertical-align: top;
+            }
+
             .custom-textarea {
                 border: 0.55px solid #e6e6e6;
                 padding: 8px;
@@ -21,6 +25,13 @@ page-survey {
                 width: 100%;
                 margin-top: 5px;
             }
+        }
+    }
+
+    .item-ios {
+        h2 {
+            font-size: 16px;
+            font-weight: normal;
         }
     }
 

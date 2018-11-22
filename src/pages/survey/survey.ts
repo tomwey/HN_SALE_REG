@@ -25,6 +25,7 @@ export class SurveyPage {
   error: any = null;
   formData: any = [];
   formObj: any = {};
+  title: any = '问卷调查';
   
   @ViewChild(Content) content: Content;
 
@@ -37,6 +38,10 @@ export class SurveyPage {
       this.callid = this.navParams.data.callid;
       this.tplid  = this.navParams.data.tplid;
       this.proj_id = this.navParams.data.proj_id;
+      
+      this.title = this.tplid === '8' ? '来电问卷' : '来访问卷';
+
+      console.log(this.proj_id);
   }
 
   ionViewDidLoad() {
@@ -51,20 +56,27 @@ export class SurveyPage {
   }
 
   loadData() {
+    console.log(this.callid);
+    console.log(this.tplid);
+
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取问卷明细数据APP',
                           param1: this.callid.toString(),
                           param2: this.tplid.toString()
                           }, '', false)
             .then(data => {
-              console.log(data);
-              let mid = 0;
-              let arr = data['data'];
-              if (arr.length > 0) {
-                mid = arr[0].mid;
-              }
+              // console.log(data);
+              if (data && data['data']) {
+                let mid = 0;
+                let arr = data['data'];
+                if (arr.length > 0) {
+                  mid = arr[0].mid;
+                }
 
-              this.genSurvey(mid);
+                this.genSurvey(mid);
+              } else {
+                this.error = '未配置问卷';
+              }
             })
             .catch(error => {
               // console.log(error);
