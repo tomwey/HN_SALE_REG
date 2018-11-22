@@ -45,14 +45,15 @@
         type="tel" placeholder="请输入"></ion-input>
       <ion-note item-right>万</ion-note>
     </ion-item>
-    <ion-item *ngIf="formData.calcType === '1'">
+    <button ion-item *ngIf="formData.calcType === '1'" (click)="selectData('loanRatios', 'loanRatio', '选择贷款比例')">
       <ion-label>贷款比例</ion-label>
-      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+      <!-- <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
         (ionChange)="selectChanged('loanRatio')"
         [(ngModel)]="formData.loanRatio">
         <ion-option *ngFor="let type of loanRatios" value="{{type.value}}">{{type.label}}</ion-option>
-      </ion-select>
-    </ion-item>
+      </ion-select> -->
+      <span item-right>{{formData.loanRatioName || '请选择'}}</span>
+    </button>
     <ion-item>
       <ion-label>贷款总额</ion-label>
       <ion-input [(ngModel)]="formData.loanTotal" 
@@ -61,13 +62,14 @@
       <ion-note item-right>万</ion-note>
     </ion-item>
 
-    <ion-item *ngIf="loanType === '0' || loanType === '2'">
+    <button ion-item *ngIf="loanType === '0' || loanType === '2'" (click)="selectData('sdRates','sdRate', '选择商贷利率')">
       <ion-label>商贷利率</ion-label>
-      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+      <!-- <ion-select interface="popover" cancelText="取消" okText="确定" 
         [(ngModel)]="formData.sdRate">
         <ion-option *ngFor="let type of sdRates" value="{{type.value}}">{{type.label}}</ion-option>
-      </ion-select>
-    </ion-item>
+      </ion-select> -->
+      <span item-right>{{formData.sdRateName || '请选择'}}</span>
+    </button>
     <ion-item *ngIf="loanType === '2'">
       <ion-label>商业贷款</ion-label>
       <ion-input [(ngModel)]="formData.sdTotal" 
@@ -75,13 +77,14 @@
         type="tel" placeholder="请输入"></ion-input>
       <ion-note item-right>万</ion-note>
     </ion-item>
-    <ion-item *ngIf="loanType === '1' || loanType === '2'">
+    <button ion-item *ngIf="loanType === '1' || loanType === '2'" (click)="selectData('gjjRates', 'gjjRate', '选择公积金利率')">
       <ion-label>公积金利率</ion-label>
-      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+      <!-- <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
         [(ngModel)]="formData.gjjRate">
         <ion-option *ngFor="let type of gjjRates" value="{{type.value}}">{{type.label}}</ion-option>
-      </ion-select>
-    </ion-item>
+      </ion-select> -->
+      <span item-right>{{formData.gjjRateName || '请选择'}}</span>
+    </button>
     <ion-item *ngIf="loanType === '2'">
       <ion-label>公积金贷款</ion-label>
       <ion-input [(ngModel)]="formData.gjjTotal" 
@@ -90,13 +93,14 @@
       <ion-note item-right>万</ion-note>
     </ion-item>
 
-    <ion-item>
+    <button ion-item (click)="selectData('loanYears', 'loanYear', '选择贷款期限')">
       <ion-label>贷款期限</ion-label>
-      <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
+      <!-- <ion-select interface="action-sheet" cancelText="取消" okText="确定" 
         [(ngModel)]="formData.loanYear">
         <ion-option *ngFor="let type of loanYears" value="{{type.value}}">{{type.label}}</ion-option>
-      </ion-select>
-    </ion-item>
+      </ion-select> -->
+      <span item-right>{{formData.loanYearName || '请选择'}}</span>
+    </button>
     <ion-card-header>
       <ion-row>
         <ion-col col-6>

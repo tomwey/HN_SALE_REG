@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Tools } from '../../provider/Tools';
 
 /**
@@ -25,17 +25,22 @@ export class CalculatorPage {
     calcType: '0',
     houseTotal: '',
     loanRatio: '7',
+    loanRatioName: '7成',
     loanTotal: '',
     loanYear: '30',
+    loanYearName: '30年',
     // loanRate: '0',
     gjjTotal: '',
     gjjRate: '1',
+    gjjRateName: '最新基准利率(3.25%)',
     sdTotal: '',
     sdRate: '1',
+    sdRateName: '最新基准利率(4.9%)',
   };
 
   constructor(public navCtrl: NavController, 
     private tools: Tools,
+    private modalCtrl: ModalController,
     public navParams: NavParams) {
       if (this.navParams.data.calcType) {
         this.formData.calcType = this.navParams.data.calcType;
@@ -61,17 +66,21 @@ export class CalculatorPage {
       gjjRate:  Math.round(10000 * parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE) / 10000,
       loanYear: parseInt(this.formData.loanYear)
     };
+
+    const houseTotal = this.formData.houseTotal || 0;
+    const loanTotal  = this.formData.loanTotal || 0;
     
     if (this.formData.calcType === '1') {
-      // 按房屋总价
-      params['houseTotal'] = this.formData.houseTotal;
-      if (parseInt(this.formData.houseTotal) <= 0) {
+      if (parseInt(houseTotal) <= 0) {
         this.tools.showToast('房屋总价必须大于0万');
         return;
       }
+
+      // 按房屋总价
+      params['houseTotal'] = this.formData.houseTotal;
     }
 
-    if (parseInt(this.formData.loanTotal) <= 0) {
+    if (parseInt(loanTotal) <= 0) {
       this.tools.showToast('贷款总价必须大于0万');
       return;
     }
@@ -84,35 +93,82 @@ export class CalculatorPage {
       calcType: '0',
       houseTotal: '',
       loanRatio: '7',
+      loanRatioName: '7成',
       loanTotal: '',
       loanYear: '30',
+      loanYearName: '30年',
+      // loanRate: '0',
       gjjTotal: '',
       gjjRate: '1',
+      gjjRateName: '最新基准利率(3.25%)',
       sdTotal: '',
       sdRate: '1',
+      sdRateName: '最新基准利率(4.9%)',
     };
+  }
+
+  selectData(dataKey, field, title) {
+    const data = this[dataKey];
+    let temp = [];
+    data.forEach(element => {
+      temp.push(`${element.label}|${element.value}`);
+    });
+
+    const modal = this.modalCtrl.create('CommSelectPage', { data: temp, title: title, selectedItem: null });
+    modal.onDidDismiss((res) => {
+      if (res) {
+        this.formData[field] = res.value;
+        this.formData[`${field}Name`] = res.label;
+
+        if (field === 'loanRatio') {
+          this.calcLoanTotal();
+        }
+      }
+    });
+    modal.present();
   }
 
   inputChanged(field, ev) {
     // console.log(field);
-    let val = parseInt(ev);
-    console.log(ev);
+    // let val = parseInt(ev);
+    // console.log(ev);
 
     if (this.loanType === '2') {
       if (field === 'loanTotal') {
-        this.formData.sdTotal = this.formData.loanTotal;
+        this.formData.sdTotal = isNaN(this.formData.loanTotal) ? 0 : this.formData.loanTotal;
         this.formData.gjjTotal = 0;
       } else if (field === 'sdTotal') {
         let sdTotal = parseInt(this.formData.sdTotal);
         let loanTotal = parseInt(this.formData.loanTotal);
+        if (isNaN(sdTotal)) {
+          sdTotal = 0;
+        }
+        if (isNaN(loanTotal)) {
+          loanTotal = 0;
+        }
         if (sdTotal <= loanTotal) {
           this.formData.gjjTotal = loanTotal - sdTotal;
+        } else {
+          this.formData.gjjTotal = 0;
+          this.formData.sdTotal  = loanTotal;
+
+          this.tools.showToast('商业贷款不能超过贷款总额');
         }
       } else if (field === 'gjjTotal') {
-        let sdTotal = parseInt(this.formData.gjjTotal);
+        let gjjTotal = parseInt(this.formData.gjjTotal);
         let loanTotal = parseInt(this.formData.loanTotal);
-        if (sdTotal <= loanTotal) {
-          this.formData.sdTotal = loanTotal - sdTotal;
+        if (isNaN(gjjTotal)) {
+          gjjTotal = 0;
+        }
+        if (isNaN(loanTotal)) {
+          loanTotal = 0;
+        }
+        if (gjjTotal <= loanTotal) {
+          this.formData.sdTotal = loanTotal - gjjTotal;
+        } else {
+          this.formData.gjjTotal = loanTotal;
+          this.formData.sdTotal  = 0;
+          this.tools.showToast('公积金贷款不能超过贷款总额');
         }
       } 
     }
@@ -122,18 +178,22 @@ export class CalculatorPage {
     }
   }
 
-  selectChanged(field) {
-    if (field === 'calcType') {
-    } else if (field === 'loanRatio') {
-      this.calcLoanTotal();
-    }
-  }
+  // selectChanged(field) {
+  //   if (field === 'calcType') {
+  //   } else if (field === 'loanRatio') {
+  //     this.calcLoanTotal();
+  //   }
+  // }
 
   calcLoanTotal() {
     let houseTotal = parseInt(this.formData.houseTotal);
     let ratio = parseInt(this.formData.loanRatio) * 10;
     let loanTotal = Math.round(houseTotal * ratio / 100.0);
     // console.log(loanTotal);
+    if (isNaN(loanTotal)) {
+      loanTotal = 0;
+    }
+
     this.formData.loanTotal = loanTotal;
     this.formData.sdTotal = this.formData.loanTotal;
     this.formData.gjjTotal = 0;

@@ -1,6 +1,8 @@
 page-calculator {
     .item-ios {
         border-bottom: 0.55px solid #e6e6e6;
+        font-size: 14px !important;
+        color: #666;
     }
 
     ion-select {
@@ -21,7 +23,7 @@ page-calculator {
         // margin-left: -16px;
         // padding-right: 10px;
         // margin-left: 50px;
-        margin-top: 8px;
+        margin-top: 2px;
         .select-item {
             display: inline-block;
             padding-right: 5px;
