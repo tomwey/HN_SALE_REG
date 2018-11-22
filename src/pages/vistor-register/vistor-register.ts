@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController, Content, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Content, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
@@ -120,7 +120,7 @@ export class VistorRegisterPage {
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController,
+    // private alertCtrl: AlertController,
     private events: Events,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
