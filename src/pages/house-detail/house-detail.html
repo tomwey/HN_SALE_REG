@@ -46,8 +46,8 @@
 
 </ion-content>
 
-<ion-footer>
-  <div padding *ngIf="data.length > 0">
+<ion-footer *ngIf="data.length > 0">
+  <div padding>
     <button ion-button block (click)="gotoCalc();">房贷计算器</button>
   </div>
 </ion-footer>

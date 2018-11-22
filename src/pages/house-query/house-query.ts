@@ -173,7 +173,7 @@ export class HouseQueryPage {
 
           this.industries = temp;
 
-          // this.content.resize();
+          this.content.resize();
 
           // console.log(this.industries);
 

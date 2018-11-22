@@ -14,8 +14,8 @@
 
   </ion-navbar>
 
-  <ion-toolbar color="white">
-    <ion-segment *ngIf="industries.length > 0" [(ngModel)]="industryID" 
+  <ion-toolbar color="white" *ngIf="industries.length > 0">
+    <ion-segment [(ngModel)]="industryID" 
       mode="md"
       (ionChange)="segmentChanged($event)">
       <ion-segment-button [value]="ind.id" *ngFor="let ind of industries">

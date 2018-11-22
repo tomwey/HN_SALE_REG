@@ -55,6 +55,8 @@ export class HouseDetailPage {
                 } else {
                   this.error = '未知错误';
                 }
+
+                this.content.resize();
               } else {
                 this.error = '未知错误';
               }
