@@ -261,6 +261,9 @@ export class MyCustomerPage {
 
   formatMoney(money) {
     money = parseFloat(money) / 10000.0;
+    if (isNaN(money)) {
+      return '--';
+    }
     return money.toFixed(2).toString();
   }
 
@@ -438,7 +441,7 @@ export class MyCustomerPage {
     },
     {
       ID: '6',
-      name: '异常',
+      name: '异常客户',
     },
     {
       ID: '4',
