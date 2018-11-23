@@ -431,6 +431,11 @@ export class VistorRegisterPage {
             //   this.currentSelectBtn.selected = false;
             //   this.currentSelectBtn = null;
             // }
+            if (arr[0].resultdesc && arr[0].resultdesc !== 'NULL') {
+              this.tools.showToast(arr[0].resultdesc);
+              this.navCtrl.pop();
+              return;
+            }
 
             if (this.operType == '0') {
               this.person.callid = this.person.callid || arr[0].callid;
