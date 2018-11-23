@@ -24,6 +24,7 @@
           <td class="value">
             <span *ngIf="!info.type">{{info.value}}</span>
             <!-- <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer> -->
+            <img *ngIf="info.type && info.type == '2'" [src]="info.value" imageViewer>
           </td>
         </tr>
       </table>
@@ -38,7 +39,7 @@
         <td class="label">{{info.label}}</td>
         <td class="value">
           <span>{{info.value}}</span>
-          <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer>
+          <!-- <img *ngIf="info.type && info.type == '2'" [src]="info.value" imageViewer> -->
         </td>
       </tr>
     </table>

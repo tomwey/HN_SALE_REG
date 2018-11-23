@@ -165,6 +165,8 @@ export class HouseDetailPage {
         value: roomData.layoutannexurl || '',
         type: '2',
       });
+
+      // console.log(this.data);
   }
 
   data2: any = [];
