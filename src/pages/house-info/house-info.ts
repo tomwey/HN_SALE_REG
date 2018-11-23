@@ -31,13 +31,22 @@ export class HouseInfoPage {
     this.house = this.navParams.data.house;
     this.project = this.navParams.data.project;
     this.industry = this.navParams.data.industry;
+    
+    // console.log(this.project);
+    // console.log(this.industry);
+    // console.log(this.house);
 
     this.prepareUnits();
+    
   }
 
   prepareUnits() {
     let ids = this.house.unitids.replace('NULL', '')
-    if (!ids) return;
+    if (!ids) {
+      this.unit = '-1';
+      return;
+    } 
+
     ids = ids.split(',');
     let names = this.house.unitnames.replace('NULL', '').split(',');
     // console.log(this.house.unitids);
@@ -77,9 +86,11 @@ export class HouseInfoPage {
     }
 
     this.units = arr;
+    // console.log(arr);
+
     if (this.units.length > 0) {
       this.unit = this.units[0]['ID'];
-    }
+    } 
   }
 
   ionViewDidLoad() {

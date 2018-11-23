@@ -244,7 +244,7 @@ export class HouseQueryPage {
   // }
 
   segmentChanged(ev) {
-    console.log(ev);
+    // console.log(ev);
 
     this.loadHouses();
   }
