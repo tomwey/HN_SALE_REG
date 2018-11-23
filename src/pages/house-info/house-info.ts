@@ -135,6 +135,11 @@ export class HouseInfoPage {
   }
 
   handleData(arr) {
+    // 重置数据
+    this.colors.forEach(element => {
+      element.count = 0;
+    });
+
     if (arr.length == 0) {
       this.error = '暂无数据';
       return;
@@ -143,17 +148,27 @@ export class HouseInfoPage {
     arr.forEach(item => {
       const floor = item.floor;
       
-      if (item.statenum == '100') {
-        item.roomcolor = '#DA9694';
-      } else if (item.pushstate == '0') {
+      if (item.statenum == '100') { // 销控
+        item.roomcolor = 'rgb(255,255,100)';//'#DA9694';
+        let count = this.colors[2].count || 0;
+        this.colors[2].count = count + 1;
+      } else if (item.pushstate == '0') { // 收盘
         item.roomcolor = '#D9D9D9';
+        let count = this.colors[0].count || 0;
+        this.colors[0].count = count + 1;
       } else {
-        if (item.statenum == '0') {
+        if (item.statenum == '0') { // 待售
           item.roomcolor = '#fff';
-        } else if (item.statenum == '10') {
-          item.roomcolor = 'rgb(167,184,107)';
-        } else if (item.statenum == '20') {
-          item.roomcolor = '#538DD5';
+          let count = this.colors[1].count || 0;
+          this.colors[1].count = count + 1;
+        } else if (item.statenum == '10') { // 认购
+          item.roomcolor = 'rgb(201,54,41)';//'rgb(167,184,107)';
+          let count = this.colors[3].count || 0;
+          this.colors[3].count = count + 1;
+        } else if (item.statenum == '20') { // 签约
+          item.roomcolor = 'rgb(161,43,241)';//'#538DD5';
+          let count = this.colors[4].count || 0;
+          this.colors[4].count = count + 1;
         } 
       }
       if (this.floors[floor]) {
@@ -223,17 +238,17 @@ export class HouseInfoPage {
     {
       ID: '3',
       name: '销控',
-      value: '#DA9694',
+      value: 'rgb(255,255,100)'//'#DA9694',
     },
     {
       ID: '4',
       name: '认购',
-      value: 'rgb(167,184,107)',
+      value: 'rgb(201,54,41)',
     },
     {
       ID: '5',
       name: '签约',
-      value: '#538DD5',
+      value: 'rgb(161,43,241)',
     },
   ];
 

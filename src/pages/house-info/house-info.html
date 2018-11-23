@@ -18,14 +18,15 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <div class="help-box">
+    <span class="color-item" [style.background]="color.value" *ngFor="let color of colors">
+      <span class="name">{{color.name}}</span><span class="count">{{color.count || 0}}</span>
+    </span>
+  </div>
 </ion-header>
 
 <ion-content>
-  <div class="help-box">
-    <span class="color-item" [style.background]="color.value" *ngFor="let color of colors">
-      {{color.name}}
-    </span>
-  </div>
+  
   <div class="empty-error-box" *ngIf="!!error">
     {{error}}
   </div>
