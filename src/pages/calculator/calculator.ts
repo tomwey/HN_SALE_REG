@@ -49,6 +49,10 @@ export class CalculatorPage {
       if (this.navParams.data.houseTotal) {
         this.formData.houseTotal = this.navParams.data.houseTotal;
       }
+
+      if (this.formData.calcType === '1') {
+        this.calcLoanTotal();
+      }
   }
 
   ionViewDidLoad() {
