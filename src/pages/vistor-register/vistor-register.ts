@@ -57,6 +57,8 @@ export class VistorRegisterPage {
 
   operType: any = '0';
 
+  hasSurvey: boolean = false;
+
   buttons: any = [
     {
       label: '无',
@@ -141,7 +143,7 @@ export class VistorRegisterPage {
                             param2: 'H_SP_Call',
                            })
               .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data && data['data']) {
                   let arr = data['data'];
                   if (arr.length > 0) {
@@ -153,7 +155,8 @@ export class VistorRegisterPage {
     }
 
     if (this.followtype === '20') {
-      this.api.POST(null, { dotype: 'GetData', 
+      setTimeout(() => {
+        this.api.POST(null, { dotype: 'GetData', 
                     funname: '获取房源业态APP', 
                     param1: this.proj_id,
                     // param2: 'H_SP_Call',
@@ -170,8 +173,29 @@ export class VistorRegisterPage {
                 }
               })
               .catch(error => {});
-      
+      }, 100);
     }
+
+    setTimeout(() => {
+      // 检查是否有问卷
+      this.api.POST(null, {
+        dotype: 'GetData',
+        funname: '查询是否有调查问卷APP',
+        param1: this.proj_id,
+        param2: Utils.getQueryString('manid')
+      }, '正在加载', false)
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          const arr = data['data'];
+          if (arr.length > 0) {
+            this.hasSurvey = arr[0].havesurvey;
+          }
+        }
+      })
+      .catch();
+    }, 300);
+    
   }
 
   // 准备数据

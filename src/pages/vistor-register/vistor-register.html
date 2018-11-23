@@ -21,7 +21,7 @@
       <span>客户基本资料</span>
       <button ion-button class="float-right" 
         small outline color="btn-state-{{person.statenum}}" 
-        [disabled]="true">{{person.statedesc}}</button>
+        [disabled]="true" *ngIf="person.statedesc">{{person.statedesc}}</button>
     </ion-card-header>
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
@@ -235,10 +235,10 @@
       跟进历史
       <ion-note item-right>{{person.followcnt || 0}}次</ion-note>
     </button>
-    <button ion-item (click)="openSurvey('8');" *ngIf="person.havesurvey">
+    <button ion-item (click)="openSurvey('8');" *ngIf="hasSurvey">
       来电问卷
     </button>
-    <button ion-item (click)="openSurvey('6');" *ngIf="person.havesurvey">
+    <button ion-item (click)="openSurvey('6');" *ngIf="hasSurvey">
       来访问卷
     </button>
   </ion-card>
