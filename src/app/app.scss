@@ -20,6 +20,22 @@
     // background: transparent;
 }
 
+.required {
+    display: inline-block;
+    color: color($colors, primary);
+    font-size: 12px;
+    line-height: 12px;
+    vertical-align: top;
+    margin: 7px 2px 0 0;
+}
+
+.segment-md .segment-button {
+    border-bottom-color: rgba(0,0,0,0)!important;
+    &.segment-activated {
+        border-bottom-color: color($colors, primary)!important;
+    }
+}
+
 // .loading-wrapper {
 //     background: rgba(0,0,0,0.8)!important;
 //     width: 110px;
