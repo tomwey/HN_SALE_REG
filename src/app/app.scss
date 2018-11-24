@@ -36,14 +36,43 @@
     }
 }
 
-// .loading-wrapper {
-//     background: rgba(0,0,0,0.8)!important;
-//     width: 110px;
-//     height: 110px;
-//     padding: 0!important;
-//     color: white!important;
-//     position: relative;
-// }
+.loading-wrapper {
+    background: rgba(0,0,0,0.6)!important;
+    width: 120px;
+    height: 120px;
+    padding: 0!important;
+    color: white!important;
+    display: block!important;
+    text-align: center;
+    border-radius: 6px!important;
+    .loading-spinner {
+        margin: 35px 0 20px 0;
+        // ion-spinner * {
+        //     stroke: rgba(255,255,255,0.7);
+        //   }
+
+        ion-spinner {
+            * {
+              stroke: #fff;
+            }
+        
+            &.spinner-circles circle,
+            &.spinner-bubbles circle,
+            &.spinner-dots circle {
+              fill: #fff;
+            }
+          }
+    }
+    .loading-content {
+        margin-left: 0!important;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(255,255,255,0.9);
+        // font-weight: normal;
+        // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    }
+}
 
 // .loading-spinner {
 
