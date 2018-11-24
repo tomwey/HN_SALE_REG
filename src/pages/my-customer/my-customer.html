@@ -92,8 +92,41 @@
         <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
       </ion-item>
 
-      <ion-item *ngIf="menuType == '2' || menuType == '3'">
+      <ion-item *ngIf="menuType === '2' || menuType === '3'">
         <ion-row>
+          <ion-col col-5>
+            <div class="left cell-box">
+              <p class="custname">{{item.custnames}}</p>
+              <p class="hor-item"><span class="label-text">客户来源</span><span class="value-text">{{item.sourcetype}}</span></p>
+              <p class="ver-item" *ngIf="menuType === '2'">
+                <span class="label-text">认购日期</span><br>
+                <span class="value-text">{{item.orderdate.split('T')[0]}}</span>
+              </p>
+            </div>
+          </ion-col>
+          <ion-col col-3>
+            <div class="center cell-box">
+              <p class="house-no">{{item.house_no}}</p>
+              <p class="hor-item"><span class="label-text">置业顾问</span><span class="value-text">{{item.sellername}}</span></p>
+              <p class="ver-item" *ngIf="menuType === '2'">
+                <span class="label-text">签约失效日期</span><br>
+                <span class="value-text">{{item.plancondate.split('T')[0]}}</span>
+              </p>
+            </div>
+          </ion-col>
+          <ion-col col-4>
+            <div class="right cell-box">
+              <p class="money">{{formatMoney(item.money)}}<span class="unit">万</span></p>
+              <span class="call-btn" *ngIf="menuType === '2'" tappable (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></span>
+              <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p>
+              <p class="left-days-warning" *ngIf="menuType === '2'">
+                <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
+                <span *ngIf="item.left_days === 0">即将过期</span>
+              </p>
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
           <ion-col col-8>
               <span class="custname">{{item.custnames}}</span>
           </ion-col>
@@ -126,7 +159,7 @@
           <ion-col col-6 style="text-align: right;">
               <p>职业顾问: {{item.sellername}}</p>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
 
         <!-- 
          <ion-row>

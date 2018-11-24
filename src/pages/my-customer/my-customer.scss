@@ -138,10 +138,82 @@ page-my-customer {
 
     .left-days-warning {
         font-size: 12px;
-        color: red;
+        color: color($colors, primary);
         // margin-top: 5px;
         // background: red;
         // color: white;
+    }
+
+    .cell-box {
+        .custname, .house-no {
+            font-size: 14px;
+            color: #333;
+            line-height: 20px;
+        }
+
+        .call-btn {
+            display: inline-block;
+            width: 50px;
+            height: 40px;
+            line-height: 40px;
+            ion-icon {
+                font-size: 32px;
+                color: color($colors, primary);
+            }
+            text-align: center;
+        }
+
+        .house-no {
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+        }
+
+        &.right {
+            text-align: right;
+        }
+
+        .money {
+            font-size: 14px;
+            color: color($colors, primary);
+            line-height: 20px;
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            .unit {
+                font-size: 10px;
+                color: #999;
+                padding-left: 3px;
+            }
+        }
+
+        // &.center {
+        //     margin-left: 15px;
+        // }
+
+        .hor-item {
+            margin-top: 6px;
+        }
+
+        .ver-item {
+            margin-top: 6px;
+        }
+    
+        .label-text {
+            font-size: 12px;
+            color: #999;
+            padding-right: 3px;
+        }
+    
+        .value-text {
+            font-size: 12px;
+            color: #333;
+        }
+
+        .con-date {
+            font-size: 12px;
+            color: color($colors, primary);
+            .help-text {
+                color: #999;
+                padding-left: 3px;
+            }
+        }
     }
     
 }
