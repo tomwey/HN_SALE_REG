@@ -207,11 +207,13 @@ page-my-customer {
         }
 
         .con-date {
-            font-size: 12px;
+            font-size: 14px;
             color: color($colors, primary);
+            margin-top: 6px;
             .help-text {
                 color: #999;
                 padding-left: 3px;
+                font-size: 12px;
             }
         }
     }
