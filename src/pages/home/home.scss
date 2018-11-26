@@ -45,7 +45,8 @@ page-home {
         
         .stat-box {
             padding: 10px 15px;
-            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            font-size: 14px;
             &.b-right {
                 border-right: 0.55px solid #f6f6f6;
             }
@@ -56,17 +57,18 @@ page-home {
             //     text-align: right;
             // }
             .name {
+                font-size: 14px;
+                color: #666;
+            }
+            .digit {
                 font-size: 12px;
                 color: #999;
             }
-            .digit {
-                font-size: 16px;
-                color: #666;
-            }
             .unit {
-                font-size: 10px;
+                font-size: 12px;
                 color: #999;
                 padding-left: 3px;
+                // font-size: 14px;
             }
         }
     }
