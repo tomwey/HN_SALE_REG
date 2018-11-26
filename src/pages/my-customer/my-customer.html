@@ -106,7 +106,7 @@
           </ion-col>
           <ion-col col-3>
             <div class="center cell-box">
-              <p class="house-no">{{item.house_no}}</p>
+              <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span class="house-no">{{item.house_no}}</span></p>
               <p class="hor-item"><span class="label-text">置业顾问</span><span class="value-text">{{item.sellername}}</span></p>
               <p class="ver-item" *ngIf="menuType === '2'">
                 <span class="label-text">签约失效日期</span><br>

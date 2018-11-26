@@ -145,7 +145,7 @@ page-my-customer {
     }
 
     .cell-box {
-        .custname, .house-no {
+        .custname, .house-info {
             font-size: 14px;
             color: #333;
             line-height: 20px;
@@ -163,8 +163,31 @@ page-my-customer {
             text-align: center;
         }
 
-        .house-no {
+        .house-info {
             font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            .outusertypename {
+                display: inline-block;
+                padding-right: 3px;
+                &.type-color-1 { // 住宅
+                    color: color($colors, primary);
+                }
+                &.type-color-2 { // 公寓
+                    color: rgb(143, 180, 56);
+                }
+                &.type-color-3 { // 商业
+                    color: rgb(49, 124, 204);
+                }
+                &.type-color-4 { // 车位
+                    color: rgb(125, 63, 63);
+                }
+                &.type-color-5 { // 其它
+                    color: rgb(184, 149, 96);
+                }
+                &.type-color-32 { // 办公
+                    color: rgb(37, 186, 219);
+                }
+            }
+
         }
 
         &.right {

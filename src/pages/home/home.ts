@@ -36,12 +36,12 @@ export class HomePage {
     private tools: Tools,
     public navParams: NavParams) {
 
-      this.store.getProject(data => {
-        if (data) {
-          this.currentProject.id = data.value;
-        this.currentProject.name = data.label;
-        }
-      });
+      // this.store.getProject(data => {
+      //   if (data) {
+      //     this.currentProject.id = data.value;
+      //   this.currentProject.name = data.label;
+      //   }
+      // });
 
     this.data = [
       {
@@ -122,6 +122,16 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+  }
+
+  ionViewWillEnter() {
+
+    this.store.getProject(data => {
+      if (data) {
+        this.currentProject.id = data.value;
+      this.currentProject.name = data.label;
+      }
+    });
   }
 
   back() {
