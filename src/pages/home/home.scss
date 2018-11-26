@@ -3,29 +3,77 @@ page-home {
         background: color($colors, primary);
         padding: 5px 15px 15px 15px;
         color: white;
+        font-size: 14px;
+        font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+
         ion-grid, ion-row, ion-col, p {
             margin: 0;
             padding: 0;
         }
-        .stat-box {
-            width: 100%;
-            text-align: center;
-            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
-            .digit {
-                font-size: 18px;
+
+        .content-wrap {
+            &.left {
+                text-align: left;
             }
-            .name {
-                font-size: 12px;
+            &.right {
+                text-align: right;
             }
+
+            .stat-item {
+                margin-top: 12px;
+                .digit {
+                    font-size: 18px;
+                }
+                .unit {
+                    font-size: 12px;
+                    padding-left: 3px;
+                }
+                .line {
+                    padding: 0 5px;
+                }
+            }
+        }
+        
+    }
+    .exception-stats {
+        background: #fff;
+        ion-row, ion-col {
+            margin: 0;
+            padding: 0;
         }
 
-        .today {
-            margin-bottom: 15px;
-            .size-28 {
-                font-size: 28px;
-                // font-weight: 700;
+        
+        .stat-box {
+            padding: 10px 15px;
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            &.b-right {
+                border-right: 0.55px solid #f6f6f6;
+            }
+            &.b-bottom {
+                border-bottom: 0.55px solid #f6f6f6;
+            }
+            // &.right {
+            //     text-align: right;
+            // }
+            .name {
+                font-size: 12px;
+                color: #999;
+            }
+            .digit {
+                font-size: 16px;
+                color: #666;
+            }
+            .unit {
+                font-size: 10px;
+                color: #999;
+                padding-left: 3px;
             }
         }
+    }
+    .splitor {
+        width: 100%;
+        height: 8px;
+        background: rgb(241,242,243);
     }
     .sections {
         // padding: 15px;
@@ -59,5 +107,9 @@ page-home {
                 color: #666;
             }
         }
+    }
+
+    .limit-width {
+        font-size: 14px;
     }
 }
