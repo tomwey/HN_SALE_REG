@@ -57,7 +57,7 @@
     <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
         <h2 text-wrap class="title">
-          {{item.telephone}}&nbsp;{{item.custname}}
+          {{item.telephone | hackMobile}}&nbsp;{{item.custname}}
           <ion-icon 
             [class.male]="item.sex == '1' || item.sex == '男'" 
             [class.female]="item.sex == '2' || item.sex == '女'" 
@@ -94,7 +94,7 @@
 
       <ion-item *ngIf="menuType === '2' || menuType === '3'">
         <ion-row>
-          <ion-col col-5>
+          <ion-col col-4>
             <div class="left cell-box">
               <p class="custname">{{item.custnames}}</p>
               <p class="hor-item"><span class="label-text">客户来源</span><span class="value-text">{{item.sourcetype}}</span></p>
@@ -104,7 +104,7 @@
               </p>
             </div>
           </ion-col>
-          <ion-col col-3>
+          <ion-col col-4>
             <div class="center cell-box">
               <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span class="house-no">{{item.house_no}}</span></p>
               <p class="hor-item"><span class="label-text">置业顾问</span><span class="value-text">{{item.sellername}}</span></p>
