@@ -1,0 +1,19 @@
+<ion-item tappable (click)="selectItem(item);">
+    <ion-row>
+      <ion-col col-4>
+        <div class="left cell-box">
+          <p class="custname">{{item.custname}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-4>
+        <div class="center cell-box">
+          <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span class="house-no">{{item.house_no}}</span></p>
+        </div>
+      </ion-col>
+      <ion-col col-4>
+        <div class="right cell-box">
+          <span class="ajstate ajstate-{{item.ajstate}}">{{item.ajstatedesc}}</span>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-item>

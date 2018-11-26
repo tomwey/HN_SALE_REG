@@ -259,13 +259,13 @@ export class MyCustomerPage {
     this.data = temp;
   }
 
-  formatMoney(money) {
-    money = parseFloat(money) / 10000.0;
-    if (isNaN(money)) {
-      return '--';
-    }
-    return money.toFixed(2).toString();
-  }
+  // formatMoney(money) {
+  //   money = parseFloat(money) / 10000.0;
+  //   if (isNaN(money)) {
+  //     return '--';
+  //   }
+  //   return money.toFixed(2).toString();
+  // }
 
   loadProjects() {
     // this.api.POST(null, { "dotype": "GetData", 
@@ -439,10 +439,10 @@ export class MyCustomerPage {
       ID: '3',
       name: '签约',
     },
-    {
-      ID: '6',
-      name: '异常客户',
-    },
+    // {
+    //   ID: '6',
+    //   name: '异常客户',
+    // },
     {
       ID: '4',
       name: '按揭',

@@ -95,7 +95,15 @@
         <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
       </ion-item>
 
-      <ion-item *ngIf="menuType === '2' || menuType === '3'">
+      <order-sign-item *ngIf="menuType === '2' || menuType === '3'" 
+        [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
+        (onCallPhone)="callPhone(item);">
+
+      </order-sign-item>
+
+      <mortgage-item [item]="item" *ngIf="menuType === '4'"></mortgage-item>
+      
+      <!-- <ion-item *ngIf="menuType === '2' || menuType === '3'">
         <ion-row>
           <ion-col col-4>
             <div class="left cell-box">
@@ -129,7 +137,7 @@
             </div>
           </ion-col>
         </ion-row>
-      </ion-item>
+      </ion-item> -->
     </div>
   </ion-list>
 </ion-content>

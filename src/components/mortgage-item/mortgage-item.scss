@@ -1,0 +1,95 @@
+mortgage-item {
+    ion-row, ion-col {
+        margin: 0;
+        padding: 0;
+    }
+    .cell-box {
+        .custname, .house-info {
+            font-size: 14px;
+            color: #666;
+            line-height: 20px;
+        }
+
+        .house-info {
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            .house-no {
+                color: #666;
+            }
+            .outusertypename {
+                display: inline-block;
+                padding-right: 3px;
+                &.type-color-1 { // 住宅
+                    color: color($colors, primary);
+                }
+                &.type-color-2 { // 公寓
+                    color: rgb(143, 180, 56);
+                }
+                &.type-color-3 { // 商业
+                    color: rgb(49, 124, 204);
+                }
+                &.type-color-4 { // 车位
+                    color: rgb(125, 63, 63);
+                }
+                &.type-color-5 { // 其它
+                    color: rgb(184, 149, 96);
+                }
+                &.type-color-32 { // 办公
+                    color: rgb(37, 186, 219);
+                }
+            }
+
+        }
+
+        &.right {
+            text-align: right;
+        }
+
+        .ajstate {
+            display: inline-block;
+            border-radius: 2px;
+            padding: 2px 4px;
+            font-size: 10px;
+            color: white;
+    
+            &.ajstate-10 {
+                background: rgb(169, 199, 243);
+            }
+            &.ajstate-20 {
+                background: rgb(26, 47, 92);
+            }
+            &.ajstate-30 {
+                background: rgb(94, 117, 91);
+            }
+            &.ajstate-40 {
+                background: rgb(238, 182, 187);
+            }
+            &.ajstate-50 {
+                background: rgb(231,90,22);
+            }
+            &.ajstate-60 {
+                background: rgb(83, 77, 77);
+            }
+            &.ajstate-70 {
+                background: rgb(125, 63, 63);
+            }
+            &.ajstate-80 {
+                background: rgb(49, 124, 204);
+            }
+            &.ajstate-90 {
+                background: rgb(184, 149, 96);
+            }
+            &.ajstate-95 {
+                background: rgb(148, 25, 209);
+            }
+            &.ajstate-100 {
+                background: rgb(37, 186, 219);
+            }
+            &.ajstate-110 {
+                background: rgb(150, 22, 22);
+            }
+            &.ajstate-120 {
+                background: rgb(143, 180, 56);
+            }
+        }
+    }
+}
