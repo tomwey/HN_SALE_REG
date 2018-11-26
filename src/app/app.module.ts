@@ -19,6 +19,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { iOSFixedScrollFreeze } from '../provider/iOSFixedScrollFreeze';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppStore } from '../provider/app-store';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AppStore } from '../provider/app-store';
     }),
     PipesModule,
     IonicImageViewerModule,
+    ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

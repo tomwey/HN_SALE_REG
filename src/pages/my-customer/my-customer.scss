@@ -4,67 +4,68 @@ page-my-customer {
             margin: 0;
             padding: 0;
         }
-        .title {
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: normal;
-            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
-        }
-
-        p {
-            font-size: 12px;
-        }
-
-        .custname, .house-no {
-            font-size: 14px;
-            color: #333;
-        }
-
-        .male {
-            color: rgb(101,142,223);
-        }
-
-        .female {
-            color: rgb(232, 83, 177);
-        }
-
-        .state {
-            // background: red;
-            display: inline-block;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 2px;
-            color: white;
-            margin-left: 5px;
-            margin-bottom: 5px;
-            margin-top: 10px;
-        }
-    
-        .state-1 {
-            background: rgb(101,142,223);
-        }
-    
-        .state-2 {
-            background: rgb(132,196,159);
-        }
-
-        .right-section {
-            text-align: center;
-            p {
-                font-size: 12px;
-            }
-
-            .days {
-                color: color($colors, primary);
-                padding: 0 3px;
-                font-size: 18px;
-            }
-
-            ion-icon {
-                font-size: 32px;
-            }
-        }
     }
+    //     .title {
+    //         margin-bottom: 10px;
+    //         font-size: 14px;
+    //         font-weight: normal;
+    //         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    //     }
+
+    //     p {
+    //         font-size: 12px;
+    //     }
+
+    //     .custname, .house-no {
+    //         font-size: 14px;
+    //         color: #333;
+    //     }
+
+    //     .male {
+    //         color: rgb(101,142,223);
+    //     }
+
+    //     .female {
+    //         color: rgb(232, 83, 177);
+    //     }
+
+    //     .state {
+    //         // background: red;
+    //         display: inline-block;
+    //         font-size: 10px;
+    //         padding: 2px 5px;
+    //         border-radius: 2px;
+    //         color: white;
+    //         margin-left: 5px;
+    //         margin-bottom: 5px;
+    //         margin-top: 10px;
+    //     }
+    
+    //     .state-1 {
+    //         background: rgb(101,142,223);
+    //     }
+    
+    //     .state-2 {
+    //         background: rgb(132,196,159);
+    //     }
+
+    //     .right-section {
+    //         text-align: center;
+    //         p {
+    //             font-size: 12px;
+    //         }
+
+    //         .days {
+    //             color: color($colors, primary);
+    //             padding: 0 3px;
+    //             font-size: 18px;
+    //         }
+
+    //         ion-icon {
+    //             font-size: 32px;
+    //         }
+    //     }
+    // }
 
     // .overlay-wrap {
     //     position: absolute;

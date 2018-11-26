@@ -323,8 +323,8 @@ export class MyCustomerPage {
     })
   }
 
-  callPhone(item,ev:Event) {
-    ev.stopPropagation();
+  callPhone(item) {
+    // ev.stopPropagation();
     window.location.href = "tel:" + item.telephone;
     // window.open("tel:" + item.telephone);
   }

@@ -1,0 +1,21 @@
+<ion-item tappable (click)="selectItem(item);">
+  <h2 text-wrap class="title">
+    {{item.telephone | hackMobile}}&nbsp;{{item.custname}}
+    <ion-icon 
+      [class.male]="item.sex == '1' || item.sex == '男'" 
+      [class.female]="item.sex == '2' || item.sex == '女'" 
+      name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
+    </ion-icon>
+  </h2>
+  <p text-wrap class="follow-content">上次跟进内容: {{item.content}}</p>
+  <p class="follow-time">上次跟进时间: {{item.lastfollowdate | formatDate:'1'}}</p>
+  <div item-right class="right-section">
+    <!-- <span class="state state-{{item.type}}">{{item.typename}}</span> -->
+    <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
+    <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
+    <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
+      <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
+      <span *ngIf="item.left_days === 0">即将过期</span>
+    </p>
+  </div>
+</ion-item>

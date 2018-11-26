@@ -55,7 +55,7 @@
   </ion-refresher>
   <ion-list>
     <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
-      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
+      <!-- <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
         <h2 text-wrap class="title">
           {{item.telephone | hackMobile}}&nbsp;{{item.custname}}
           <ion-icon 
@@ -67,7 +67,6 @@
         <p text-wrap>上次跟进内容: {{item.content}}</p>
         <p>上次跟进时间: {{item.lastfollowdate | formatDate:'1'}}</p>
         <div item-right class="right-section">
-          <!-- <span class="state state-{{item.type}}">{{item.typename}}</span> -->
           <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
           <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
           <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
@@ -76,7 +75,11 @@
           </p>
         </div>
         
-      </ion-item>
+      </ion-item> -->
+      <man-item *ngIf="menuType == '1'" 
+        [item]="item" 
+        (onSelect)="selectItem(item);"
+        (onCallPhone)="callPhone(item);"></man-item>
 
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
         <h2 text-wrap class="title">
@@ -126,99 +129,7 @@
             </div>
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
-          <ion-col col-8>
-              <span class="custname">{{item.custnames}}</span>
-          </ion-col>
-          <ion-col col-4 style="text-align: right">
-              <span class="house-no">{{item.house_no}}</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-7>
-              <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
-              <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
-          </ion-col>
-          <ion-col col-5 style="text-align: right;">
-            <p>成交总价: <span class="title money">{{formatMoney(item.money)}}</span><span class="unit">万</span></p>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="menuType == '2'">
-          <ion-col col-8>
-            <p>签约失效日期: {{item.plancondate.split('T')[0]}}</p>
-          </ion-col>
-          <ion-col col-4 style="text-align:right;">
-            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col col-6>
-              <p>客户来源: {{item.sourcetype}}</p>
-          </ion-col>
-          <ion-col col-6 style="text-align: right;">
-              <p>职业顾问: {{item.sellername}}</p>
-          </ion-col>
-        </ion-row> -->
-
-        <!-- 
-         <ion-row>
-          <ion-col col-5>
-            <p class="first-col"><span class="title people">{{item.custnames}}</span><br><span class="name">认购客户</span></p>
-          </ion-col>
-          <ion-col col-4>
-            <p><span class="title house-no">{{item.house_no}}</span><br><span class="name">房号</span></p>
-          </ion-col>
-          <ion-col col-3>
-              <p><span class="title money">{{formatMoney(item.money)}}</span><span class="unit">万</span><br>
-                <span class="name">成交总价</span></p>
-          </ion-col>
-
-        </ion-row>
-        <ion-row *ngIf="menuType == '2'" class="date-tip">
-          <ion-col col-8>
-            <p>签约失效日期: {{item.plancondate.split('T')[0]}}</p>
-          </ion-col>
-          <ion-col col-4 style="text-align:right;">
-            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
-          </ion-col>
-        </ion-row>
-        <div class="extra-info">
-          <ion-row>
-            <ion-col col-6>
-              <p>客户来源: {{item.sourcetype}}</p>
-            </ion-col>
-            <ion-col col-6 style="text-align: right;">
-              <p *ngIf="menuType == '2'">认购日期: {{item.orderdate.split('T')[0]}}</p>
-              <p *ngIf="menuType == '3'">签约日期: {{item.condate.split('T')[0]}}</p>
-            </ion-col>
-          </ion-row>
-          <p>职业顾问: {{item.sellername}}</p>
-        </div> 
-      -->
-        
-        <!-- <div item-left>
-            <h2>房号: {{item.house_no}}</h2>
-            <p>成交总价: {{item.money}}元</p>
-        </div>
-        <div item-right class="right-section">
-            <p>{{item.left_days_label}}<span class="days">{{item.left_days}}</span>天</p>
-          </div>
-
-        
-         -->
-        
       </ion-item>
     </div>
   </ion-list>
-
-  <!-- <div class="overlay-wrap" [hidden]="!showPanel" tappable (click)="showPanel = false;">
-      <div class="overlay-content" tappable (click)="$event.stopPropagation();">
-          <ion-list>
-            <ion-item *ngFor="let proj of projects" tappable (click)="selectProject(proj,$event);">
-              {{proj.project_name}}
-            </ion-item>
-          </ion-list>
-      </div>
-    </div> -->
 </ion-content>
