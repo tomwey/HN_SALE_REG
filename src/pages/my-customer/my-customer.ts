@@ -330,12 +330,12 @@ export class MyCustomerPage {
   }
 
   segmentChanged(ev) {
-    if (this.menuType == '4' || 
-        this.menuType == '5' 
-        ) {
-          this.error = '即将上线...';
-          return;
-        }
+    // if (this.menuType == '4' || 
+    //     this.menuType == '5' 
+    //     ) {
+    //       this.error = '即将上线...';
+    //       return;
+    //     }
     
     if (this.menuType == '6') {
       this.error = null;
