@@ -15,14 +15,19 @@ page-home {
             &.left {
                 text-align: left;
             }
+            // &.right {
+            //     text-align: right;
+            // }
+
             &.right {
-                text-align: right;
+                padding-left: 15px;
             }
 
             .stat-item {
                 margin-top: 12px;
                 .digit {
-                    font-size: 18px;
+                    font-size: 28px;
+                    font-weight: 500;
                 }
                 .unit {
                     font-size: 12px;
@@ -30,6 +35,16 @@ page-home {
                 }
                 .line {
                     padding: 0 5px;
+                }
+
+                .value2 {
+                    .digit,.unit,.prefix {
+                        font-size: 14px;
+                        font-weight: normal;
+                    }
+                    .prefix {
+                        padding-right: 3px;
+                    }
                 }
             }
         }
@@ -61,11 +76,11 @@ page-home {
                 color: #666;
             }
             .digit {
-                font-size: 12px;
+                // font-size: 12px;
                 color: #999;
             }
             .unit {
-                font-size: 12px;
+                // font-size: 12px;
                 color: #999;
                 padding-left: 3px;
                 // font-size: 14px;
