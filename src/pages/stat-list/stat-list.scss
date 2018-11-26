@@ -1,0 +1,35 @@
+page-stat-list {
+    .exception-item {
+            .title {
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: normal;
+            font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        .custname, .house-no {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .male {
+            color: rgb(101,142,223);
+        }
+
+        .female {
+            color: rgb(232, 83, 177);
+        }
+
+        .custom-badge {
+            display: inline-block;
+            border-radius: 2px;
+            padding: 2px 4px;
+            font-size: 10px;
+            color: white;
+        }
+    }
+}

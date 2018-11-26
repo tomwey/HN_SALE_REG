@@ -142,4 +142,9 @@ export class HomePage {
     this.navCtrl.push(item.page);
   }
 
+  openList(type) {
+    let params = {};
+    this.navCtrl.push('StatListPage', { params: params, type: type});
+  }
+
 }
