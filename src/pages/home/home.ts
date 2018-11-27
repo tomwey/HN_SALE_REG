@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { /*IonicPage, */NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { VistorsQueryPage } from '../vistors-query/vistors-query';
 import { HouseQueryPage } from '../house-query/house-query';
 import { MyCustomerPage } from '../my-customer/my-customer';
@@ -15,7 +15,7 @@ import { Tools } from '../../provider/Tools';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -31,11 +31,25 @@ export class HomePage {
     name: ''
   };
 
+  statData: any = {
+    ajexpcount: "0",
+    callcount: "0",
+    concount: "0",
+    contotalmoney: "NULL",
+    ordercount: "0",
+    ordertotalmoney: "NULL",
+    overdueunconcount: "0",
+    overdueusercount: "0",
+    totalpaymoney: "NULL",
+    unpaymoney: "NULL",
+  };
+
   constructor(public navCtrl: NavController, 
     private store: AppStore,
     private modalCtrl: ModalController,
     private api: ApiService,
     private tools: Tools,
+    private events: Events,
     public navParams: NavParams) {
 
       // this.store.getProject(data => {
@@ -46,6 +60,37 @@ export class HomePage {
       // });
 
       this.prepareFunc();
+
+      this.events.subscribe('project:changed', (projData) => {
+        this.changeCurrentProject(projData);
+        this.loadStatData(false);
+      });
+  }
+
+  loadStatData(loading = true) {
+    if (!this.hasDashboard) return;
+
+    if (!this.currentProject.id) {
+      this.tools.showToast('选择项目查看统计数据');
+      return;
+    }
+
+    this.api.POST(null, { 
+      dotype: 'GetData',
+      funname: '查询销售系统首页信息APP',
+      param1: this.currentProject.id,
+      param2: Utils.getQueryString('manid')
+    }, '正在加载', loading).then(data => {
+      // console.log(data);
+      if (data && data['data']) {
+        let arr = data['data'];
+        if (arr.length > 0) {
+          this.statData = arr[0];
+        }
+      }
+    }).catch(error => {
+
+    });
   }
 
   prepareFunc() {
@@ -55,7 +100,7 @@ export class HomePage {
       powerids = poweridsStr.split(',');
     }
 
-    console.log(powerids);
+    // console.log(powerids);
 
     if (powerids) {
       // 是否有统计面板权限
@@ -122,18 +167,33 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-  }
-
-  ionViewWillEnter() {
+    // console.log('ionViewDidLoad HomePage');
 
     this.store.getProject(data => {
       if (data) {
-        this.currentProject.id = data.value;
-      this.currentProject.name = data.label;
+        this.changeCurrentProject(data);
+
+        this.loadStatData(true);
       }
     });
   }
+
+  changeCurrentProject(projData) {
+    if (projData) {
+      this.currentProject.id = projData.value;
+      this.currentProject.name = projData.label;
+    }
+  }
+
+  // ionViewWillEnter() {
+
+  //   this.store.getProject(data => {
+  //     if (data) {
+  //       this.currentProject.id = data.value;
+  //       this.currentProject.name = data.label;
+  //     }
+  //   });
+  // }
 
   back() {
     window.location.href = 'salereg://back';

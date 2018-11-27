@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Events } from 'ionic-angular';
 
 @Injectable()
 export class AppStore {
-    constructor(private storage: Storage) {
+    constructor(private storage: Storage, private events: Events) {
         // console.log('Hello ApiService Provider');
     }
 
@@ -26,6 +27,7 @@ export class AppStore {
     }
 
     saveProject(projData) {
+        this.events.publish('project:changed', projData);
         return this.saveObject(projData, 'selected:project');
     }
 

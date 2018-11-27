@@ -20,11 +20,13 @@ import { iOSFixedScrollFreeze } from '../provider/iOSFixedScrollFreeze';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppStore } from '../provider/app-store';
 import { ComponentsModule } from '../components/components.module';
+import { HomePage } from '../pages/home/home';
 
 @NgModule({
   declarations: [
     MyApp,
-    TabsPage,
+    // TabsPage,
+    HomePage,
     VistorsQueryPage,
     HouseQueryPage,
     MyCustomerPage,
@@ -44,7 +46,8 @@ import { ComponentsModule } from '../components/components.module';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    TabsPage,
+    // TabsPage,
+    HomePage,
     VistorsQueryPage,
     HouseQueryPage,
     MyCustomerPage,
