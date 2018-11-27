@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { /*IonicPage, */NavController, NavParams, ModalController, Events } from 'ionic-angular';
-import { VistorsQueryPage } from '../vistors-query/vistors-query';
-import { HouseQueryPage } from '../house-query/house-query';
-import { MyCustomerPage } from '../my-customer/my-customer';
+// import { VistorsQueryPage } from '../vistors-query/vistors-query';
+// import { HouseQueryPage } from '../house-query/house-query';
+// import { MyCustomerPage } from '../my-customer/my-customer';
 import { AppStore } from '../../provider/app-store';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
@@ -213,7 +213,7 @@ export class HomePage {
     '19': {
       icon: 'icon_registor.png',
       name: '来访登记',
-      page: VistorsQueryPage,
+      page: 'VistorsQueryPage',
       powerid: 19 // 与数据库保持一致
     },
     '20': {
@@ -225,13 +225,13 @@ export class HomePage {
     '21': {
       icon: 'icon_house.png',
       name: '房源查询',
-      page: HouseQueryPage,
+      page: 'HouseQueryPage',
       powerid: 21
     },
     '22': {
       icon: 'icon_customers.png',
       name: '我的客户',
-      page: MyCustomerPage,
+      page: 'MyCustomerPage',
       powerid: 22
     },
     '23': {

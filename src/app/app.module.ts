@@ -11,10 +11,10 @@ import { Utils } from '../provider/Utils';
 import { PipesModule } from '../pipes/pipes.module';
 import { ApiService } from '../provider/api-service';
 import { Tools } from '../provider/Tools';
-import { TabsPage } from '../pages/tabs/tabs';
-import { VistorsQueryPage } from '../pages/vistors-query/vistors-query';
-import { HouseQueryPage } from '../pages/house-query/house-query';
-import { MyCustomerPage } from '../pages/my-customer/my-customer';
+// import { TabsPage } from '../pages/tabs/tabs';
+// import { VistorsQueryPage } from '../pages/vistors-query/vistors-query';
+// import { HouseQueryPage } from '../pages/house-query/house-query';
+// import { MyCustomerPage } from '../pages/my-customer/my-customer';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { iOSFixedScrollFreeze } from '../provider/iOSFixedScrollFreeze';
 import { IonicStorageModule } from '@ionic/storage';
@@ -27,9 +27,9 @@ import { HomePage } from '../pages/home/home';
     MyApp,
     // TabsPage,
     HomePage,
-    VistorsQueryPage,
-    HouseQueryPage,
-    MyCustomerPage,
+    // VistorsQueryPage,
+    // HouseQueryPage,
+    // MyCustomerPage,
   ],
   imports: [
     BrowserModule,
@@ -48,9 +48,9 @@ import { HomePage } from '../pages/home/home';
     MyApp,
     // TabsPage,
     HomePage,
-    VistorsQueryPage,
-    HouseQueryPage,
-    MyCustomerPage,
+    // VistorsQueryPage,
+    // HouseQueryPage,
+    // MyCustomerPage,
   ],
   providers: [
     StatusBar,

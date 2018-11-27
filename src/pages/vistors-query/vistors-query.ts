@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, IonicPage } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { App } from 'ionic-angular/components/app/app';
@@ -13,7 +13,7 @@ import { AppStore } from '../../provider/app-store';
  * Ionic pages and navigation.
  */
 
-// @IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-vistors-query',
   templateUrl: 'vistors-query.html',

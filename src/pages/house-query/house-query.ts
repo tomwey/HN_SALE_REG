@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, App, ModalController, Content } from 'ionic-angular';
+import { NavController, NavParams, App, ModalController, Content,IonicPage } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { AppStore } from '../../provider/app-store';
@@ -12,7 +12,7 @@ import { Tools } from '../../provider/Tools';
  * Ionic pages and navigation.
  */
 
-// @IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-house-query',
   templateUrl: 'house-query.html',
