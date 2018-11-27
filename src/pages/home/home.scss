@@ -26,8 +26,8 @@ page-home {
             .stat-item {
                 margin-top: 12px;
                 .digit {
-                    font-size: 28px;
-                    font-weight: 500;
+                    font-size: 30px;
+                    // font-weight: 500;
                 }
                 .unit {
                     font-size: 12px;
@@ -61,7 +61,7 @@ page-home {
         .stat-box {
             padding: 10px 15px;
             // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             &.b-right {
                 border-right: 0.55px solid #f6f6f6;
             }
@@ -72,8 +72,8 @@ page-home {
             //     text-align: right;
             // }
             .name {
-                font-size: 14px;
-                color: #666;
+                // font-size: 16px;
+                color: #333;
             }
             .digit {
                 // font-size: 12px;
@@ -111,17 +111,21 @@ page-home {
                 padding: 0;
             }
 
-            .icon-wrap {
-                ion-icon {
-                    font-size: 30px!important;
-                    color: color($colors, primary);
-                }
-                margin-bottom: 10px;
+            // .icon-wrap {
+            //     ion-icon {
+            //         font-size: 30px!important;
+            //         color: color($colors, primary);
+            //     }
+            //     margin-bottom: 10px;
+            // }
+            .icon {
+                max-height: 30px;
+                margin-bottom: 5px;
             }
 
             .name {
-                font-size: 14px;
-                color: #666;
+                font-size: 16px;
+                color: #333;
             }
         }
     }

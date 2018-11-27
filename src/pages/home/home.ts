@@ -45,27 +45,27 @@ export class HomePage {
 
     this.data = [
       {
-        icon: 'ios-laifang',
+        icon: 'icon_registor.png',
         name: '来访登记',
         page: VistorsQueryPage,
       },
       {
-        icon: 'ios-list-box-outline',
+        icon: 'icon_aj.png',
         name: ' 按揭台账',
         page: 'MortgageListPage',
       },
       {
-        icon: 'ios-house',
+        icon: 'icon_house.png',
         name: '房源查询',
         page: HouseQueryPage,
       },
       {
-        icon: 'ios-customer',
+        icon: 'icon_customers.png',
         name: '我的客户',
         page: MyCustomerPage,
       },
       {
-        icon: 'md-calculator',
+        icon: 'icon_calc.png',
         name: '房贷计算器',
         page: 'CalculatorPage',
       },
