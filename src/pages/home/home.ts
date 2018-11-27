@@ -22,7 +22,9 @@ import { Tools } from '../../provider/Tools';
 })
 export class HomePage {
 
-  data: any;
+  data: any = [];
+
+  hasDashboard: boolean = false;
 
   currentProject: any = {
     id: '',
@@ -43,33 +45,32 @@ export class HomePage {
       //   }
       // });
 
-    this.data = [
-      {
-        icon: 'icon_registor.png',
-        name: '来访登记',
-        page: VistorsQueryPage,
-      },
-      {
-        icon: 'icon_aj.png',
-        name: ' 按揭台账',
-        page: 'MortgageListPage',
-      },
-      {
-        icon: 'icon_house.png',
-        name: '房源查询',
-        page: HouseQueryPage,
-      },
-      {
-        icon: 'icon_customers.png',
-        name: '我的客户',
-        page: MyCustomerPage,
-      },
-      {
-        icon: 'icon_calc.png',
-        name: '房贷计算器',
-        page: 'CalculatorPage',
-      },
-    ];
+      this.prepareFunc();
+  }
+
+  prepareFunc() {
+    const poweridsStr = Utils.getQueryString('powerids');
+    let powerids: string[] = null;
+    if (poweridsStr) {
+      powerids = poweridsStr.split(',');
+    }
+
+    console.log(powerids);
+
+    if (powerids) {
+      // 是否有统计面板权限
+      this.hasDashboard = (powerids.indexOf('18') !== -1);
+
+      // 其它模块权限
+      let temp = [];
+      powerids.forEach(id => {
+        const item = this.modulesData[id];
+        if (item) {
+          temp.push(item);
+        }
+      });
+      this.data = temp;
+    }
   }
 
   selectProject() {
@@ -146,5 +147,39 @@ export class HomePage {
     let params = {};
     this.navCtrl.push('StatListPage', { params: params, type: type});
   }
+
+  // 与后台数据库保持一致的功能权限配置
+  modulesData: any = {
+    '19': {
+      icon: 'icon_registor.png',
+      name: '来访登记',
+      page: VistorsQueryPage,
+      powerid: 19 // 与数据库保持一致
+    },
+    '20': {
+      icon: 'icon_aj.png',
+      name: ' 按揭台账',
+      page: 'MortgageListPage',
+      powerid: 20
+    },
+    '21': {
+      icon: 'icon_house.png',
+      name: '房源查询',
+      page: HouseQueryPage,
+      powerid: 21
+    },
+    '22': {
+      icon: 'icon_customers.png',
+      name: '我的客户',
+      page: MyCustomerPage,
+      powerid: 22
+    },
+    '23': {
+      icon: 'icon_calc.png',
+      name: '房贷计算器',
+      page: 'CalculatorPage',
+      powerid: 23
+    },
+  };
 
 }

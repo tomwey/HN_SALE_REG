@@ -24,18 +24,35 @@ page-home {
             }
 
             .stat-item {
+                // padding: 15px 0;
                 margin-top: 12px;
+                // &.pl-15 {
+                //     padding-left: 15px;
+                // }
+                // &.pt-0 {
+                //     padding-top: 0;
+                // }
+                // &.pb-0 {
+                //     padding-bottom: 0;
+                // }
+                // padding-bottom: 15px;
+                // &.border-b {
+                //     border-bottom: 0.55px solid rgba(255,255,255,0.2);
+                // }
+                // &.border-r {
+                //     border-right: 0.55px solid rgba(255,255,255,0.4);
+                // }
                 .digit {
-                    font-size: 30px;
+                    font-size: 28px;
                     // font-weight: 500;
                 }
                 .unit {
                     font-size: 12px;
                     padding-left: 3px;
                 }
-                .line {
-                    padding: 0 5px;
-                }
+                // .line {
+                //     padding: 0 5px;
+                // }
 
                 .value2 {
                     .digit,.unit,.prefix {
@@ -119,7 +136,7 @@ page-home {
             //     margin-bottom: 10px;
             // }
             .icon {
-                max-height: 30px;
+                max-height: 28px;
                 margin-bottom: 5px;
             }
 
