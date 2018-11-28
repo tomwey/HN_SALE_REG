@@ -10,6 +10,9 @@
     <ion-title>我的客户</ion-title>
     <ion-buttons end>
       <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+      <button ion-button icon-only small>
+        <ion-icon name="ios-search-outline" style="font-size: 20px;"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar color="white">
@@ -22,8 +25,8 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <ion-toolbar color="white" *ngIf="!showPanel">
-      <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
+  <!-- <ion-toolbar color="white" *ngIf="!showPanel">
+      
       <form action=".">
         <ion-searchbar
           #searchBar
@@ -38,106 +41,130 @@
         >
         </ion-searchbar>
     </form>
-    </ion-toolbar>
+    </ion-toolbar> -->
+    <div class="filter-bar">
+      <div class="filter-item"
+        tappable
+        (click)="selectFilter(filterItem);"
+        *ngFor="let filterItem of filterData[menuType]">
+        <span class="name">{{filterMenuName(filterItem)}}</span>
+        <span class="icon-wrap"><ion-icon name="md-arrow-dropdown"></ion-icon></span>
+      </div>
+    </div>
 </ion-header>
 
 <ion-content>
-  <div class="empty-error-box" *ngIf="!!error">
-    {{error}}
-  </div>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="ios-arrow-round-down-outline"
-      pullingText="下拉刷新"
-      refreshingSpinner="circles" 
-      refreshingText="正在刷新">
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-list>
-    <div *ngFor="let item of data" class="custom-card" tappable (click)="openItem(item);">
-      <!-- <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '1'">
-        <h2 text-wrap class="title">
-          {{item.telephone | hackMobile}}&nbsp;{{item.custname}}
-          <ion-icon 
-            [class.male]="item.sex == '1' || item.sex == '男'" 
-            [class.female]="item.sex == '2' || item.sex == '女'" 
-            name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
-          </ion-icon>
-        </h2>
-        <p text-wrap>上次跟进内容: {{item.content}}</p>
-        <p>上次跟进时间: {{item.lastfollowdate | formatDate:'1'}}</p>
-        <div item-right class="right-section">
-          <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
-          <button ion-button clear (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></button>
-          <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
-            <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
-            <span *ngIf="item.left_days === 0">即将过期</span>
-          </p>
-        </div>
-        
-      </ion-item> -->
-      <man-item *ngIf="menuType == '1'" 
-        [item]="item" 
-        (onSelect)="selectItem(item);"
-        (onCallPhone)="callPhone(item);"></man-item>
-
-      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
-        <h2 text-wrap class="title">
-          {{item.telephone}} {{item.custname}} 
-          <ion-icon 
-            [class.male]="item.sex == '1' || item.sex == '男'" 
-            [class.female]="item.sex == '2' || item.sex == '女'" 
-            name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
-          </ion-icon>
-        </h2>
-        <p>房号: {{item.house_no}}</p>
-        <p text-wrap>{{item.abnormalsubname}}</p>
-        <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
-      </ion-item>
-
-      <order-sign-item *ngIf="menuType === '2' || menuType === '3'" 
-        [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
-        (onCallPhone)="callPhone(item);">
-
-      </order-sign-item>
-
-      <mortgage-item [item]="item" *ngIf="menuType === '4'"></mortgage-item>
-      
-      <!-- <ion-item *ngIf="menuType === '2' || menuType === '3'">
-        <ion-row>
-          <ion-col col-4>
-            <div class="left cell-box">
-              <p class="custname">{{item.custnames}}</p>
-              <p class="hor-item"><span class="label-text">客户来源</span><span class="value-text">{{item.sourcetype}}</span></p>
-              <p class="ver-item" *ngIf="menuType === '2'">
-                <span class="label-text">认购日期</span><br>
-                <span class="value-text">{{item.orderdate.split('T')[0]}}</span>
-              </p>
-            </div>
-          </ion-col>
-          <ion-col col-4>
-            <div class="center cell-box">
-              <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span class="house-no">{{item.house_no}}</span></p>
-              <p class="hor-item"><span class="label-text">置业顾问</span><span class="value-text">{{item.sellername}}</span></p>
-              <p class="ver-item" *ngIf="menuType === '2'">
-                <span class="label-text">签约失效日期</span><br>
-                <span class="value-text">{{item.plancondate.split('T')[0]}}</span>
-              </p>
-            </div>
-          </ion-col>
-          <ion-col col-4>
-            <div class="right cell-box">
-              <p class="money">{{formatMoney(item.money)}}<span class="unit">万</span></p>
-              <span class="call-btn" *ngIf="menuType === '2'" tappable (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></span>
-              <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p>
-              <p class="left-days-warning" *ngIf="menuType === '2'">
-                <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
-                <span *ngIf="item.left_days === 0">即将过期</span>
-              </p>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-item> -->
+  <!-- <div class="main-content"> -->
+    <!-- 错误内容显示 -->
+    <div class="empty-error-box" *ngIf="!!error">
+      {{error}}
     </div>
-  </ion-list>
+    <!-- 下拉刷新 -->
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="ios-arrow-round-down-outline"
+        pullingText="下拉刷新"
+        refreshingSpinner="circles" 
+        refreshingText="正在刷新">
+      </ion-refresher-content>
+    </ion-refresher>
+    <!-- 列表 -->
+    <ion-list>
+      <div *ngFor="let item of data" class="custom-card">
+        <man-item *ngIf="menuType == '1'" 
+          [item]="item" 
+          (onSelect)="selectItem(item);"
+          (onCallPhone)="callPhone(item);"></man-item>
+
+        <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
+          <h2 text-wrap class="title">
+            {{item.telephone}} {{item.custname}} 
+            <ion-icon 
+              [class.male]="item.sex == '1' || item.sex == '男'" 
+              [class.female]="item.sex == '2' || item.sex == '女'" 
+              name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
+            </ion-icon>
+          </h2>
+          <p>房号: {{item.house_no}}</p>
+          <p text-wrap>{{item.abnormalsubname}}</p>
+          <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
+        </ion-item>
+
+        <order-sign-item *ngIf="menuType === '2' || menuType === '3'" 
+          [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
+          (onCallPhone)="callPhone(item);">
+
+        </order-sign-item>
+
+        <mortgage-item [item]="item" *ngIf="menuType === '4'"></mortgage-item>
+        
+        <!-- <ion-item *ngIf="menuType === '2' || menuType === '3'">
+          <ion-row>
+            <ion-col col-4>
+              <div class="left cell-box">
+                <p class="custname">{{item.custnames}}</p>
+                <p class="hor-item"><span class="label-text">客户来源</span><span class="value-text">{{item.sourcetype}}</span></p>
+                <p class="ver-item" *ngIf="menuType === '2'">
+                  <span class="label-text">认购日期</span><br>
+                  <span class="value-text">{{item.orderdate.split('T')[0]}}</span>
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-4>
+              <div class="center cell-box">
+                <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span class="house-no">{{item.house_no}}</span></p>
+                <p class="hor-item"><span class="label-text">置业顾问</span><span class="value-text">{{item.sellername}}</span></p>
+                <p class="ver-item" *ngIf="menuType === '2'">
+                  <span class="label-text">签约失效日期</span><br>
+                  <span class="value-text">{{item.plancondate.split('T')[0]}}</span>
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-4>
+              <div class="right cell-box">
+                <p class="money">{{formatMoney(item.money)}}<span class="unit">万</span></p>
+                <span class="call-btn" *ngIf="menuType === '2'" tappable (click)="callPhone(item, $event);"><ion-icon name="ios-call-outline"></ion-icon></span>
+                <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p>
+                <p class="left-days-warning" *ngIf="menuType === '2'">
+                  <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
+                  <span *ngIf="item.left_days === 0">即将过期</span>
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-item> -->
+      </div>
+    </ion-list>
+    <!-- 条件过滤 -->
+
+  <!-- </div> -->
 </ion-content>
+
+<div class="filters-overlap" *ngIf="showFilterPanel" tappable (click)="closeFilter();">
+  <div class="filter-wrap">
+    <ion-list>
+      <button ion-item detail-none *ngFor="let item of filterConfigData" (click)="selectFilterItem(item);">
+        <ion-label class="name">{{item.name}}</ion-label>
+        <ion-icon name="ios-checkmark-outline" item-right *ngIf="item.value !== '100' && currentFilterData[menuType] && currentFilterData[menuType][item.field] === item.value "></ion-icon>
+        <div item-content *ngIf="item.value === '100'" class="date-control-wrap">
+          <ion-datetime 
+            [(ngModel)]="item.startDate"
+            displayFormat="YYYY-MM-DD" 
+            pickerFormat="YYYY-MM-DD" 
+            cancelText="取消"
+            doneText="确定"
+            placeholder="开始日期" class="custom-date-control"></ion-datetime>
+          <span class="date-line">-</span>
+          <ion-datetime 
+            [(ngModel)]="item.endDate"
+            displayFormat="YYYY-MM-DD" 
+            pickerFormat="YYYY-MM-DD" 
+            cancelText="取消"
+            doneText="确定"
+            placeholder="截止日期" class="custom-date-control"></ion-datetime>
+        </div>
+        <button ion-button item-right *ngIf="item.value === '100'">确定</button>
+      </button>
+    </ion-list>
+  </div>
+</div>

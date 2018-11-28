@@ -74,9 +74,16 @@
     }
 }
 
+.toolbar .segment-md {
+    border-bottom: 0.5px solid #f2f2f2;
+}
 
 .list-ios .item-block .item-inner {
     border-bottom-color: #f2f2f2;
+}
+
+.list-ios > .item-block:first-child {
+    border-top-color: #f2f2f2;
 }
 
 .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {

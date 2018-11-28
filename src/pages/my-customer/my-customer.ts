@@ -24,7 +24,9 @@ export class MyCustomerPage {
     id: '',
     name: ''
   };
-  showPanel: boolean = false;
+
+  showFilterPanel: boolean = false;
+  // showPanel: boolean = false;
   @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController, 
     private api: ApiService,
@@ -56,23 +58,17 @@ export class MyCustomerPage {
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad MyCustomerPage');
-    // this.error = '暂无数据';
     this.iosFixed.fixedScrollFreeze(this.content);
     
-    // this.loadProjects();
     setTimeout(() => {
       this.loadData();
     }, 300);
     
   }
 
-  showPanel1() {
-    this.showPanel = true;
-    this.content.resize();
-  }
-
   selectProject() {
+    this.showFilterPanel = false;
+
     this.api.POST(null, { "dotype": "GetData", 
           "funname": "案场获取项目列表APP", 
           "param1": Utils.getQueryString("manid") })
@@ -259,32 +255,6 @@ export class MyCustomerPage {
     this.data = temp;
   }
 
-  // formatMoney(money) {
-  //   money = parseFloat(money) / 10000.0;
-  //   if (isNaN(money)) {
-  //     return '--';
-  //   }
-  //   return money.toFixed(2).toString();
-  // }
-
-  loadProjects() {
-    // this.api.POST(null, { "dotype": "GetData", 
-    //       "funname": "案场获取项目列表APP", 
-    //       "param1": Utils.getQueryString("manid") })
-    //   .then(data => {
-    //     if (data && data['data']) {
-    //       let arr = data['data'];
-    //       // console.log(arr);
-    //       this.projects = arr;
-    //       // this.showSelectPage(arr);
-    //       // this.loadIndustries(this.projects[0]);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     // this.tools.showToast(error.message || '获取项目失败');
-    //   });
-  }
-
   selectItem(item) {
     if (this.menuType == '6') {
       this.app.getRootNavs()[0].push('ExCustomerReplyPage', item);
@@ -330,48 +300,11 @@ export class MyCustomerPage {
   }
 
   segmentChanged(ev) {
-    // if (this.menuType == '4' || 
-    //     this.menuType == '5' 
-    //     ) {
-    //       this.error = '即将上线...';
-    //       return;
-    //     }
+    this.showFilterPanel = false;
     
     if (this.menuType == '6') {
       this.error = null;
       this.loadExCustomers();
-      // this.data = [
-      //   {
-      //     telephone: '13012345678',
-      //     custname: '张三',
-      //     sex: '1',
-      //     house_no: '1-2-3-4',
-      //     is_reply: '0',
-      //     followupdesc: '',
-      //     abnormalsubname: '补充户口资料',
-      //     replydesc: ''
-      //   },
-      //   {
-      //     telephone: '13012345678',
-      //     custname: '张三',
-      //     sex: '1',
-      //     house_no: '1-2-3-4',
-      //     is_reply: '0',
-      //     followupdesc: '',
-      //     abnormalsubname: '补充户口资料',
-      //     replydesc: ''
-      //   },
-      //   {
-      //     telephone: '13012345678',
-      //     custname: '张三',
-      //     sex: '1',
-      //     house_no: '1-2-3-4',
-      //     is_reply: '0',
-      //     followupdesc: '',
-      //     abnormalsubname: '补充户口资料',
-      //     replydesc: ''
-      //   }
-      // ];
       return;
     }
 
@@ -394,37 +327,49 @@ export class MyCustomerPage {
     }
   }
 
-  openItem(item) {
-    
+  closeFilter() {
+    this.showFilterPanel = false;
   }
 
-  data: any = [
-    /*{
-      mobile: '18048553687',
-      name: '张先生',
-      sex: '1',
-      type: '1',
-      typename: '来电',
-      content: '询问了价格方面的情况',
-      time: '2018-07-28',
-      left_days: 1,
-    },
-    {
-      mobile: '13312345678',
-      name: '王女士',
-      sex: '2',
-      type: '2',
-      typename: '来访',
-      content: '初次了解',
-      time: '2018-07-25',
-      left_days: 3,
-    },*/
-  ];
+  selectFilter(item) {
+    this.showFilterPanel = true;
+
+    this.filterConfigData = this.filterBaseData[item.field];
+  }
+
+  filterMenuName(fItem) {
+    let obj = this.currentFilterData[this.menuType]
+    if (!obj) return fItem.name;
+
+    let obj2 = obj[fItem.field];
+    if (!obj2) return fItem.name;
+    return obj2.name;
+  }
+
+  selectFilterItem(item) {
+    this.showFilterPanel = false;
+    // console.log(item);
+    let obj = this.currentFilterData[this.menuType] || {};
+
+    obj[item.field] = item;
+    // console.log(this.currentFilterData);
+
+    this.currentFilterData[this.menuType] = obj;
+
+    // console.log(this.currentFilterData)
+  }
+
+  data: any = [];
   error: any = null;
   projects: any = null;
 
   keyword: string = '';
   menuType: any = '1';
+
+  customTime: any = {
+    startDate: '',
+    endDate: ''
+  };
 
   menues: any = [
     {
@@ -452,5 +397,332 @@ export class MyCustomerPage {
       name: '回款',
     },
   ];
+
+  currentFilterData: any = {};
+
+  filterData: any = {
+    '1': [
+      {
+        name: '时间',
+        field: 'time'
+      },
+      {
+        name: '过期状态',
+        field: 'expire_state_1'
+      },
+      {
+        name: '业态',
+        field: 'industry'
+      }
+    ],
+    '2': [
+      {
+        name: '时间',
+        field: 'time'
+      },
+      {
+        name: '过期状态',
+        field: 'expire_state_2'
+      },
+      {
+        name: '业态',
+        field: 'industry'
+      }
+    ],
+    '3': [
+      {
+        name: '时间',
+        field: 'time'
+      },
+      {
+        name: '审核状态',
+        field: 'approve_state'
+      },
+      {
+        name: '业态',
+        field: 'industry'
+      }
+    ],
+    '4': [
+      {
+        name: '时间',
+        field: 'time'
+      },
+      {
+        name: '客户类型',
+        field: 'custom_type'
+      },
+      {
+        name: '按揭状态',
+        field: 'aj_state'
+      },
+      {
+        name: '业态',
+        field: 'industry'
+      }
+    ],
+    '5': [
+      {
+        name: '时间',
+        field: 'time'
+      },
+      {
+        name: '逾期状态',
+        field: 'yq_state'
+      },
+      {
+        name: '付款方式',
+        field: 'pay_type'
+      },
+      {
+        name: '款项类型',
+        field: 'bill_type'
+      },
+    ]
+  };
+
+  filterBaseData: any = {
+    time: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'time'
+      },
+      {
+        name: '本月',
+        value: '0',
+        field: 'time'
+      },
+      {
+        name: '上月',
+        value: '1',
+        field: 'time'
+      },
+      {
+        name: '自定义',
+        value: '100',
+        field: 'time'
+      },
+    ],
+    industry: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'industry'
+      },
+      {
+        name: '住宅',
+        value: '1',
+        field: 'industry'
+      },
+      {
+        name: '公寓',
+        value: '2',
+        field: 'industry'
+      },
+      {
+        name: '商业',
+        value: '3',
+        field: 'industry'
+      },
+      {
+        name: '办公',
+        value: '32',
+        field: 'industry'
+      },
+      {
+        name: '车位',
+        value: '4',
+        field: 'industry'
+      },
+      {
+        name: '其他',
+        value: '5',
+        field: 'industry'
+      }
+    ],
+    expire_state_1: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'expire_state_1'
+      },
+      {
+        name: '3天内过期',
+        value: '3',
+        field: 'expire_state_1'
+      },
+      {
+        name: '未过期',
+        value: '0',
+        field: 'expire_state_1'
+      }
+    ],
+    expire_state_2: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'expire_state_2'
+      },
+      {
+        name: '3天内过期',
+        value: '3',
+        field: 'expire_state_2'
+      },
+      {
+        name: '未过期',
+        value: '0',
+        field: 'expire_state_2'
+      },
+      {
+        name: '已过期',
+        value: '1',
+        field: 'expire_state_2'
+      }
+    ],
+    approve_state: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'approve_state'
+      },
+      {
+        name: '未审核',
+        value: '0',
+        field: 'approve_state'
+      },
+      {
+        name: '已审核',
+        value: '1',
+        field: 'approve_state'
+      },
+    ],
+    custom_type: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'custom_type'
+      },
+      {
+        name: '异常客户',
+        value: '0',
+        field: 'custom_type'
+      },
+    ],
+    aj_state: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'aj_state'
+      },
+      {
+        name: '未到银行',
+        value: '10',
+        field: 'aj_state'
+      },
+      {
+        name: '网上备案中',
+        value: '20',
+        field: 'aj_state'
+      },
+      {
+        name: '预告预抵',
+        value: '30',
+        field: 'aj_state'
+      },
+      {
+        name: '转现场全权处理',
+        value: '40',
+        field: 'aj_state'
+      },
+      {
+        name: '现场处理完成',
+        value: '50',
+        field: 'aj_state'
+      },
+      {
+        name: '银行受理中',
+        value: '60',
+        field: 'aj_state'
+      },
+      {
+        name: '待放款',
+        value: '70',
+        field: 'aj_state'
+      },
+      {
+        name: '修改备案中',
+        value: '80',
+        field: 'aj_state'
+      },
+      {
+        name: '异常待处理',
+        value: '90',
+        field: 'aj_state'
+      },
+      {
+        name: '异常退法务处理',
+        value: '95',
+        field: 'aj_state'
+      },
+      {
+        name: '待撤消备案',
+        value: '100',
+        field: 'aj_state'
+      },
+      {
+        name: '按揭中断',
+        value: '110',
+        field: 'aj_state'
+      },
+      {
+        name: '已回款',
+        value: '120',
+        field: 'aj_state'
+      },
+    ],
+    yq_state: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'yq_state'
+      },
+      {
+        name: '未逾期',
+        value: '0',
+        field: 'yq_state'
+      },
+      {
+        name: '已逾期',
+        value: '1',
+        field: 'yq_state'
+      },
+    ],
+    pay_type: [
+      {
+        name: '全部',
+        value: '-1'
+      },
+    ],
+    bill_type: [
+      {
+        name: '全部',
+        value: '-1',
+        field: 'bill_type'
+      },
+      {
+        name: '贷款',
+        value: '0',
+        field: 'bill_type'
+      },
+      {
+        name: '非贷款',
+        value: '1',
+        field: 'bill_type'
+      },
+    ],
+  };
+
+  filterConfigData: any = [];
 
 }

@@ -6,8 +6,103 @@ page-my-customer {
         }
     }
 
+    .filters-overlap {
+        position: absolute;
+        z-index: 100;
+        top: 128px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 126px);
+        background: rgba(0,0,0,0.6);
+        .filter-wrap {
+            height: 100%;
+            overflow: auto;
+            
+            .name {
+                font-size: 14px;
+            }
+        }
+
+        .date-control-wrap {
+            width: 180px;
+            display: flex;
+            .date-line {
+                display: block;
+                flex: 0 0 10px;
+                line-height: 36px;
+                text-align: center;
+                color: #999;
+            }
+
+            .custom-date-control {
+                font-size: 12px;
+                flex: 1;
+                padding-left: 8px;
+                padding-right: 8px;
+                .item-cover {
+                    width: 0!important;
+                }
+                &:first-child {
+                    text-align: right;
+                }
+                &:last-child {
+                    text-align: left;
+                    // padding-left: 8px;
+                    // padding-right: 8px;
+                }
+                // padding: 10px 5px;
+            }
+        }
+    }
+
+    .filter-bar {
+        display: flex;
+        background: #fff;
+        padding: 5px 10px;
+        border-bottom: 0.5px solid #f2f2f2;
+        .filter-item {
+            flex: 1;
+            text-align: center;
+            // background: #f2f2f2;
+            border-radius: 4px; 
+            padding: 6px 0;
+            font-size: 12px;
+            font-family: -apple-system, 'Helvetica Neue', sans-serif;
+            color: #666;
+            // margin-right: 10px;
+            &:last-child {
+                // margin-right: 0;
+                border-right: 0;
+            }
+
+            &.active {
+                color: color($colors, primary);
+
+                .icon-wrap {
+                    ion-icon {
+                        color: color($colors, primary);
+                    }
+                }
+            }
+
+            border-right: 0.5px solid #f2f2f2;
+
+            .name {
+                display: inline-block;
+            }
+            .icon-wrap {
+                display: inline-block;
+                margin-left: 5px;
+                vertical-align: middle;
+                ion-icon {
+                    color: #999;
+                }
+            }
+        }
+    }
+
     .limit-width {
-        max-width: 120px;
+        max-width: 110px;
         font-size: 14px;
     }
     //     .title {
