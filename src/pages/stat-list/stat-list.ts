@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, App, ModalController, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { AppStore } from '../../provider/app-store';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the StatListPage page.
@@ -29,12 +30,15 @@ export class StatListPage {
     id: '',
     name: ''
   };
+
+  @ViewChild(Content) content: Content;
   
   constructor(public navCtrl: NavController, 
     private app: App,
     private api: ApiService,
     private store: AppStore,
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
     this.type = this.navParams.data.type;
@@ -49,6 +53,8 @@ export class StatListPage {
   }
 
   ionViewDidLoad() {
+    this.iosFixed.fixedScrollFreeze(this.content);
+    
     setTimeout(() => {
       this.loadData();
     }, 300);

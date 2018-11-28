@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { /*IonicPage, */NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { /*IonicPage, */NavController, NavParams, ModalController, Events, Content } from 'ionic-angular';
 // import { VistorsQueryPage } from '../vistors-query/vistors-query';
 // import { HouseQueryPage } from '../house-query/house-query';
 // import { MyCustomerPage } from '../my-customer/my-customer';
@@ -7,6 +7,7 @@ import { AppStore } from '../../provider/app-store';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the HomePage page.
@@ -44,11 +45,13 @@ export class HomePage {
     unpaymoney: "NULL",
   };
 
+  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController, 
     private store: AppStore,
     private modalCtrl: ModalController,
     private api: ApiService,
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
     public navParams: NavParams) {
 
@@ -169,6 +172,8 @@ export class HomePage {
   ionViewDidLoad() {
     // console.log('ionViewDidLoad HomePage');
 
+    this.iosFixed.fixedScrollFreeze(this.content);
+    
     this.store.getProject(data => {
       if (data) {
         this.changeCurrentProject(data);

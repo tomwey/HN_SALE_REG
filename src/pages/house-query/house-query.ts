@@ -4,6 +4,7 @@ import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { AppStore } from '../../provider/app-store';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the HouseQueryPage page.
@@ -41,6 +42,7 @@ export class HouseQueryPage {
     private app: App,
     private store: AppStore,
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     private api: ApiService,
     public navParams: NavParams) {
@@ -52,6 +54,7 @@ export class HouseQueryPage {
     // this.loadProjects();
 
     // this.loadIndustries(this.currentProject.id);
+    this.iosFixed.fixedScrollFreeze(this.content);
 
     this.store.getProject((data) => {
       if (data) {

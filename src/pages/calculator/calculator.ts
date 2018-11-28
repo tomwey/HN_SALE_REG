@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Content } from 'ionic-angular';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the CalculatorPage page.
@@ -38,8 +39,11 @@ export class CalculatorPage {
     sdRateName: '最新基准利率(4.9%)',
   };
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, 
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
       if (this.navParams.data.calcType) {
@@ -56,6 +60,7 @@ export class CalculatorPage {
   }
 
   ionViewDidLoad() {
+    this.iosFixed.fixedScrollFreeze(this.content);
     // console.log('ionViewDidLoad CalculatorPage');
   }
 

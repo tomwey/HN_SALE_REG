@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, Content } from 'ionic-angular';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the CommSelectPage page.
@@ -22,8 +23,12 @@ export class CommSelectPage {
 
   keyword: any = '';
   originData: any = [];
+  
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, 
     private viewCtrl: ViewController,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
       this.data = this.navParams.data.data;
       this.title = this.navParams.data.title;
@@ -36,7 +41,8 @@ export class CommSelectPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CommSelectPage');
+    // console.log('ionViewDidLoad CommSelectPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
   }
 
   startSearch(kw) {
