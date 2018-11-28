@@ -20,6 +20,7 @@ page-home {
             .stat-item {
                 flex: 1;
                 text-align: center;
+                // font-family: 'PingFang SC',Arial, Helvetica, sans-serif;
                 // border-right: 0.55px solid rgba(255,255,255,0.4);
                 // padding-left: 10px;
                 // &.right {
@@ -35,9 +36,9 @@ page-home {
                 //     border-right: 0;
                 // }
                 // font-size: 14px;
-                // .digit {
-                //     font-size: 16px;
-                // }
+                .digit {
+                    font-size: 16px;
+                }
                 // .unit {
                 //     font-size: 16px;
                 // }

@@ -209,7 +209,7 @@ export class HomePage {
   }
 
   openList(type,title) {
-    let params = {};
+    // let params = {};
     this.navCtrl.push('StatListPage', { type: type, title: title});
   }
 
