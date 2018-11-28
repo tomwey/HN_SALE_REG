@@ -203,9 +203,9 @@ export class HomePage {
     this.navCtrl.push(item.page);
   }
 
-  openList(type) {
+  openList(type,title) {
     let params = {};
-    this.navCtrl.push('StatListPage', { params: params, type: type});
+    this.navCtrl.push('StatListPage', { type: type, title: title});
   }
 
   // 与后台数据库保持一致的功能权限配置

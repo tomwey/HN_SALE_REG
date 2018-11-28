@@ -6,44 +6,62 @@ page-home {
         font-size: 14px;
         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
 
-        .project-wrap {
-            text-align: center;
-            margin-top: -10px;
-            button {
-                font-size: 16px!important;
-                padding: 5px 0;
-            }
+        ion-grid, ion-row, ion-col, p {
+            margin: 0;
+            padding: 0;
         }
 
-        .stat-wrap {
-            display: flex;
+        .content-wrap {
+            &.left {
+                text-align: left;
+            }
+            // &.right {
+            //     text-align: right;
+            // }
+
+            &.right {
+                padding-left: 15px;
+            }
+
             .stat-item {
-                flex: 1;
-                text-align: center;
-                // border-right: 0.55px solid rgba(255,255,255,0.4);
-                // padding-left: 10px;
-                // &.right {
-                //     text-align: right;
+                // padding: 15px 0;
+                margin-top: 12px;
+                // &.pl-15 {
+                //     padding-left: 15px;
                 // }
-                .value {
-                    font-weight: 700;
+                // &.pt-0 {
+                //     padding-top: 0;
+                // }
+                // &.pb-0 {
+                //     padding-bottom: 0;
+                // }
+                // padding-bottom: 15px;
+                // &.border-b {
+                //     border-bottom: 0.55px solid rgba(255,255,255,0.2);
+                // }
+                // &.border-r {
+                //     border-right: 0.55px solid rgba(255,255,255,0.4);
+                // }
+                .digit {
+                    font-size: 28px;
+                    // font-weight: 500;
                 }
-                // &:first-child {
-                //     padding-left: 0;
+                .unit {
+                    font-size: 12px;
+                    padding-left: 3px;
+                }
+                // .line {
+                //     padding: 0 5px;
                 // }
-                // &:last-child {
-                //     border-right: 0;
-                // }
-                // font-size: 14px;
-                // .digit {
-                //     font-size: 16px;
-                // }
-                // .unit {
-                //     font-size: 16px;
-                // }
-                .money, .sm-unit {
-                    font-size: 10px;
-                    font-weight: normal;
+
+                .value2 {
+                    .digit,.unit,.prefix {
+                        font-size: 14px;
+                        font-weight: normal;
+                    }
+                    .prefix {
+                        padding-right: 3px;
+                    }
                 }
             }
         }

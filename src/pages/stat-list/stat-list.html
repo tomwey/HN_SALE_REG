@@ -8,6 +8,9 @@
 
   <ion-navbar color="primary">
     <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+        <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -22,11 +25,11 @@
       (onSelect)="selectItem(item);"
       (onCallPhone)="callPhone(item);"></man-item>
       <order-sign-item *ngIf="type === '2'" [item]="item" 
-      [menuType]='3'
+      menuType='2'
       (onSelect)="selectItem(item);"
       (onCallPhone)="callPhone(item);"></order-sign-item>
       
-      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'" class="exception-item">
+      <ion-item tappable (click)="selectItem(item);" *ngIf="type == '4'" class="exception-item">
           <h2 text-wrap class="title">
             {{item.telephone | hackMobile}} {{item.custname}} 
             <ion-icon 
