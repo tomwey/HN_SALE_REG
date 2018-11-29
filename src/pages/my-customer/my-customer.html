@@ -7,10 +7,29 @@
 <ion-header no-border>
 
   <ion-navbar color="primary">
-    <ion-title>我的客户</ion-title>
+    <ion-title>
+      我的客户
+    </ion-title>
+    <div class="searchbar-wrap" [hidden]="!showSearch">
+      <form action=".">
+          <ion-searchbar
+            #searchBar
+            [(ngModel)]="keyword"
+            cancelButtonText="取消"
+            [ngModelOptions]="{standalone: true}"
+            [showCancelButton]="true"
+            (search)="startSearch(keyword)"
+            (ionCancel)="cancelClick();"
+            placeholder="搜索"
+            [animated]="false"
+            name="search"
+          >
+          </ion-searchbar>
+      </form>
+    </div>
     <ion-buttons end>
       <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
-      <button ion-button icon-only small>
+      <button ion-button icon-only small (click)="searchClick();">
         <ion-icon name="ios-search-outline" style="font-size: 20px;"></ion-icon>
       </button>
     </ion-buttons>

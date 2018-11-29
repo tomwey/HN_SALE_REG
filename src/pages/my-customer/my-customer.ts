@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content, ModalController, Events,IonicPage } from 'ionic-angular';
+import { NavController, NavParams, Content, ModalController, Events,IonicPage, App, Searchbar } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
-import { App } from 'ionic-angular/components/app/app';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 import { Tools } from '../../provider/Tools';
 import { AppStore } from '../../provider/app-store';
@@ -26,8 +25,12 @@ export class MyCustomerPage {
   };
 
   showFilterPanel: boolean = false;
+  showSearch: boolean = false;
+
   // showPanel: boolean = false;
   @ViewChild(Content) content: Content;
+  @ViewChild('searchBar') searchBar: Searchbar;
+
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private app: App,
@@ -91,6 +94,19 @@ export class MyCustomerPage {
       .catch(error => {
         this.tools.showToast(error.message || '获取项目失败');
       });
+  }
+
+  cancelClick() {
+    this.showSearch = false;
+  }
+
+  searchClick() {
+    this.showSearch = true;
+    setTimeout(() => {
+      // console.log(this.searchBar);
+      this.searchBar.setFocus();
+    }, 150);
+    
   }
 
   forwardToPage(arr) {
