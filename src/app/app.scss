@@ -76,6 +76,7 @@
 
 .toolbar .segment-md {
     border-bottom: 0.5px solid #f2f2f2;
+    height: 44px;
 }
 
 .list-ios .item-block .item-inner {
@@ -113,6 +114,8 @@
 
 .segment-md .segment-button {
     color: #666;
+    height: 44px;
+    line-height: 44px;
     &.segment-activated {
         color: color($colors,primary);
     }
