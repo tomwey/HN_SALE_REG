@@ -164,7 +164,7 @@
     <ion-list>
       <button ion-item detail-none *ngFor="let item of filterConfigData" (click)="selectFilterItem(item);">
         <ion-label class="name">{{item.name}}</ion-label>
-        <ion-icon name="ios-checkmark-outline" item-right *ngIf="item.value !== '100' && currentFilterData[menuType] && currentFilterData[menuType][item.field] === item.value "></ion-icon>
+        <ion-icon color="primary" name="ios-checkmark-outline" item-right *ngIf="item.value !== '100' && item.selected"></ion-icon>
         <div item-content *ngIf="item.field === 'time' && item.value === '100'" class="date-control-wrap">
           <ion-datetime 
             [(ngModel)]="item.startDate"
@@ -172,7 +172,7 @@
             pickerFormat="YYYY-MM-DD" 
             cancelText="取消"
             doneText="确定"
-            placeholder="开始日期" class="custom-date-control"></ion-datetime>
+            placeholder="开始日期" [max]="item.endDate" class="custom-date-control"></ion-datetime>
           <span class="date-line">-</span>
           <ion-datetime 
             [(ngModel)]="item.endDate"
@@ -180,7 +180,7 @@
             pickerFormat="YYYY-MM-DD" 
             cancelText="取消"
             doneText="确定"
-            placeholder="截止日期" class="custom-date-control"></ion-datetime>
+            placeholder="截止日期" [min]="item.startDate" class="custom-date-control"></ion-datetime>
         </div>
         <button ion-button item-right *ngIf="item.field === 'time' && item.value === '100'">确定</button>
       </button>

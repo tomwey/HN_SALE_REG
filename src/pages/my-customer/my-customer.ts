@@ -146,6 +146,8 @@ export class MyCustomerPage {
   loadData(loading = true) {
     this.data = [];
     
+    console.log(this.currentFilterData);
+
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
                           param1: Utils.getQueryString('manid'),
@@ -350,7 +352,18 @@ export class MyCustomerPage {
   selectFilter(item) {
     this.showFilterPanel = true;
 
-    this.filterConfigData = this.filterBaseData[item.field];
+    const filterItemObj = this.currentFilterData[this.menuType] || {};
+
+    const selectedObj = filterItemObj[item.field];
+
+    const data = this.filterBaseData[item.field];
+    data.forEach(config => {
+      config.selected = false;
+      if (selectedObj && selectedObj.value === config.value && selectedObj.name === config.name) {
+        config.selected = true;
+      }
+    });
+    this.filterConfigData = data;
   }
 
   filterMenuName(fItem) {
@@ -365,14 +378,13 @@ export class MyCustomerPage {
   selectFilterItem(item) {
     this.showFilterPanel = false;
     // console.log(item);
+    if (item.selected) return;
+
     let obj = this.currentFilterData[this.menuType] || {};
-
     obj[item.field] = item;
-    // console.log(this.currentFilterData);
-
     this.currentFilterData[this.menuType] = obj;
 
-    // console.log(this.currentFilterData)
+    this.loadData();
   }
 
   data: any = [];
