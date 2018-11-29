@@ -9,10 +9,10 @@ page-my-customer {
     .filters-overlap {
         position: absolute;
         z-index: 100;
-        top: 128px;
+        top: 130px;
         left: 0;
         width: 100%;
-        height: calc(100% - 126px);
+        height: calc(100% - 130px);
         background: rgba(0,0,0,0.6);
         .filter-wrap {
             height: 100%;
@@ -89,6 +89,11 @@ page-my-customer {
 
             .name {
                 display: inline-block;
+                max-width: 75%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                vertical-align: middle;
             }
             .icon-wrap {
                 display: inline-block;
