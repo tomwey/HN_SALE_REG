@@ -77,15 +77,15 @@ page-my-customer {
                 border-right: 0;
             }
 
-            &.active {
-                color: color($colors, primary);
+            // &.active {
+            //     color: color($colors, primary);
 
-                .icon-wrap {
-                    ion-icon {
-                        color: color($colors, primary);
-                    }
-                }
-            }
+            //     .icon-wrap {
+            //         ion-icon {
+            //             color: color($colors, primary);
+            //         }
+            //     }
+            // }
 
             border-right: 0.5px solid #f2f2f2;
 
@@ -95,14 +95,16 @@ page-my-customer {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                vertical-align: middle;
+                vertical-align: top;
             }
             .icon-wrap {
                 display: inline-block;
                 margin-left: 5px;
-                vertical-align: middle;
+                // line-height: 17px;
+                vertical-align: top;
                 ion-icon {
                     color: #999;
+                    margin-top: 2px;
                 }
             }
         }
