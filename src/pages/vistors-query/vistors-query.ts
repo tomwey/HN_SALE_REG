@@ -58,19 +58,14 @@ export class VistorsQueryPage {
   }
 
   selectProject() {
-    this.api.POST(null, { "dotype": "GetData", 
-                          "funname": "案场获取项目列表APP", 
-                          "param1": Utils.getQueryString("manid") })
-            .then(data => {
-              if (data && data['data']) {
-                let arr = data['data'];
-                this.showSelectPage(arr);
-              }
-            })
-            .catch(error => {
-              this.tools.showToast(error.message || '获取项目失败');
-            });
+    let modal = this.modalCtrl.create('SelectProjectPage');
+    modal.onDidDismiss(data => {
+      if (!data) return;
 
+      this.project = data;
+      this.store.saveProject(data);
+    })
+    modal.present();
   }
 
   selectItem(person) {
@@ -79,29 +74,6 @@ export class VistorsQueryPage {
       return;
     }
     this.forwardTo(person);
-  }
-
-  showSelectPage(arr) {
-    let data = [];
-    // console.log(arr);
-    arr.forEach(element => {
-      // "project_id":"1291428","project_name":"珍宝金楠一期"
-      data.push(`${element.project_name}|${element.project_id}`);  
-    });
-    let selectedItem = null;
-    if (this.project.label && this.project.value) {
-      selectedItem = `${this.project.label}|${this.project.value}`;
-    }
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
-                                                          title: '选择项目', data: data, need_save: true })
-    modal.onDidDismiss((data) => {
-      if (data) {
-        this.project = data;
-
-        this.store.saveProject(data);
-      }
-    });
-    modal.present();
   }
 
   query(type) {

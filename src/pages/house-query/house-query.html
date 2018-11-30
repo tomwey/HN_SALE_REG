@@ -9,7 +9,8 @@
   <ion-navbar color="primary">
     <ion-title>房源查询</ion-title>
     <ion-buttons end>
-      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+        <project-select [size]="14" [limitWidth]="120" (onSelect)="onSelectedProject($event);"></project-select>
+      <!-- <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button> -->
     </ion-buttons>
 
   </ion-navbar>

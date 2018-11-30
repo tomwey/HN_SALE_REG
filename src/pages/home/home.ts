@@ -118,8 +118,8 @@ export class HomePage {
   onSelectedProject(ev) {
     // console.log(ev);
     this.currentProject = ev;
-
     this.loadStatData(true);
+    
   }
 
   ionViewDidLoad() {

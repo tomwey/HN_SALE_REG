@@ -30,6 +30,7 @@ export class ProjectSelectComponent {
       if (data) {
         this.currentProject.id = data.value;
         this.currentProject.name = data.label;
+        this.currentProject.fromStore = true;
 
         this.onSelect.emit(this.currentProject);
       }
@@ -45,6 +46,7 @@ export class ProjectSelectComponent {
 
         this.currentProject.name = res.label;
         this.currentProject.id   = res.value;
+        this.currentProject.fromStore = false;
 
         this.store.saveProject(res);
 
