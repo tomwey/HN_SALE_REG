@@ -50,6 +50,10 @@ export class Tools {
             });
             loading.present();
             this.loading = loading;
+
+            setTimeout( () => {
+                this.hideLoading();
+            }, 60000 ) // 最长显示10秒
         }
     }
 

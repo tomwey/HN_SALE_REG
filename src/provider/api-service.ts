@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Md5 } from 'ts-md5';
 import { Tools } from './Tools';
+import 'rxjs/add/operator/timeout';
 
 /*
   Generated class for the ApiService provider.
@@ -156,6 +157,7 @@ export class ApiService {
     let requestOptions = new RequestOptions({ headers: headers });
     return new Promise((resolve, reject) => {
       this.http.post(url, JSON.stringify(params), requestOptions)
+      .timeout(60000)
       .toPromise()
       .then(resp => {
         this.hideLoading();
