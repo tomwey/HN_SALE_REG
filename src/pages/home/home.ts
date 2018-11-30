@@ -57,6 +57,14 @@ export class HomePage {
         this.changeCurrentProject(projData);
         this.loadStatData(false);
       });
+
+      this.events.subscribe('follow:saved', (data) => {
+        if (data === '1') {
+          // const callcount = parseInt(this.statData.callcount);
+          // this.statData.callcount = callcount + 1;
+          this.loadStatData(false);
+        }
+      });
   }
 
   loadStatData(loading = true) {

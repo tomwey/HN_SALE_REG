@@ -44,7 +44,9 @@ export class MortgageDetailPage {
     temp.push({ label: '客户名称', value: this.mortgage.custnames.replace('NULL', '--') });
     temp.push({ label: '房间号', value: this.mortgage.house_no.replace('NULL', '--') });
     temp.push({ label: '证件号码', value: this.mortgage.cardnos.replace('NULL', '--') });
-    temp.push({ label: '贷款金额', value: this.mortgage.ajmoney.replace('NULL', '--') });
+    temp.push({ label: '成交金额', value: `${this.mortgage.money.replace('NULL', '--')}万` });
+    temp.push({ label: '首付金额', value: `${this.mortgage.firstpay.replace('NULL', '--')}万` });
+    temp.push({ label: '贷款金额', value: `${this.mortgage.ajmoney.replace('NULL', '--')}万` });
     temp.push({ label: '贷款方式', value: this.mortgage.paytypename.replace('NULL', '--') });
     temp.push({ label: '按揭银行', value: this.mortgage.ajbankname.replace('NULL', '--') });
     temp.push({ label: '贷款年限', value: this.mortgage.ajyears.replace('NULL', '--') });

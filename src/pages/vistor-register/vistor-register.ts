@@ -491,7 +491,12 @@ export class VistorRegisterPage {
               this.person.srcname = this.source.label;
             }
 
-            this.events.publish('follow:saved');
+            // this.events.publish('follow:saved');
+            if (this.followtype === '20', this.person.followcnt === 1) { // 并且跟进成功一次
+              this.events.publish('follow:saved', '1');
+            } else {
+              this.events.publish('follow:saved', '0');
+            }
             // this.navParams.data.person = this.person;
             
           } else {
