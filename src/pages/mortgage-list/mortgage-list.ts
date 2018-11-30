@@ -61,12 +61,12 @@ export class MortgageListPage {
 
     // this.error = '请先选择项目';
 
-    this.store.getProject(data => {
-      if (data) {
-        // const proj = JSON.parse(data);
-        this.currentProject.id = data.value;
-        this.currentProject.name = data.label;
-      }
+    // this.store.getProject(data => {
+    //   if (data) {
+    //     // const proj = JSON.parse(data);
+    //     this.currentProject.id = data.value;
+    //     this.currentProject.name = data.label;
+    //   }
 
       if (!this.currentProject.id) {
         this.error = '请先选择项目';
@@ -75,7 +75,7 @@ export class MortgageListPage {
       setTimeout(() => {
         this.loadData();
       }, 300);
-    });
+    // });
   }
 
   loadMortgageStates(type) {
@@ -122,9 +122,8 @@ export class MortgageListPage {
                           "param1": Utils.getQueryString('manid'),
                           "param2": this.currentProject.id,
                           "param3": "-1",
-                          "param4": "-1",
-                          "param5": this.keyword,
-                          "param6": this.currentState.id || '-1',
+                          "param4": this.keyword,
+                          "param5": this.currentState.id || '-1',
                          }, '正在加载', loading)
       .then(data => {
         // console.log(data);
@@ -142,7 +141,19 @@ export class MortgageListPage {
 
   showPanel1(type) {
     if (type == 1) {
-      this.loadProjects(1);
+      // this.loadProjects(1);
+      let modal = this.modalCtrl.create('SelectProjectPage', { onlyShowL1Projects: true });
+      modal.onDidDismiss(data => {
+        if (!data) return;
+  
+        this.currentProject.name = data.label;
+        this.currentProject.id   = data.value;
+
+        // this.store.saveProject(data);
+
+        this.loadData();
+      })
+      modal.present();
     } else if (type == 2) {
       this.loadMortgageStates(2);
     }
@@ -179,31 +190,6 @@ export class MortgageListPage {
         this.error = error.message || '服务器出错了';
 
         ev.complete();
-      });
-  }
-
-  loadProjects(type) {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
-      .then(data => {
-        if (data && data['data']) {
-          let arr = data['data'];
-          // console.log(arr);
-          // this.projects = arr;
-          if (arr.length == 0) {
-            this.tools.showToast('暂无项目数据');
-          } else {
-            this.forwardToPage(arr, type);
-          }
-          // this.showSelectPage(arr);
-          // this.loadIndustries(this.projects[0]);
-        } else {
-          this.tools.showToast('非法错误!');
-        }
-      })
-      .catch(error => {
-        this.tools.showToast(error.message || '获取项目失败');
       });
   }
 

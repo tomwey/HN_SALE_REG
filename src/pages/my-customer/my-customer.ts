@@ -3,7 +3,6 @@ import { NavController, NavParams, Content, ModalController, Events,IonicPage, A
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
-import { Tools } from '../../provider/Tools';
 import { AppStore } from '../../provider/app-store';
 
 /**
@@ -34,7 +33,6 @@ export class MyCustomerPage {
   constructor(public navCtrl: NavController, 
     private api: ApiService,
     private app: App,
-    private tools: Tools,
     private store: AppStore,
     private events: Events,
     private modalCtrl: ModalController,
@@ -72,28 +70,41 @@ export class MyCustomerPage {
   selectProject() {
     this.showFilterPanel = false;
 
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
-      .then(data => {
-        if (data && data['data']) {
-          let arr = data['data'];
-          // console.log(arr);
-          // this.projects = arr;
-          if (arr.length == 0) {
-            this.tools.showToast('暂无项目数据');
-          } else {
-            this.forwardToPage(arr);
-          }
-          // this.showSelectPage(arr);
-          // this.loadIndustries(this.projects[0]);
-        } else {
-          this.tools.showToast('非法错误!');
-        }
-      })
-      .catch(error => {
-        this.tools.showToast(error.message || '获取项目失败');
-      });
+    let modal = this.modalCtrl.create('SelectProjectPage');
+    modal.onDidDismiss(data => {
+      if (!data) return;
+
+      this.store.saveProject(data);
+
+      this.currentProject.name = data.label;
+      this.currentProject.id   = data.value;
+
+      this.loadData();
+    })
+    modal.present();
+
+    // this.api.POST(null, { "dotype": "GetData", 
+    //       "funname": "案场获取项目列表APP", 
+    //       "param1": Utils.getQueryString("manid") })
+    //   .then(data => {
+    //     if (data && data['data']) {
+    //       let arr = data['data'];
+    //       // console.log(arr);
+    //       // this.projects = arr;
+    //       if (arr.length == 0) {
+    //         this.tools.showToast('暂无项目数据');
+    //       } else {
+    //         this.forwardToPage(arr);
+    //       }
+    //       // this.showSelectPage(arr);
+    //       // this.loadIndustries(this.projects[0]);
+    //     } else {
+    //       this.tools.showToast('非法错误!');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.tools.showToast(error.message || '获取项目失败');
+    //   });
   }
 
   cancelClick() {
@@ -109,28 +120,28 @@ export class MyCustomerPage {
     
   }
 
-  forwardToPage(arr) {
-    let temp = [];
+  // forwardToPage(arr) {
+  //   let temp = [];
 
-    arr.forEach(element => {
-      temp.push(`${element.project_name}|${element.project_id}`);
-    });
+  //   arr.forEach(element => {
+  //     temp.push(`${element.project_name}|${element.project_id}`);
+  //   });
     
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
-      title: '选择项目', data: temp });
-      modal.onDidDismiss((res) => {
-        // console.log(res);
-        if (!res) return;
+  //   let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
+  //     title: '选择项目', data: temp });
+  //     modal.onDidDismiss((res) => {
+  //       // console.log(res);
+  //       if (!res) return;
 
-        this.currentProject.name = res.label;
-        this.currentProject.id   = res.value;
+  //       this.currentProject.name = res.label;
+  //       this.currentProject.id   = res.value;
 
-        this.store.saveProject(res);
+  //       this.store.saveProject(res);
 
-        this.loadData();
-      });
-    modal.present();
-  }
+  //       this.loadData();
+  //     });
+  //   modal.present();
+  // }
 
   // selectProject(proj, ev:Event) {
   //   ev.stopPropagation();

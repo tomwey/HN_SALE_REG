@@ -28,6 +28,7 @@
       </form>
     </div>
     <ion-buttons end>
+        <!-- <project-select [size]="14" [limitWidth]="120" (onSelect)="onSelectedProject($event);"></project-select> -->
       <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
       <button ion-button icon-only small (click)="searchClick();">
         <ion-icon name="ios-search-outline" style="font-size: 20px;"></ion-icon>
