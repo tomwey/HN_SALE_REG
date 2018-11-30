@@ -57,7 +57,8 @@ export class VistorRegisterPage {
 
   operType: any = '0';
 
-  hasSurvey: boolean = false;
+  hasLDSurvey: boolean = false;
+  hasLFSurvey: boolean = false;
 
   buttons: any = [
     {
@@ -189,7 +190,8 @@ export class VistorRegisterPage {
         if (data && data['data']) {
           const arr = data['data'];
           if (arr.length > 0) {
-            this.hasSurvey = arr[0].havesurvey;
+            this.hasLDSurvey = arr[0].haveldsurvey;
+            this.hasLFSurvey = arr[0].havelfsurvey;
           }
         }
       })
@@ -514,19 +516,21 @@ export class VistorRegisterPage {
       });
   }
 
-  generateSql2() {
+  generateSql2(arr) {
+    if (!arr) return '';
+
     let sql = '';
-    this.surveyData.forEach(element => {
+    arr.forEach(element => {
       let titles = element.titles;
       // let inputCount = 0;
       if (titles) { // 单选或者多选
         titles.forEach(obj => {
 
-          sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
+          sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = '${obj.addvalue || ""}' where did = ${obj.did}`;
         });
       } else { // 填空
         // if (element.addvalue) {
-          sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
+          sql += ` update H_SP_Questionnaire_DB set AddValue = '${element.addvalue || ""}' where did = ${element.did}`;
         // }
       }
     });
@@ -534,7 +538,7 @@ export class VistorRegisterPage {
   }
 
   saveSurvey() {
-    let sql = this.generateSql2 ();
+    let sql = this.generateSql2(this.surveyData['8']) + this.generateSql2(this.surveyData['6']);
 
     this.api.SendSurvey(sql, '', false)
       .then(data => {

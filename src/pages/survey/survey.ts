@@ -48,21 +48,27 @@ export class SurveyPage {
     // console.log('ionViewDidLoad SurveyPage');
     this.iosFixed.fixedScrollFreeze(this.content);
     
-    if (this.navParams.data.surveyData) {
-      this.formData = this.navParams.data.surveyData;
-    } else {
+    const obj = this.navParams.data.surveyData;
+    // console.log(obj);
+
+    if (obj && obj[this.tplid]) {
+      this.formData = obj[this.tplid];
+    } 
+
+    if (this.formData.length === 0) {
       this.loadData();
     }
   }
 
   loadData() {
-    console.log(this.callid);
-    console.log(this.tplid);
+    // console.log(this.callid);
+    // console.log(this.tplid);
 
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取问卷明细数据APP',
                           param1: this.callid.toString(),
-                          param2: this.tplid.toString()
+                          param2: this.tplid.toString(),
+                          param3: this.proj_id,
                           }, '', false)
             .then(data => {
               // console.log(data);
@@ -118,7 +124,7 @@ export class SurveyPage {
     let temp = [];
     arr.forEach(element => {
       let ele = JSON.parse(JSON.stringify(element));
-      if (ele.titlevalue != '1') {
+      if (ele.titlevalue && ele.titlevalue !== '1') {
         ele.addvalue = '';
       }
 
@@ -146,7 +152,7 @@ export class SurveyPage {
     });
 
     this.formData = temp;
-    console.log(this.formData);
+    // console.log(this.formData);
   }
 
   selectItems(item,opt) {
@@ -190,12 +196,12 @@ export class SurveyPage {
   }
 
   commit() {
-    let sql = '';
+    // let sql = '';
     let requiredCount = 0;
     let needRequiredCount = 0;
 
     this.formData.forEach(element => {
-      console.log(element);
+      // console.log(element);
       if (element.ismust) {
         needRequiredCount ++;
       }
@@ -234,12 +240,12 @@ export class SurveyPage {
           //   }
           // }
           // console.log(obj);
-          sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = ${obj.addvalue || "''"} where did = ${obj.did}`;
+          // sql += ` update H_SP_Questionnaire_DB set TitleValue = ${obj.titlevalue || "''"}, AddValue = '${obj.addvalue || ""}' where did = ${obj.did}`;
         });
       } else { // 填空
         // if (element.addvalue) {
           // console.log(123);
-          sql += ` update H_SP_Questionnaire_DB set AddValue = ${element.addvalue || "''"} where did = ${element.did}`;
+          // sql += ` update H_SP_Questionnaire_DB set AddValue = '${element.addvalue || ""}' where did = ${element.did}`;
         // }
       }
 
@@ -248,15 +254,19 @@ export class SurveyPage {
       }
     });
     // console.log(sql);
-    console.log(requiredCount);
-    console.log(needRequiredCount);
+    // console.log(requiredCount);
+    // console.log(needRequiredCount);
 
     if (requiredCount != needRequiredCount) {
       this.tools.showToast('有必填未完成，请确认');
       return;
     }
 
-    this.events.publish('survey:saved', this.formData);
+    let data = this.navParams.data.surveyData || {};
+    data[this.tplid] = this.formData;
+    // console.log(data);
+
+    this.events.publish('survey:saved', data);
 
     this.navCtrl.pop();
 

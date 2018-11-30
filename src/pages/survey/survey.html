@@ -35,7 +35,7 @@
               placeholder="输入内容" 
               class="custom-input">
 
-              <span *ngIf="opt.itype == '3'">
+              <span *ngIf="opt.itype === '3'">
                   <!-- {{opt.title}}{{opt.ismust ? '（ *必填 ）' : ''}}<br> -->
                   <textarea placeholder="输入内容" class="custom-textarea" [(ngModel)]="opt.addvalue" rows="6">
 
