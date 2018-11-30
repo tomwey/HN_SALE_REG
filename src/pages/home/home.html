@@ -27,7 +27,7 @@
   <div class="dashboard" *ngIf="hasDashboard">
     <div class="stats">
       <div class="project-wrap">
-        <button ion-button class="limit-width1" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}}&nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon></button>
+        <project-select (onSelect)="onSelectedProject($event);"></project-select>
       </div>
       <div class="stat-wrap">
         <div class="stat-item ">

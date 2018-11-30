@@ -1,9 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { /*IonicPage, */NavController, NavParams, ModalController, Events, Content } from 'ionic-angular';
-// import { VistorsQueryPage } from '../vistors-query/vistors-query';
-// import { HouseQueryPage } from '../house-query/house-query';
-// import { MyCustomerPage } from '../my-customer/my-customer';
-import { AppStore } from '../../provider/app-store';
+import { /*IonicPage, */NavController, NavParams, Events, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
@@ -32,6 +28,8 @@ export class HomePage {
     name: ''
   };
 
+  loading: boolean = false;
+
   statData: any = {
     ajexpcount: "0",
     callcount: "0",
@@ -47,20 +45,11 @@ export class HomePage {
 
   @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController, 
-    private store: AppStore,
-    private modalCtrl: ModalController,
     private api: ApiService,
     private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
     public navParams: NavParams) {
-
-      // this.store.getProject(data => {
-      //   if (data) {
-      //     this.currentProject.id = data.value;
-      //   this.currentProject.name = data.label;
-      //   }
-      // });
 
       this.prepareFunc();
 
@@ -78,6 +67,10 @@ export class HomePage {
       return;
     }
 
+    if (this.loading) return;
+    
+    this.loading = true;
+
     this.api.POST(null, { 
       dotype: 'GetData',
       funname: '查询销售系统首页信息APP',
@@ -91,8 +84,9 @@ export class HomePage {
           this.statData = arr[0];
         }
       }
+      this.loading = false;
     }).catch(error => {
-
+      this.loading = false;
     });
   }
 
@@ -121,66 +115,15 @@ export class HomePage {
     }
   }
 
-  selectProject() {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
-      .then(data => {
-        if (data && data['data']) {
-          let arr = data['data'];
-          // console.log(arr);
-          // this.projects = arr;
-          if (arr.length == 0) {
-            this.tools.showToast('暂无项目数据');
-          } else {
-            this.forwardToPage(arr);
-          }
-          // this.showSelectPage(arr);
-          // this.loadIndustries(this.projects[0]);
-        } else {
-          this.tools.showToast('非法错误!');
-        }
-      })
-      .catch(error => {
-        this.tools.showToast(error.message || '获取项目失败');
-      });
-  }
+  onSelectedProject(ev) {
+    // console.log(ev);
+    this.currentProject = ev;
 
-  forwardToPage(arr) {
-    let temp = [];
-
-    arr.forEach(element => {
-      temp.push(`${element.project_name}|${element.project_id}`);
-    });
-    
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
-      title: '选择项目', data: temp });
-      modal.onDidDismiss((res) => {
-        // console.log(res);
-        if (!res) return;
-
-        this.currentProject.name = res.label;
-        this.currentProject.id   = res.value;
-
-        this.store.saveProject(res);
-
-        // this.loadData();
-      });
-    modal.present();
+    this.loadStatData(true);
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad HomePage');
-
     this.iosFixed.fixedScrollFreeze(this.content);
-    
-    this.store.getProject(data => {
-      if (data) {
-        this.changeCurrentProject(data);
-
-        this.loadStatData(true);
-      }
-    });
   }
 
   changeCurrentProject(projData) {
@@ -189,16 +132,6 @@ export class HomePage {
       this.currentProject.name = projData.label;
     }
   }
-
-  // ionViewWillEnter() {
-
-  //   this.store.getProject(data => {
-  //     if (data) {
-  //       this.currentProject.id = data.value;
-  //       this.currentProject.name = data.label;
-  //     }
-  //   });
-  // }
 
   back() {
     window.location.href = 'salereg://back';

@@ -1,0 +1,49 @@
+<!--
+  Generated template for the SelectProjectPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close();">
+        <ion-icon name="ios-close-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>选择项目</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar color="white" *ngIf="areas.length > 0">
+    <ion-segment [(ngModel)]="currentArea" 
+      mode="md"
+      (ionChange)="segmentChanged($event)">
+      <ion-segment-button [value]="area" *ngFor="let area of areas">
+        {{area}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
+  <ion-list class="projects">
+      <ion-card *ngFor="let item of l1Projects" tappable (click)="expandItem(item);">
+          <ion-card-header style="color: #666;font-size: 14px;">
+            {{item.project_name}}
+            <span class="icon-arrow">
+              <ion-icon name="{{item.expanded ? 'ios-arrow-down-outline' : 'ios-arrow-forward-outline'}}"></ion-icon>
+            </span>
+          </ion-card-header>
+          <accordion-list [expanded]="item.expanded" [expandedHeight]="0" *ngIf="!onlyShowL1Projects">
+              
+              <ion-item *ngFor="let child of projects[item.project_id]" 
+                tappable (click)="selectProject(child,$event);">
+                <ion-label text-wrap>{{child.project_name}}</ion-label>
+              </ion-item>
+            </accordion-list>
+        </ion-card>
+  </ion-list>
+</ion-content>
