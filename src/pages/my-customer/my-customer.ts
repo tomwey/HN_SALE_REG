@@ -106,9 +106,58 @@ export class MyCustomerPage {
       this.data = [];
     }
     
-    console.log(this.currentFilterData);
-    
+    // console.log(this.currentFilterData);
     let filterOptions = null;
+
+    const optionConfig = this.filterOptionConfigs[this.menuType];
+    if (optionConfig) {
+      let arr = optionConfig.split(',');
+      let valueArr = [];
+      arr.forEach(field => {
+        let obj = this.currentFilterData[this.menuType];
+        console.log(obj);
+        let value;
+        if (!obj) { // 表示未设置任何过滤条件，默认值全部为-1
+          if (field === 'time2') {
+            value = '';
+          } else {
+            value = '-1';
+          }
+        } else {
+          let newField = (field === 'time' || field === 'time2') ? 'time' : field;
+          let opt = obj[newField];
+          if (!opt) {
+            if (field === 'time2') {
+              value = '';
+            } else {
+              value = '-1';
+            }
+          } else {
+            if (field === 'time2') {
+              let time = obj.time;
+              // console.log(11111111);
+              // console.log(time);
+              if (time && time.value === '100') { // 表示自定义日期
+                let date = `${time.startDate || ''}#${time.endDate || ''}`;
+                if (date === '#') {
+                  value = '';
+                } else {
+                  value = date;
+                }
+              } else {
+                value = '';
+              }
+            } else {
+              value = opt.value || '-1';
+            }
+          }
+        }
+        valueArr.push(value);
+      });
+
+      filterOptions = valueArr.join(',');
+      console.log('过滤条件是: ' + filterOptions);
+    }
 
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
@@ -350,7 +399,9 @@ export class MyCustomerPage {
   selectFilterItem(item) {
     this.showFilterPanel = false;
     // console.log(item);
-    if (item.selected) return;
+    if (!(item.field === 'time' && item.value !== '100')) {
+      if (item.selected) return;
+    }
 
     let obj = this.currentFilterData[this.menuType] || {};
     obj[item.field] = item;
@@ -358,6 +409,17 @@ export class MyCustomerPage {
 
     this.loadData();
   }
+
+  // selectCustomDate(item, ev: Event) {
+  //   ev.stopPropagation();
+
+  //   if (!item.startDate && !item.endDate) {
+  //     this.
+  //     return;
+  //   }
+
+  //   this.selectFilterItem(item);
+  // }
 
   data: any = [];
   error: any = null;
@@ -479,6 +541,14 @@ export class MyCustomerPage {
         field: 'bill_type'
       },
     ]
+  };
+
+  filterOptionConfigs: any = {
+    '1': 'time,time2,expire_state_1,industry',
+    '2': 'time,time2,expire_state_2,industry',
+    '3': 'time,time2,approve_state,industry',
+    '4': 'time,time2,custom_type,aj_state,industry',
+    '5': 'time,time2,yq_state,pay_type,bill_type',
   };
 
   filterBaseData: any = {

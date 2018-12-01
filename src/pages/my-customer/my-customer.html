@@ -183,7 +183,7 @@
             doneText="确定"
             placeholder="截止日期" [min]="item.startDate" class="custom-date-control"></ion-datetime>
         </div>
-        <button ion-button item-right *ngIf="item.field === 'time' && item.value === '100'">确定</button>
+        <button ion-button item-right *ngIf="item.field === 'time' && item.value === '100'" [disabled]="!item.startDate && !item.endDate">确定</button>
       </button>
     </ion-list>
   </div>
