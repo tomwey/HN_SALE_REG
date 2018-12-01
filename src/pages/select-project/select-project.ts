@@ -41,7 +41,9 @@ export class SelectProjectPage {
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
 
-    this.loadData();
+    setTimeout(() => {
+      this.loadData();
+    }, 300);
   }
 
   loadData() {

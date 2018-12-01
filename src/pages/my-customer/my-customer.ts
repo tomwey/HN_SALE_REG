@@ -67,6 +67,10 @@ export class MyCustomerPage {
     
   }
 
+  ionViewWillLeave() {
+    this.showFilterPanel = false;
+  }
+
   selectProject() {
     this.showFilterPanel = false;
 
@@ -82,29 +86,6 @@ export class MyCustomerPage {
       this.loadData();
     })
     modal.present();
-
-    // this.api.POST(null, { "dotype": "GetData", 
-    //       "funname": "案场获取项目列表APP", 
-    //       "param1": Utils.getQueryString("manid") })
-    //   .then(data => {
-    //     if (data && data['data']) {
-    //       let arr = data['data'];
-    //       // console.log(arr);
-    //       // this.projects = arr;
-    //       if (arr.length == 0) {
-    //         this.tools.showToast('暂无项目数据');
-    //       } else {
-    //         this.forwardToPage(arr);
-    //       }
-    //       // this.showSelectPage(arr);
-    //       // this.loadIndustries(this.projects[0]);
-    //     } else {
-    //       this.tools.showToast('非法错误!');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.tools.showToast(error.message || '获取项目失败');
-    //   });
   }
 
   cancelClick() {
@@ -120,51 +101,22 @@ export class MyCustomerPage {
     
   }
 
-  // forwardToPage(arr) {
-  //   let temp = [];
-
-  //   arr.forEach(element => {
-  //     temp.push(`${element.project_name}|${element.project_id}`);
-  //   });
-    
-  //   let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
-  //     title: '选择项目', data: temp });
-  //     modal.onDidDismiss((res) => {
-  //       // console.log(res);
-  //       if (!res) return;
-
-  //       this.currentProject.name = res.label;
-  //       this.currentProject.id   = res.value;
-
-  //       this.store.saveProject(res);
-
-  //       this.loadData();
-  //     });
-  //   modal.present();
-  // }
-
-  // selectProject(proj, ev:Event) {
-  //   ev.stopPropagation();
-  //   this.currentProject.id = proj.project_id;
-  //   this.currentProject.name = proj.project_name;
-
-  //   this.showPanel = false;
-  //   this.content.resize();
-
-  //   this.loadData();
-  // }
-
-  loadData(loading = true) {
-    this.data = [];
+  loadData(loading = true, refresher: any = null) {
+    if (!refresher) {
+      this.data = [];
+    }
     
     console.log(this.currentFilterData);
+    
+    let filterOptions = null;
 
     this.api.POST(null, { dotype: 'GetData', 
                           funname: '获取我的客户列表APP', 
                           param1: Utils.getQueryString('manid'),
                           param2: this.currentProject.id, 
                           param3: this.menuType,
-                          param4: this.keyword
+                          param4: this.keyword,
+                          param5: filterOptions,
                          }, '正在加载', loading)
       .then(data => {
         console.log(data);
@@ -179,44 +131,51 @@ export class MyCustomerPage {
         } else {
           this.error = "未知错误";
         }
-      })
-      .catch(error => {
-        this.error = error.message || '服务器出错了~';
-      })
-  }
 
-  loadExCustomers() {
-    this.data = [];
-
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '查询我的异常客户APP', 
-                          param1: Utils.getQueryString('manid'),
-                          param2: '', 
-                          param3: '',
-                          param4: this.keyword
-                         })
-      .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-          this.data = data['data'];
-          // this.prepareData(arr);
-          // this.data = data;
-
-          // if (arr.length > 0) {
-          //   this.error = null;
-          // } else {
-          //   this.error = '暂无数据';
-          // }
-          this.error = this.data.length === 0 ? '暂无数据' : null;
-
-          console.log(this.data);
-        } else {
-          this.error = "未知错误";
+        if (refresher) {
+          refresher.complete();
         }
       })
       .catch(error => {
         this.error = error.message || '服务器出错了~';
+        if (refresher) {
+          refresher.complete();
+        }
       })
+  }
+
+  loadExCustomers() {
+    // this.data = [];
+
+    // this.api.POST(null, { dotype: 'GetData', 
+    //                       funname: '查询我的异常客户APP', 
+    //                       param1: Utils.getQueryString('manid'),
+    //                       param2: '', 
+    //                       param3: '',
+    //                       param4: this.keyword
+    //                      })
+    //   .then(data => {
+    //     // console.log(data);
+    //     if (data && data['data']) {
+    //       this.data = data['data'];
+    //       // this.prepareData(arr);
+    //       // this.data = data;
+
+    //       // if (arr.length > 0) {
+    //       //   this.error = null;
+    //       // } else {
+    //       //   this.error = '暂无数据';
+    //       // }
+    //       this.error = this.data.length === 0 ? '暂无数据' : null;
+
+    //       // console.log(this.data);
+    //     } else {
+    //       this.error = "未知错误";
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.error = error.message || '服务器出错了~';
+    //   })
   }
 
   prepareData(arr) {
@@ -294,32 +253,34 @@ export class MyCustomerPage {
   }
 
   doRefresh(ev) {
-    this.api.POST(null, { dotype: 'GetData', 
-        funname: '获取我的客户列表APP', 
-        param1: Utils.getQueryString('manid'),
-        param2: this.currentProject.id, 
-        param3: this.menuType,
-        param4: this.keyword
-      }, '正在加载', false)
-    .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-        let arr = data['data'];
-        this.prepareData(arr);
-        if (arr.length > 0) {
-          this.error = null;
-        } else {
-          this.error = '暂无数据';
-        }
-        } else {
-          this.error = "未知错误";
-        }
-        ev.complete();
-    })
-    .catch(error => {
-      this.error = error.message || '服务器出错了~';
-      ev.complete();
-    })
+    this.loadData(false, ev);
+    // this.api.POST(null, { dotype: 'GetData', 
+    //     funname: '获取我的客户列表APP', 
+    //     param1: Utils.getQueryString('manid'),
+    //     param2: this.currentProject.id, 
+    //     param3: this.menuType,
+    //     param4: this.keyword,
+    //     param5: filterOptions,
+    //   }, '正在加载', false)
+    // .then(data => {
+    //     // console.log(data);
+    //     if (data && data['data']) {
+    //     let arr = data['data'];
+    //     this.prepareData(arr);
+    //     if (arr.length > 0) {
+    //       this.error = null;
+    //     } else {
+    //       this.error = '暂无数据';
+    //     }
+    //     } else {
+    //       this.error = "未知错误";
+    //     }
+    //     ev.complete();
+    // })
+    // .catch(error => {
+    //   this.error = error.message || '服务器出错了~';
+    //   ev.complete();
+    // })
   }
 
   callPhone(item) {
@@ -331,11 +292,11 @@ export class MyCustomerPage {
   segmentChanged(ev) {
     this.showFilterPanel = false;
     
-    if (this.menuType == '6') {
-      this.error = null;
-      this.loadExCustomers();
-      return;
-    }
+    // if (this.menuType == '6') {
+    //   this.error = null;
+    //   this.loadExCustomers();
+    //   return;
+    // }
 
     if (!this.currentProject.id) {
       this.error = '请先选择项目';
@@ -740,7 +701,18 @@ export class MyCustomerPage {
     pay_type: [
       {
         name: '全部',
-        value: '-1'
+        value: '-1',
+        field: 'pay_type'
+      },
+      {
+        name: '一次性',
+        value: '0',
+        field: 'pay_type'
+      },
+      {
+        name: '按揭',
+        value: '1',
+        field: 'pay_type'
       },
     ],
     bill_type: [
