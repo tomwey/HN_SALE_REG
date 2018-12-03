@@ -90,6 +90,10 @@ export class MyCustomerPage {
 
   cancelClick() {
     this.showSearch = false;
+    if (this.keyword.length > 0) {
+      this.keyword = '';
+      this.loadData();
+    }
   }
 
   searchClick() {
@@ -115,7 +119,7 @@ export class MyCustomerPage {
       let valueArr = [];
       arr.forEach(field => {
         let obj = this.currentFilterData[this.menuType];
-        console.log(obj);
+        // console.log(obj);
         let value;
         if (!obj) { // 表示未设置任何过滤条件，默认值全部为-1
           if (field === 'time2') {
@@ -156,7 +160,7 @@ export class MyCustomerPage {
       });
 
       filterOptions = valueArr.join(',');
-      console.log('过滤条件是: ' + filterOptions);
+      // console.log('过滤条件是: ' + filterOptions);
     }
 
     this.api.POST(null, { dotype: 'GetData', 
@@ -168,7 +172,7 @@ export class MyCustomerPage {
                           param5: filterOptions,
                          }, '正在加载', loading)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
           this.prepareData(arr);
@@ -459,6 +463,14 @@ export class MyCustomerPage {
       name: '回款',
     },
   ];
+
+  placeholderConfigs: any = {
+    '1': '输入客户名字或手机号搜索',
+    '2': '输入客户名字搜索',
+    '3': '输入客户名字搜索',
+    '4': '输入客户名字或手机号搜索',
+    '5': '输入客户名字或手机号搜索'
+  };
 
   currentFilterData: any = {};
 

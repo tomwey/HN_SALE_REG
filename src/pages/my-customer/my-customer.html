@@ -20,7 +20,7 @@
             [showCancelButton]="true"
             (search)="startSearch(keyword)"
             (ionCancel)="cancelClick();"
-            placeholder="搜索"
+            [placeholder]="placeholderConfigs[menuType]"
             [animated]="false"
             name="search"
           >
