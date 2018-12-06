@@ -1,9 +1,55 @@
 man-item {
-    .title {
-        margin-bottom: 10px;
-        font-size: 14px;
-        font-weight: normal;
+    // .title {
+    //     margin-bottom: 10px;
+    //     font-size: 14px;
+    //     font-weight: normal;
+    //     font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    // }
+
+    .base-info {
+        color: #333;
+        font-size: 0;
+        margin-bottom: 5px;
         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+        .name, .industry, ion-icon {
+            font-size: 14px;
+            // color: #333;
+            line-height: 14px;
+            display: inline-block;
+            // margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .name {
+            width: 136px;
+            
+            // background: red;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .industry {
+            margin-left: 5px;
+            &.industry-1 { // 住宅
+                color: color($colors, primary);
+            }
+            &.industry-2 { // 公寓
+                color: rgb(143, 180, 56);
+            }
+            &.industry-3 { // 商业
+                color: rgb(49, 124, 204);
+            }
+            &.industry-4 { // 车位
+                color: rgb(125, 63, 63);
+            }
+            &.industry-5 { // 其它
+                color: rgb(184, 149, 96);
+            }
+            &.industry-32 { // 办公
+                color: rgb(37, 186, 219);
+            }
+        }
     }
 
     // p {

@@ -110,7 +110,7 @@ export class MyCustomerPage {
       this.data = [];
     }
     
-    // console.log(this.currentFilterData);
+    console.log(this.currentFilterData);
     let filterOptions = null;
 
     const optionConfig = this.filterOptionConfigs[this.menuType];
@@ -402,8 +402,8 @@ export class MyCustomerPage {
 
   selectFilterItem(item) {
     this.showFilterPanel = false;
-    // console.log(item);
-    if (!(item.field === 'time' && item.value !== '100')) {
+    console.log(item);
+    if (!(item.field === 'time' && item.value === '100')) {
       if (item.selected) return;
     }
 
