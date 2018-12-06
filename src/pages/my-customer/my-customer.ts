@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content, ModalController, Events,IonicPage, App, Searchbar } from 'ionic-angular';
+import { NavController, NavParams, Content, ModalController, Events, IonicPage, App, Searchbar } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
@@ -30,7 +30,7 @@ export class MyCustomerPage {
   @ViewChild(Content) content: Content;
   @ViewChild('searchBar') searchBar: Searchbar;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private app: App,
     private store: AppStore,
@@ -39,32 +39,32 @@ export class MyCustomerPage {
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
 
-      // 加载选中的项目
-      this.store.getProject(data => {
-        if (data) {
-          // const proj = JSON.parse(data);
-          this.currentProject.id = data.value;
-          this.currentProject.name = data.label;
-        }
+    // 加载选中的项目
+    this.store.getProject(data => {
+      if (data) {
+        // const proj = JSON.parse(data);
+        this.currentProject.id = data.value;
+        this.currentProject.name = data.label;
+      }
 
-        if (!this.currentProject.id) {
-          this.error = '请先选择项目';
-        }
-      });
+      if (!this.currentProject.id) {
+        this.error = '请先选择项目';
+      }
+    });
 
-      this.events.subscribe('follow:saved', () => {
-        this.loadData(false);
-      });
-    
+    this.events.subscribe('follow:saved', () => {
+      this.loadData(false);
+    });
+
   }
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
-    
+
     setTimeout(() => {
       this.loadData();
     }, 300);
-    
+
   }
 
   ionViewWillLeave() {
@@ -81,7 +81,7 @@ export class MyCustomerPage {
       this.store.saveProject(data);
 
       this.currentProject.name = data.label;
-      this.currentProject.id   = data.value;
+      this.currentProject.id = data.value;
 
       this.loadData();
     })
@@ -102,14 +102,14 @@ export class MyCustomerPage {
       // console.log(this.searchBar);
       this.searchBar.setFocus();
     }, 150);
-    
+
   }
 
   loadData(loading = true, refresher: any = null) {
     if (!refresher) {
       this.data = [];
     }
-    
+
     console.log(this.currentFilterData);
     let filterOptions = null;
 
@@ -163,14 +163,15 @@ export class MyCustomerPage {
       // console.log('过滤条件是: ' + filterOptions);
     }
 
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '获取我的客户列表APP', 
-                          param1: Utils.getQueryString('manid'),
-                          param2: this.currentProject.id, 
-                          param3: this.menuType,
-                          param4: this.keyword,
-                          param5: filterOptions,
-                         }, '正在加载', loading)
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取我的客户列表APP',
+      param1: Utils.getQueryString('manid'),
+      param2: this.currentProject.id,
+      param3: this.menuType,
+      param4: this.keyword,
+      param5: filterOptions,
+    }, '正在加载', loading)
       .then(data => {
         // console.log(data);
         if (data && data['data']) {
@@ -195,40 +196,6 @@ export class MyCustomerPage {
           refresher.complete();
         }
       })
-  }
-
-  loadExCustomers() {
-    // this.data = [];
-
-    // this.api.POST(null, { dotype: 'GetData', 
-    //                       funname: '查询我的异常客户APP', 
-    //                       param1: Utils.getQueryString('manid'),
-    //                       param2: '', 
-    //                       param3: '',
-    //                       param4: this.keyword
-    //                      })
-    //   .then(data => {
-    //     // console.log(data);
-    //     if (data && data['data']) {
-    //       this.data = data['data'];
-    //       // this.prepareData(arr);
-    //       // this.data = data;
-
-    //       // if (arr.length > 0) {
-    //       //   this.error = null;
-    //       // } else {
-    //       //   this.error = '暂无数据';
-    //       // }
-    //       this.error = this.data.length === 0 ? '暂无数据' : null;
-
-    //       // console.log(this.data);
-    //     } else {
-    //       this.error = "未知错误";
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.error = error.message || '服务器出错了~';
-    //   })
   }
 
   prepareData(arr) {
@@ -263,7 +230,7 @@ export class MyCustomerPage {
       } else {
         time = '--';
       }
-      
+
       item['time'] = time;
 
       if (time === '--') {
@@ -273,10 +240,10 @@ export class MyCustomerPage {
         let tempDate = time.split(' ')[0];
 
         let dateBegin = new Date(tempDate.replace(/-/g, "/"));//将-转化为/，使用new Date
-        let dateEnd   = new Date();//获取当前时间
-        let dateDiff  = dateBegin.getTime() - dateEnd.getTime() + 24 * 60 * 60 * 1000;//时间差的毫秒数
+        let dateEnd = new Date();//获取当前时间
+        let dateDiff = dateBegin.getTime() - dateEnd.getTime() + 24 * 60 * 60 * 1000;//时间差的毫秒数
         // console.log(dateDiff);
-        let days      = Math.floor(dateDiff / (24*3600*1000));
+        let days = Math.floor(dateDiff / (24 * 3600 * 1000));
 
         if (days < 0) {
           item['left_days'] = -days;
@@ -289,7 +256,7 @@ export class MyCustomerPage {
           item['left_days_label'] = '还剩';
         }
       }
-      
+
       temp.push(item);
 
     });
@@ -307,49 +274,10 @@ export class MyCustomerPage {
 
   doRefresh(ev) {
     this.loadData(false, ev);
-    // this.api.POST(null, { dotype: 'GetData', 
-    //     funname: '获取我的客户列表APP', 
-    //     param1: Utils.getQueryString('manid'),
-    //     param2: this.currentProject.id, 
-    //     param3: this.menuType,
-    //     param4: this.keyword,
-    //     param5: filterOptions,
-    //   }, '正在加载', false)
-    // .then(data => {
-    //     // console.log(data);
-    //     if (data && data['data']) {
-    //     let arr = data['data'];
-    //     this.prepareData(arr);
-    //     if (arr.length > 0) {
-    //       this.error = null;
-    //     } else {
-    //       this.error = '暂无数据';
-    //     }
-    //     } else {
-    //       this.error = "未知错误";
-    //     }
-    //     ev.complete();
-    // })
-    // .catch(error => {
-    //   this.error = error.message || '服务器出错了~';
-    //   ev.complete();
-    // })
-  }
-
-  callPhone(item) {
-    // ev.stopPropagation();
-    window.location.href = "tel:" + item.telephone;
-    // window.open("tel:" + item.telephone);
   }
 
   segmentChanged(ev) {
     this.showFilterPanel = false;
-    
-    // if (this.menuType == '6') {
-    //   this.error = null;
-    //   this.loadExCustomers();
-    //   return;
-    // }
 
     if (!this.currentProject.id) {
       this.error = '请先选择项目';
@@ -363,11 +291,11 @@ export class MyCustomerPage {
   }
 
   startSearch(kw) {
-    if (this.menuType == '6') {
-      this.loadExCustomers();
-    } else {
-      this.loadData();
-    }
+    // if (this.menuType == '6') {
+    //   this.loadExCustomers();
+    // } else {
+    this.loadData();
+    // }
   }
 
   closeFilter() {
@@ -413,17 +341,6 @@ export class MyCustomerPage {
 
     this.loadData();
   }
-
-  // selectCustomDate(item, ev: Event) {
-  //   ev.stopPropagation();
-
-  //   if (!item.startDate && !item.endDate) {
-  //     this.
-  //     return;
-  //   }
-
-  //   this.selectFilterItem(item);
-  // }
 
   data: any = [];
   error: any = null;
@@ -548,10 +465,10 @@ export class MyCustomerPage {
         name: '付款方式',
         field: 'pay_type'
       },
-      {
-        name: '款项类型',
-        field: 'bill_type'
-      },
+      // {
+      //   name: '款项类型',
+      //   field: 'bill_type'
+      // },
     ]
   };
 
@@ -560,7 +477,7 @@ export class MyCustomerPage {
     '2': 'time,time2,expire_state_2,industry',
     '3': 'time,time2,approve_state,industry',
     '4': 'time,time2,custom_type,aj_state,industry',
-    '5': 'time,time2,yq_state,pay_type,bill_type',
+    '5': 'time,time2,yq_state,pay_type',
   };
 
   filterBaseData: any = {

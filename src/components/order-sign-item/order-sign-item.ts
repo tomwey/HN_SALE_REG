@@ -18,17 +18,17 @@ export class OrderSignItemComponent {
   @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
 
   constructor() {
-    
+
   }
 
   selectItem(item) {
     this.onSelect.emit(item);
   }
 
-  callPhone(item, ev: Event) {
-    ev.stopPropagation();
-    this.onCallPhone.emit(item);
-  }
+  // callPhone(item, ev: Event) {
+  //   ev.stopPropagation();
+  //   this.onCallPhone.emit(item);
+  // }
 
   formatMoney(money) {
     money = parseFloat(money) / 10000.0;

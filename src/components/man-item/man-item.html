@@ -22,9 +22,10 @@
   <div item-right class="right-section">
     <!-- <span class="state state-{{item.type}}">{{item.typename}}</span> -->
     <p>跟进<span class="days">{{item.followcnt}}</span>次</p>
-    <button ion-button clear (click)="callPhone(item, $event);">
+    <!-- <button ion-button clear (click)="callPhone(item, $event);">
       <ion-icon name="ios-call-outline"></ion-icon>
-    </button>
+    </button> -->
+    <call-phone [mobile]="item.telephone"></call-phone>
     <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
       <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
       <span *ngIf="item.left_days === 0">即将过期</span>
