@@ -687,6 +687,16 @@ export class MyCustomerPage {
         field: 'yq_state'
       },
       {
+        name: '1天后逾期',
+        value: '2',
+        field: 'yq_state'
+      },
+      {
+        name: '2天后逾期',
+        value: '3',
+        field: 'yq_state'
+      },
+      {
         name: '未逾期',
         value: '0',
         field: 'yq_state'

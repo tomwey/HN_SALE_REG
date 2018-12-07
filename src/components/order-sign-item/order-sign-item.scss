@@ -22,6 +22,27 @@ order-sign-item {
         //     text-align: center;
         // }
 
+        // .state-wrap {
+        .state {
+            display: inline-block;
+            font-size: 10px;
+            // text-align: center;
+            // margin-left: 5px;
+            padding: 2px 3px;
+            border-radius: 2px;
+            vertical-align: middle;
+            color: #fff;
+            &.state-0 {
+                // 未审核
+                background: #222;
+            }
+            &.state-1 {
+                // 已审核
+                background: rgb(127, 183, 99);
+            }
+        }
+        // }
+
         .house-info {
             font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
             .house-no {

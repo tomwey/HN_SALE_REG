@@ -8,7 +8,7 @@
     </ion-icon>
   </h2> -->
   <p class="base-info">
-    <span class="name">{{item.telephone | hackMobile}}&nbsp;{{item.custname}}</span>
+    <span class="name">{{item.custphone | hackMobile}}&nbsp;{{item.custname}}</span>
 
     <ion-icon [class.male]="item.sex == '1' || item.sex == '男'" [class.female]="item.sex == '2' || item.sex == '女'"
       name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
@@ -25,7 +25,7 @@
     <!-- <button ion-button clear (click)="callPhone(item, $event);">
       <ion-icon name="ios-call-outline"></ion-icon>
     </button> -->
-    <call-phone [mobile]="item.telephone"></call-phone>
+    <call-phone [mobile]="item.custphone"></call-phone>
     <p class="left-days-warning" *ngIf="item.invaliddate && item.invaliddate !== 'NULL'">
       <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
       <span *ngIf="item.left_days === 0">即将过期</span>

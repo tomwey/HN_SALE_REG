@@ -1,15 +1,17 @@
 <ion-item>
   <ion-row>
-    <ion-col col-4>
+    <ion-col col-5>
       <div class="left cell-box">
-        <p class="custname">{{item.custnames}}</p>
+        <p class="custname">{{item.custname}}</p>
         <p class="hor-item"><span class="label-text">客户来源</span><span class="value-text">{{item.sourcetype}}</span></p>
         <p class="ver-item" *ngIf="menuType === '2'">
           <span class="label-text">认购日期</span><br>
           <span class="value-text">{{item.orderdate.split('T')[0]}}</span>
         </p>
         <p class="hor-item" *ngIf="menuType === '3'">
-          <span class="label-text">签约日期</span><span class="value-text">{{item.condate.split('T')[0]}}</span></p>
+          <span class="label-text">签约日期</span>
+          <span class="value-text">{{item.condate.split('T')[0]}}</span>
+        </p>
       </div>
     </ion-col>
     <ion-col col-4>
@@ -21,22 +23,29 @@
           <span class="label-text">签约失效日期</span><br>
           <span class="value-text">{{item.plancondate.split('T')[0]}}</span>
         </p>
+        <p class="hor-item" *ngIf="menuType === '3'"><span class="state state-{{item.constatenum === '20' ? '1' : '0'}}">
+            {{item.constatenum === '20' ? '已审核' : '未审核'}}</span></p>
       </div>
     </ion-col>
-    <ion-col col-4>
+    <ion-col col-3>
       <div class="right cell-box">
         <p class="money">{{formatMoney(item.money)}}<span class="unit">万</span></p>
         <!-- <span class="call-btn" *ngIf="menuType === '2' || menuType === '3'" tappable (click)="callPhone(item, $event);">
           <ion-icon name="ios-call-outline"></ion-icon>
         </span> -->
-        <call-phone [mobile]="item.telephone"></call-phone>
+        <call-phone [mobile]="item.custphone"></call-phone>
         <!-- <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p> -->
         <p class="left-days-warning" *ngIf="menuType === '2'">
           <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
           <span *ngIf="item.left_days === 0">即将过期</span>
         </p>
-        <!-- <p class="state-wrap" *ngIf="menuType === '3'"><span class="state state-{{}}">{{}}</span>></p> -->
+        <!-- <p class="state-wrap" *ngIf="menuType === '3'">
+          <span class="state state-{{item.constatenum === '20' ? '1' : '0'}}">
+            {{item.constatenum === '20' ? '已审核' : '未审核'}}</span>
+        </p> -->
       </div>
     </ion-col>
+
   </ion-row>
+
 </ion-item>

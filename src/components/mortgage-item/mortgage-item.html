@@ -1,9 +1,9 @@
 <ion-item tappable (click)="selectItem(item);">
   <ion-row>
-    <ion-col col-5>
+    <ion-col col-6>
       <div class="left cell-box">
         <p class="custname">{{item.custname}}</p>
-        <p class="time">按揭日期<span class="value">2018-10-01</span></p>
+        <p class="time">按揭签约日期<span class="value">{{item.condate | formatDate}}</span></p>
       </div>
     </ion-col>
     <ion-col col-4>
@@ -13,11 +13,11 @@
         <p><span class="ajstate ajstate-{{item.ajstate}}">{{item.ajstatedesc}}</span></p>
       </div>
     </ion-col>
-    <ion-col col-3>
+    <ion-col col-2>
       <div class="right cell-box">
 
         <p class="call-phone-wrap">
-          <call-phone [mobile]="item.telephone"></call-phone>
+          <call-phone [mobile]="item.custphone"></call-phone>
         </p>
       </div>
     </ion-col>
