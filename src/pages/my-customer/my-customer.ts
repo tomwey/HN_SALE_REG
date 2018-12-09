@@ -308,6 +308,10 @@ export class MyCustomerPage {
     }
   }
 
+  selectItem2(item) {
+    console.log(item);
+  }
+
   doRefresh(ev) {
     this.loadData(false, ev);
   }

@@ -98,7 +98,7 @@
 
       <mortgage-item [item]="item" *ngIf="menuType === '4'"></mortgage-item>
 
-      <payment-money-item [item]="item" *ngIf="menuType === '5'"></payment-money-item>
+      <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);"></payment-money-item>
 
     </div>
   </ion-list>
