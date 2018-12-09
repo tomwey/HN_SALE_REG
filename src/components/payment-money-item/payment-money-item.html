@@ -1,0 +1,25 @@
+<ion-item tappable (click)="selectItem(item);">
+  <ion-row>
+    <ion-col col-8>
+      <span class="custname">{{item.custnames}}</span>
+    </ion-col>
+    <ion-col col-4 style="text-align: right;">
+      <span class="house-no">{{item.house_no}}</span>
+    </ion-col>
+  </ion-row>
+  <div class="time-state-wrap">
+    <p class="time"><span class="label">签约/认购日期</span><span class="value">{{item.orderdate}}</span></p>
+    <div class="state-wrap">
+      <span class="yq-state state-{{item.hasovermoney}}">{{item.hasovermoney ? '已逾期' : '未逾期'}}</span>
+    </div>
+  </div>
+  <div class="paymoney-rate-wrap">
+    <div class="paymoney-progress">
+      <p class="paymoney"><span class="label">已回款金额</span><span class="value">{{item.paymoney | formatWan}}万</span></p>
+      <div class="progress">
+        <div class="progress-inner" [style.width]="item.payrate + '%'"></div>
+      </div>
+    </div>
+    <div class="rate">{{item.payrate}}%</div>
+  </div>
+</ion-item>

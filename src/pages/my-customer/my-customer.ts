@@ -110,7 +110,7 @@ export class MyCustomerPage {
       this.data = [];
     }
 
-    console.log(this.currentFilterData);
+    // console.log(this.currentFilterData);
     let filterOptions = null;
 
     const optionConfig = this.filterOptionConfigs[this.menuType];
@@ -176,6 +176,42 @@ export class MyCustomerPage {
         // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
+
+          if (this.menuType === '5') {
+            arr = [
+              {
+                house_no: '5-1-1-3-1',
+                custnames: '张三，李四，王五',
+                orderdate: '2018-11-12',
+                paymoney: '313459',
+                money: '1230987',
+                hasovermoney: false,
+                payrate: '35.1',
+                orderid: '3948755'
+              },
+              {
+                house_no: '5-1-10-2-1',
+                custnames: '李四，王五',
+                orderdate: '2018-11-12',
+                paymoney: '313459',
+                money: '1230987',
+                hasovermoney: true,
+                payrate: '35.1',
+                orderid: '3948755'
+              },
+              {
+                house_no: '3-0-1-1-1',
+                custnames: '王五',
+                orderdate: '2018-11-10',
+                paymoney: '31000',
+                money: '323940',
+                hasovermoney: false,
+                payrate: '11',
+                orderid: '394755'
+              }
+            ];
+          }
+
           this.prepareData(arr);
           if (arr.length > 0) {
             this.error = null;

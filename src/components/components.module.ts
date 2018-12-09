@@ -7,6 +7,7 @@ import { OrderSignItemComponent } from './order-sign-item/order-sign-item';
 import { MortgageItemComponent } from './mortgage-item/mortgage-item';
 import { ProjectSelectComponent } from './project-select/project-select';
 import { CallPhoneComponent } from './call-phone/call-phone';
+import { PaymentMoneyItemComponent } from './payment-money-item/payment-money-item';
 
 @NgModule({
 	declarations: [AccordionListComponent,
@@ -14,13 +15,15 @@ import { CallPhoneComponent } from './call-phone/call-phone';
     OrderSignItemComponent,
     MortgageItemComponent,
     ProjectSelectComponent,
-    CallPhoneComponent],
+    CallPhoneComponent,
+    PaymentMoneyItemComponent],
 	imports: [IonicPageModule.forChild([AccordionListComponent]), PipesModule],
 	exports: [AccordionListComponent,
     ManItemComponent,
     OrderSignItemComponent,
     MortgageItemComponent,
     ProjectSelectComponent,
-    CallPhoneComponent]
+    CallPhoneComponent,
+    PaymentMoneyItemComponent]
 })
 export class ComponentsModule {}

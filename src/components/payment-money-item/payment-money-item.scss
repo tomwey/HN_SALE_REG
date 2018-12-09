@@ -1,0 +1,98 @@
+payment-money-item {
+    .custname, .house-no {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .house-no {
+        text-align: right;
+    }
+
+    .time-state-wrap {
+        margin-top: 5px;
+        width: 100%;
+        .time, .state-wrap {
+            display: inline-block;
+        }
+
+        .time {
+            margin: 0;
+            padding: 0;
+            line-height: 12px;
+            width: calc(100% - 80px);
+            font-size: 12px;
+            color: #999;
+            .value {
+                color: #333;
+                padding-left: 5px;
+            }
+        }
+
+        .state-wrap {
+            width: 80px;
+            text-align: right;
+            padding-right: 5px;
+            .yq-state {
+                display: inline-block;
+                font-size: 10px;
+                // text-align: center;
+                line-height: 14px;
+                vertical-align: middle;
+                border-radius: 2px;
+                padding: 2px 3px;
+                font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+                color: #fff;
+                &.state-false {
+                    background: #7FB762;
+                }
+                &.state-true {
+                    background: #BD5450;
+                }
+            }
+        }
+    }
+
+    .paymoney-rate-wrap {
+        // margin-top: 5px;
+        .paymoney {
+            // margin: 0!important;
+            // padding: 0;
+            margin-bottom: 2px;
+            font-size: 12px;
+            color: #999;
+            .value {
+                color: color($colors, primary);
+                padding-left: 5px;
+            }
+        }
+
+        .rate {
+            display: inline-block;
+            width: 60px;
+            text-align: right;
+            padding-right: 5px;
+            vertical-align: middle;
+            line-height: 14px;
+            font-size: 14px;
+            color: #333;
+            padding-top: 15px;
+        }
+
+        .paymoney-progress {
+            display: inline-block;
+            width: calc(100% - 60px);
+
+            .progress {
+                width: 100%;
+                // line-height: 18px;
+                height: 4px;
+                background: #e6e6e6;
+
+                .progress-inner {
+                    background: color($colors, primary);
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
