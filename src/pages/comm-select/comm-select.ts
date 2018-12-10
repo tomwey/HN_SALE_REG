@@ -23,21 +23,25 @@ export class CommSelectPage {
 
   keyword: any = '';
   originData: any = [];
-  
+
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private viewCtrl: ViewController,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
-      this.data = this.navParams.data.data;
-      this.title = this.navParams.data.title;
-      this.selectedItem = this.navParams.data.selectedItem;
-      if (this.data.length == 0) {
-        this.error = '暂无数据';
-      }
+    this.data = this.navParams.data.data;
+    this.title = this.navParams.data.title;
+    this.selectedItem = this.navParams.data.selectedItem;
+    if (this.data.length == 0) {
+      this.error = '暂无数据';
+    }
 
-      this.originData = this.data;
+    this.originData = this.data;
+
+    // hack history back
+    var foo = { foo: true };
+    history.pushState(foo, "Anything", " ");
   }
 
   ionViewDidLoad() {

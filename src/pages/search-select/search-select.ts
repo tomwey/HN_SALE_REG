@@ -25,7 +25,7 @@ export class SearchSelectPage {
   placeholder: any = '搜索';
 
   source: any;
-  
+
   data: any = [];
   error: any = null;
 
@@ -38,7 +38,7 @@ export class SearchSelectPage {
 
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private viewCtrl: ViewController,
     private api: ApiService,
     private modalCtrl: ModalController,
@@ -46,27 +46,31 @@ export class SearchSelectPage {
     private iosFixed: iOSFixedScrollFreeze,
     private store: AppStore,
     public navParams: NavParams) {
-      this.source = this.navParams.data.source;
-      this.proj_id = this.navParams.data.proj_id;
+    this.source = this.navParams.data.source;
+    this.proj_id = this.navParams.data.proj_id;
 
-      if (this.source.field == 'old_person') {
-        this.placeholder = '输入老业主姓名搜索';
-      } else if (this.source.field == 'employer') {
-        this.placeholder = '输入员工姓名搜索';
-      } else if (this.source.field == 'company') {
-        this.placeholder = '输入转介公司名字搜索';
+    if (this.source.field == 'old_person') {
+      this.placeholder = '输入老业主姓名搜索';
+    } else if (this.source.field == 'employer') {
+      this.placeholder = '输入员工姓名搜索';
+    } else if (this.source.field == 'company') {
+      this.placeholder = '输入转介公司名字搜索';
+    }
+
+    this.error = this.placeholder;
+
+    // 加载选中的项目
+    this.store.getProject(data => {
+      if (data) {
+        // const proj = JSON.parse(data);
+        this.currentProject.id = data.value;
+        this.currentProject.name = data.label;
       }
+    });
 
-      this.error = this.placeholder;
-
-      // 加载选中的项目
-      this.store.getProject(data => {
-        if (data) {
-          // const proj = JSON.parse(data);
-          this.currentProject.id = data.value;
-          this.currentProject.name = data.label;
-        }
-      });
+    // hack history back
+    var foo = { foo: true };
+    history.pushState(foo, "Anything", " ");
   }
 
   ionViewDidLoad() {
@@ -83,16 +87,20 @@ export class SearchSelectPage {
     if (this.source.field == 'employer') {
       params = { dotype: "selman", manname: kw.trim() };
     } else if (this.source.field == 'old_person') {
-      params = { dotype: "GetData", 
-                 funname: '获取老客户APP', 
-                 param1: kw.trim(), 
-                 param2: this.currentProject.id,
-                 param3: Utils.getQueryString('manid') };
+      params = {
+        dotype: "GetData",
+        funname: '获取老客户APP',
+        param1: kw.trim(),
+        param2: this.currentProject.id,
+        param3: Utils.getQueryString('manid')
+      };
     } else if (this.source.field == 'company') {
-      params = { dotype: "GetData", 
-                 funname: '获取转介公司APP', 
-                 param1: kw.trim(), 
-                 param2: /*Utils.getQueryString('manid')*/this.proj_id };
+      params = {
+        dotype: "GetData",
+        funname: '获取转介公司APP',
+        param1: kw.trim(),
+        param2: /*Utils.getQueryString('manid')*/this.proj_id
+      };
     }
 
     this.api.POST(null, params)
@@ -119,9 +127,11 @@ export class SearchSelectPage {
   }
 
   selectProject() {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "案场获取项目列表APP",
+      "param1": Utils.getQueryString("manid")
+    })
       .then(data => {
         if (data && data['data']) {
           let arr = data['data'];
@@ -149,22 +159,24 @@ export class SearchSelectPage {
     arr.forEach(element => {
       temp.push(`${element.project_name}|${element.project_id}`);
     });
-    
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
-      title: '选择项目', data: temp });
-      modal.onDidDismiss((res) => {
-        // console.log(res);
-        if (!res) return;
 
-        this.currentProject.name = res.label;
-        this.currentProject.id   = res.value;
+    let modal = this.modalCtrl.create('CommSelectPage', {
+      selectedItem: null,
+      title: '选择项目', data: temp
+    });
+    modal.onDidDismiss((res) => {
+      // console.log(res);
+      if (!res) return;
 
-        // this.store.saveProject(res);
+      this.currentProject.name = res.label;
+      this.currentProject.id = res.value;
 
-        this.startSearch(this.keyword);
+      // this.store.saveProject(res);
 
-        // this.loadData();
-      });
+      this.startSearch(this.keyword);
+
+      // this.loadData();
+    });
     modal.present();
   }
 

@@ -27,7 +27,7 @@ export class TreeSelectPage {
 
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private viewCtrl: ViewController,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
@@ -37,6 +37,10 @@ export class TreeSelectPage {
     this.selectedItems = this.navParams.data.selectedItems || [];
     // console.log(this.selectedItems);
     this.prepareData();
+
+    // hack history back
+    var foo = { foo: true };
+    history.pushState(foo, "Anything", " ");
   }
 
   prepareData() {
@@ -46,11 +50,11 @@ export class TreeSelectPage {
         item.children = [];
         this.parents.push(item);
       } else {
-        for (var i=0; i<this.parents.length; i++) {
+        for (var i = 0; i < this.parents.length; i++) {
           if (this.parents[i].dic_id == item.dic_pid) {
             this.parents[i].children.push(item);
             item.parent = this.parents[i];
-            for (var j=0; j<this.selectedItems.length; j++) {
+            for (var j = 0; j < this.selectedItems.length; j++) {
               const obj = this.selectedItems[j];
               if (obj.dic_id === item.dic_id) {
                 item.checked = true;
@@ -116,20 +120,20 @@ export class TreeSelectPage {
 
   }
 
-  expandItem(item){
-    
+  expandItem(item) {
+
     this.parents.map((listItem) => {
 
-        if(item == listItem){
-            listItem.expanded = !listItem.expanded;
-        } else {
-            // listItem.expanded = false;
-        }
+      if (item == listItem) {
+        listItem.expanded = !listItem.expanded;
+      } else {
+        // listItem.expanded = false;
+      }
 
-        return listItem;
+      return listItem;
 
     });
-    
+
   }
 
 }

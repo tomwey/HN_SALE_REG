@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, IonicApp } from 'ionic-angular';
 import { HomePage } from '../pages/home/home';
 // import { StatusBar } from '@ionic-native/status-bar';
 // import { SplashScreen } from '@ionic-native/splash-screen';
@@ -9,10 +9,11 @@ import { HomePage } from '../pages/home/home';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage: any = HomePage;
 
   constructor(
-    platform: Platform, 
+    platform: Platform,
+    private _ionicApp: IonicApp
     // statusBar: StatusBar, 
     // splashScreen: SplashScreen
   ) {
@@ -21,7 +22,22 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       // statusBar.styleDefault();
       // splashScreen.hide();
+
     });
+    this.backButtonListener();
+  }
+
+  backButtonListener(): void {
+    window.onpopstate = (evt) => {
+      let activePortal = this._ionicApp._loadingPortal.getActive() ||
+        this._ionicApp._modalPortal.getActive() ||
+        this._ionicApp._toastPortal.getActive() ||
+        this._ionicApp._overlayPortal.getActive();
+      if (activePortal) {
+        activePortal.dismiss();
+        return;
+      }
+    }
   }
 }
 

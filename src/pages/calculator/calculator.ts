@@ -41,22 +41,22 @@ export class CalculatorPage {
 
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
-      if (this.navParams.data.calcType) {
-        this.formData.calcType = this.navParams.data.calcType;
-      }
+    if (this.navParams.data.calcType) {
+      this.formData.calcType = this.navParams.data.calcType;
+    }
 
-      if (this.navParams.data.houseTotal) {
-        this.formData.houseTotal = this.navParams.data.houseTotal;
-      }
+    if (this.navParams.data.houseTotal) {
+      this.formData.houseTotal = this.navParams.data.houseTotal;
+    }
 
-      if (this.formData.calcType === '1') {
-        this.calcLoanTotal();
-      }
+    if (this.formData.calcType === '1') {
+      this.calcLoanTotal();
+    }
   }
 
   ionViewDidLoad() {
@@ -65,20 +65,20 @@ export class CalculatorPage {
   }
 
   calculate() {
-    let params = { 
-      loanType: this.loanType, 
+    let params = {
+      loanType: this.loanType,
       loanTypename: this.loanTypes[parseInt(this.loanType)]['label'],
       loanTotal: parseInt(this.formData.loanTotal),
       sdTotal: parseInt(this.formData.sdTotal),
       gjjTotal: parseInt(this.formData.gjjTotal),
       sdRate: Math.round(10000 * parseFloat(this.formData.sdRate) * SD_FIXED_RATE) / 10000,
-      gjjRate:  Math.round(10000 * parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE) / 10000,
+      gjjRate: Math.round(10000 * parseFloat(this.formData.gjjRate) * GJJ_FIXED_RATE) / 10000,
       loanYear: parseInt(this.formData.loanYear)
     };
 
     const houseTotal = this.formData.houseTotal || 0;
-    const loanTotal  = this.formData.loanTotal || 0;
-    
+    const loanTotal = this.formData.loanTotal || 0;
+
     if (this.formData.calcType === '1') {
       if (parseInt(houseTotal) <= 0) {
         this.tools.showToast('房屋总价必须大于0万');
@@ -159,7 +159,7 @@ export class CalculatorPage {
           this.formData.gjjTotal = loanTotal - sdTotal;
         } else {
           this.formData.gjjTotal = 0;
-          this.formData.sdTotal  = loanTotal;
+          this.formData.sdTotal = loanTotal;
 
           this.tools.showToast('商业贷款不能超过贷款总额');
         }
@@ -176,10 +176,10 @@ export class CalculatorPage {
           this.formData.sdTotal = loanTotal - gjjTotal;
         } else {
           this.formData.gjjTotal = loanTotal;
-          this.formData.sdTotal  = 0;
+          this.formData.sdTotal = 0;
           this.tools.showToast('公积金贷款不能超过贷款总额');
         }
-      } 
+      }
     }
 
     if (field === 'houseTotal') {

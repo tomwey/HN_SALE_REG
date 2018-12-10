@@ -34,13 +34,18 @@ payment-money-item {
             padding-right: 5px;
             .yq-state {
                 display: inline-block;
-                font-size: 10px;
-                // text-align: center;
-                line-height: 14px;
-                vertical-align: middle;
                 border-radius: 2px;
                 padding: 2px 4px;
-                font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+                font-size: 10px;
+
+                // display: inline-block;
+                // font-size: 10px;
+                // // text-align: center;
+                // line-height: 14px;
+                // vertical-align: middle;
+                // border-radius: 2px;
+                // padding: 2px 4px;
+                // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
                 color: #fff;
                 &.state-false {
                     background: #7FB762;

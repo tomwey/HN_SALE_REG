@@ -30,12 +30,16 @@ export class SelectProjectPage {
   onlyShowL1Projects: boolean = false;
 
   @ViewChild(Content) content: Content;
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private viewCtrl: ViewController,
     private api: ApiService,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
-      this.onlyShowL1Projects = this.navParams.data.onlyShowL1Projects;
+    this.onlyShowL1Projects = this.navParams.data.onlyShowL1Projects;
+
+    // hack history back
+    var foo = { foo: true };
+    history.pushState(foo, "Anything", " ");
   }
 
   ionViewDidLoad() {
@@ -47,10 +51,10 @@ export class SelectProjectPage {
   }
 
   loadData() {
-    this.api.POST(null, { 
-      "dotype": "GetData", 
-      "funname": "案场获取项目列表APP", 
-      "param1": Utils.getQueryString("manid") 
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "案场获取项目列表APP",
+      "param1": Utils.getQueryString("manid")
     })
       .then(data => {
         if (data && data['data']) {
@@ -131,9 +135,9 @@ export class SelectProjectPage {
     });
   }
 
-  selectProject(item,ev: Event) {
+  selectProject(item, ev: Event) {
     if (ev) ev.stopPropagation();
-    
+
     if (!item) return;
 
     let data = { label: item.project_name, value: item.project_id };
