@@ -187,7 +187,8 @@ export class MyCustomerPage {
                 money: '1230987',
                 hasovermoney: false,
                 payrate: '35.1',
-                orderid: '4'
+                orderid: '4',
+                custandphone: 'Tel:13608022943,13608022951*Name:三,三1',
               },
               {
                 house_no: '5-1-10-2-1',
@@ -197,7 +198,8 @@ export class MyCustomerPage {
                 money: '1230987',
                 hasovermoney: true,
                 payrate: '35.1',
-                orderid: '6'
+                orderid: '6',
+                custandphone: 'Tel:13608022943,13608022951*Name:三,三1',
               },
               {
                 house_no: '3-0-1-1-1',
@@ -207,7 +209,8 @@ export class MyCustomerPage {
                 money: '323940',
                 hasovermoney: false,
                 payrate: '11',
-                orderid: '4'
+                orderid: '4',
+                custandphone: 'Tel:13608022943,13608022951*Name:三,三1',
               }
             ];
           }

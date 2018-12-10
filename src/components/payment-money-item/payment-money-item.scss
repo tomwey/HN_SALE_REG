@@ -66,21 +66,60 @@ payment-money-item {
             }
         }
 
-        .rate {
+        // .rate {
+        //     display: inline-block;
+        //     width: 60px;
+        //     text-align: right;
+        //     padding-right: 5px;
+        //     vertical-align: middle;
+        //     line-height: 14px;
+        //     font-size: 14px;
+        //     color: #333;
+        //     padding-top: 15px;
+        // }
+        .call-phone-wrap {
             display: inline-block;
             width: 60px;
             text-align: right;
-            padding-right: 5px;
-            vertical-align: middle;
-            line-height: 14px;
-            font-size: 14px;
-            color: #333;
-            padding-top: 15px;
+            margin-top: 5px;
+
+            .call-btn {
+                display: inline-block;
+                width: 50px;
+                height: 40px;
+                // line-height: 40px;
+                ion-icon {
+                    font-size: 32px;
+                    line-height: 32px;
+                    margin-top: 4px;
+                    vertical-align: middle;
+                    color: color($colors, primary);
+                }
+                text-align: center;
+            }
         }
 
         .paymoney-progress {
             display: inline-block;
             width: calc(100% - 60px);
+
+            ion-row, ion-col {
+                margin: 0;
+                padding: 0;
+            }
+
+            .rate {
+                text-align: right;
+                font-size: 12px;
+                .label {
+                    color: #999;
+                }
+
+                .value {
+                    color: color($colors, primary);
+                    padding-left: 5px;
+                }
+            }
 
             .progress {
                 width: 100%;

@@ -15,11 +15,23 @@
   </div>
   <div class="paymoney-rate-wrap">
     <div class="paymoney-progress">
-      <p class="paymoney"><span class="label">已回款金额</span><span class="value">{{item.paymoney | formatWan}}万</span></p>
+      <ion-row>
+        <ion-col col-8>
+          <p class="paymoney"><span class="label">已回款金额</span><span class="value">{{item.paymoney | formatWan}}万</span></p>
+        </ion-col>
+        <ion-col col-4>
+          <p class="rate"><span class="label">占比</span><span class="value">{{item.payrate}}%</span></p>
+        </ion-col>
+      </ion-row>
       <div class="progress">
         <div class="progress-inner" [style.width]="item.payrate + '%'"></div>
       </div>
     </div>
-    <div class="rate">{{item.payrate}}%</div>
+    <div class="call-phone-wrap">
+      <span class="call-btn" tappable (click)="callPhone($event);">
+        <ion-icon name="ios-call-outline"></ion-icon>
+      </span>
+    </div>
+    <!-- <div class="rate">{{item.payrate}}%</div> -->
   </div>
 </ion-item>

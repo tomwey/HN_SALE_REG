@@ -15,11 +15,11 @@ export class MortgageItemComponent {
   @Input() item: any = {};
   @Input() menuType: string = '2';
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
+  // @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
   constructor() {
 
   }
-  
+
   selectItem(item) {
     this.onSelect.emit(item);
   }

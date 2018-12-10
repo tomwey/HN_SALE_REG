@@ -15,7 +15,7 @@ export class OrderSignItemComponent {
   @Input() item: any = {};
   @Input() menuType: string = '2';
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
+  // @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
 
   constructor() {
 

@@ -14,16 +14,16 @@ export class ManItemComponent {
 
   @Input() item: any = {};
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
+  // @Output() onCallPhone: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   selectItem(item) {
     this.onSelect.emit(item);
   }
 
-  callPhone(item, ev: Event) {
-    ev.stopPropagation();
-    this.onCallPhone.emit(item);
-  }
+  // callPhone(item, ev: Event) {
+  //   ev.stopPropagation();
+  //   this.onCallPhone.emit(item);
+  // }
 }
