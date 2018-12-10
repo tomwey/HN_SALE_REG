@@ -1,4 +1,30 @@
-<ion-item tappable (click)="selectItem(item);">
+<ion-item tappable (click)="selectItem(item);" *ngIf="item.ajstate === '40'">
+  <ion-row>
+    <ion-col col-6>
+      <div class="left cell-box">
+        <p class="custname">{{item.custname}}</p>
+        <p class="time">按揭签约日期<span class="value">{{item.condate | formatDate}}</span></p>
+      </div>
+    </ion-col>
+    <ion-col col-4>
+      <div class="center cell-box">
+        <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span
+            class="house-no">{{item.house_no}}</span></p>
+        <p><span class="ajstate ajstate-{{item.ajstate}}">{{item.ajstatedesc}}</span></p>
+      </div>
+    </ion-col>
+    <ion-col col-2>
+      <div class="right cell-box">
+
+        <p class="call-phone-wrap">
+          <call-phone [mobile]="item.custphone"></call-phone>
+        </p>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-item>
+
+<ion-item *ngIf="item.ajstate !== '40'">
   <ion-row>
     <ion-col col-6>
       <div class="left cell-box">

@@ -9,8 +9,9 @@
   <ion-navbar color="primary">
     <ion-title>{{title}}</ion-title>
     <ion-buttons end>
-        <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
-      </ion-buttons>
+      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}}
+        <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -21,27 +22,12 @@
   </div>
   <ion-list>
     <div *ngFor="let item of data">
-      <man-item *ngIf="type === '1'" [item]="item" 
-      (onSelect)="selectItem(item);"
-      (onCallPhone)="callPhone(item);"></man-item>
-      <order-sign-item *ngIf="type === '2'" [item]="item" 
-      menuType='2'
-      (onSelect)="selectItem(item);"
-      (onCallPhone)="callPhone(item);"></order-sign-item>
-      
-      <ion-item tappable (click)="selectItem(item);" *ngIf="type == '4'" class="exception-item">
-          <h2 text-wrap class="title">
-            {{item.telephone | hackMobile}} {{item.custname}} 
-            <ion-icon 
-              [class.male]="item.sex == '1' || item.sex == '男'" 
-              [class.female]="item.sex == '2' || item.sex == '女'" 
-              name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
-            </ion-icon>
-          </h2>
-          <p>房号: {{item.house_no}}</p>
-          <p text-wrap>{{item.abnormalsubname}}</p>
-          <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' : '已回复'}}</ion-badge>
-        </ion-item>
+      <man-item *ngIf="type === '1'" [item]="item" (onSelect)="selectItem(item);"></man-item>
+      <order-sign-item *ngIf="type === '2'" [item]="item" menuType='2'></order-sign-item>
+
+      <mortgage-item [item]="item" *ngIf="type === '4'" (onSelect)="selectItem(item);"></mortgage-item>
+
+      <payment-money-item [item]="item" *ngIf="type === '3'" (onSelect)="selectItem2($event);"></payment-money-item>
 
     </div>
   </ion-list>

@@ -22,13 +22,14 @@ export class ExCustomerReplyPage {
   item: any = null;
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.item = this.navParams.data;
     this.item.sex_name = this.item.sex == '1' ? '男' : '女';
+    console.log(this.item);
   }
 
   ionViewDidLoad() {
@@ -49,12 +50,12 @@ export class ExCustomerReplyPage {
       param2: this.item.followupid,
       param3: this.item.replydesc,
     })
-    .then(data => {
-      this.tools.showToast('回复成功');
-    })
-    .catch(error => {
-      this.tools.showToast(error.message || '服务器出错了');
-    });
+      .then(data => {
+        this.tools.showToast('回复成功');
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '服务器出错了');
+      });
   }
 
 }

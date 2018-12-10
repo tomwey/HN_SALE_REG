@@ -96,7 +96,7 @@
 
       </order-sign-item>
 
-      <mortgage-item [item]="item" *ngIf="menuType === '4'"></mortgage-item>
+      <mortgage-item [item]="item" *ngIf="menuType === '4'" (onSelect)="selectItem(item);"></mortgage-item>
 
       <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);"></payment-money-item>
 

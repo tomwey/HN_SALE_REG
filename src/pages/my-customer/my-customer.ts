@@ -303,9 +303,8 @@ export class MyCustomerPage {
   }
 
   selectItem(item) {
-    if (this.menuType == '6') {
+    if (this.menuType == '4') {
       this.app.getRootNavs()[0].push('ExCustomerReplyPage', item);
-
     } else {
       this.app.getRootNavs()[0].push('VistorRegisterPage', { person: item });
     }

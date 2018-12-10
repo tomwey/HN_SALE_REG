@@ -13,14 +13,55 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <div class="info-box">
+    <h2 class="title">基本信息</h2>
+    <ion-row>
+      <ion-col col-6>
+        <p class="pair">
+          <span class="label">姓名:</span><span class="value">{{item.custname || '无'}}</span>
+        </p>
+      </ion-col>
+      <ion-col col-6>
+        <p class="pair">
+          <span class="label">房号:</span><span class="value">{{item.house_no || '无'}}</span>
+        </p>
+      </ion-col>
+      <ion-col col-6>
+        <p class="pair">
+          <span class="label">电话:</span><span class="value">{{item.custphone || '无'}}</span>
+        </p>
+      </ion-col>
+      <ion-col col-6>
+        <p class="pair">
+          <span class="label">性别:</span><span class="value">{{item.sex_name || '无'}}</span>
+        </p>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="info-box">
+    <h2 class="title">异常类型</h2>
+    <p class="body">{{item.abnormalsubname || '无'}}</p>
+  </div>
+  <div class="info-box">
+    <h2 class="title">跟进说明</h2>
+    <p class="body">{{item.followupdesc || '无'}}</p>
+  </div>
+
+  <div class="reply-form">
+    <h2 class="title">异常回复</h2>
+    <div class="input-control">
+      <ion-textarea [(ngModel)]="item.replydesc" placeholder="输入回复内容" rows="6"></ion-textarea>
+    </div>
+    <button ion-button (click)="save()" full [disabled]="!item.replydesc">提交</button>
+  </div>
+  <!-- <ion-list>
     <ion-item>
       <ion-label>姓名</ion-label>
       <ion-input [(ngModel)]="item.custname" disabled="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>电话</ion-label>
-      <ion-input [(ngModel)]="item.telephone" disabled="true"></ion-input>
+      <ion-input [(ngModel)]="item.custphone" disabled="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>性别</ion-label>
@@ -45,5 +86,5 @@
   </ion-list>
   <div padding-left padding-right>
     <button ion-button (click)="save()" block [disabled]="!item.replydesc">提交</button>
-  </div>
+  </div> -->
 </ion-content>

@@ -1,5 +1,54 @@
 page-ex-customer-reply {
-    .item-input ion-label {
-        width: 80px;
+    .info-box {
+        p, ion-row, ion-col, h2 {
+            margin: 0;
+            padding: 0;
+        }
+        background: #fff;
+        padding: 15px;
+        font-size: 14px;
+        color: #999;
+        .title {
+            font-size: 14px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .pair {
+            font-size: 0;
+            .label, .value {
+                font-size: 14px;
+            }
+            .value {
+                color: #333;
+                padding-left: 5px;
+            }
+        }
+    }
+
+    .reply-form {
+        margin-top: 10px;
+        padding: 15px;
+        background: #fff;
+        .title {
+            font-size: 14px;
+            color: #333;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 10px;
+            // padding-left: 2px;
+        }
+        .input-control {
+            border: 0.5px solid #eee;
+            margin-bottom: 15px;
+
+            .text-input-ios {
+                margin: 5px;
+                width: calc(100% - 10px);
+                font-size: 14px;
+                color: #333;
+            }
+        }
     }
 }

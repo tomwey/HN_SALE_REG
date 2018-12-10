@@ -32,8 +32,8 @@ export class StatListPage {
   };
 
   @ViewChild(Content) content: Content;
-  
-  constructor(public navCtrl: NavController, 
+
+  constructor(public navCtrl: NavController,
     private app: App,
     private api: ApiService,
     private store: AppStore,
@@ -48,22 +48,24 @@ export class StatListPage {
       if (data) {
         this.currentProject.id = data.value;
         this.currentProject.name = data.label;
-     }
+      }
     });
   }
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
-    
+
     setTimeout(() => {
       this.loadData();
     }, 300);
   }
 
   selectProject() {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "案场获取项目列表APP", 
-          "param1": Utils.getQueryString("manid") })
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "案场获取项目列表APP",
+      "param1": Utils.getQueryString("manid")
+    })
       .then(data => {
         if (data && data['data']) {
           let arr = data['data'];
@@ -91,22 +93,24 @@ export class StatListPage {
     arr.forEach(element => {
       temp.push(`${element.project_name}|${element.project_id}`);
     });
-    
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: null, 
-      title: '选择项目', data: temp });
-      modal.onDidDismiss((res) => {
-        // console.log(res);
-        if (!res) return;
 
-        this.currentProject.name = res.label;
-        this.currentProject.id   = res.value;
+    let modal = this.modalCtrl.create('CommSelectPage', {
+      selectedItem: null,
+      title: '选择项目', data: temp
+    });
+    modal.onDidDismiss((res) => {
+      // console.log(res);
+      if (!res) return;
 
-        this.store.saveProject(res);
+      this.currentProject.name = res.label;
+      this.currentProject.id = res.value;
 
-        this.loadData();
+      this.store.saveProject(res);
 
-        // this.loadData();
-      });
+      this.loadData();
+
+      // this.loadData();
+    });
     modal.present();
   }
 
@@ -114,28 +118,28 @@ export class StatListPage {
     // this.error = null;
     // this.data = [];
 
-    this.api.POST(null, { 
-      dotype: 'GetData', 
+    this.api.POST(null, {
+      dotype: 'GetData',
       funname: '获取销售系统过期数据详情APP',
       param1: this.currentProject.id,
       param2: Utils.getQueryString('manid'),
       param3: this.type,
       // param4: ''
-      })
-    .then(data => {
-      if (data && data['data']) {
-        let arr = data['data'];
-        this.error = arr.length === 0 ? '暂无数据' : null;
-        // if (arr.length > 0) {
-          this.prepareData(arr);
-        // }
-      } else {
-        this.error = '非法错误';
-      }
     })
-    .catch(error => {
-      this.error = error.message || '服务器出错了~';
-    });
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.error = arr.length === 0 ? '暂无数据' : null;
+          // if (arr.length > 0) {
+          this.prepareData(arr);
+          // }
+        } else {
+          this.error = '非法错误';
+        }
+      })
+      .catch(error => {
+        this.error = error.message || '服务器出错了~';
+      });
   }
 
   prepareData(arr) {
@@ -170,7 +174,7 @@ export class StatListPage {
       } else {
         time = '--';
       }
-      
+
       item['time'] = time;
 
       if (time === '--') {
@@ -180,10 +184,10 @@ export class StatListPage {
         let tempDate = time.split(' ')[0];
 
         let dateBegin = new Date(tempDate.replace(/-/g, "/"));//将-转化为/，使用new Date
-        let dateEnd   = new Date();//获取当前时间
-        let dateDiff  = dateBegin.getTime() - dateEnd.getTime() + 24 * 60 * 60 * 1000;//时间差的毫秒数
+        let dateEnd = new Date();//获取当前时间
+        let dateDiff = dateBegin.getTime() - dateEnd.getTime() + 24 * 60 * 60 * 1000;//时间差的毫秒数
         // console.log(dateDiff);
-        let days      = Math.floor(dateDiff / (24*3600*1000));
+        let days = Math.floor(dateDiff / (24 * 3600 * 1000));
 
         if (days < 0) {
           item['left_days'] = -days;
@@ -196,7 +200,7 @@ export class StatListPage {
           item['left_days_label'] = '还剩';
         }
       }
-      
+
       temp.push(item);
 
     });
@@ -204,16 +208,17 @@ export class StatListPage {
   }
 
   selectItem(item) {
+    console.log(item);
     if (this.type == '4') {
       this.app.getRootNavs()[0].push('ExCustomerReplyPage', item);
-
     } else {
       this.app.getRootNavs()[0].push('VistorRegisterPage', { person: item });
     }
   }
 
-  callPhone(item) {
-    window.location.href = "tel:" + item.telephone;
+  selectItem2(item) {
+    // console.log(item);
+    this.app.getRootNavs()[0].push('PaymoneyListPage', item);
   }
 
 }
