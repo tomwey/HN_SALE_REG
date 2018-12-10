@@ -187,7 +187,7 @@ export class MyCustomerPage {
                 money: '1230987',
                 hasovermoney: false,
                 payrate: '35.1',
-                orderid: '3948755'
+                orderid: '4'
               },
               {
                 house_no: '5-1-10-2-1',
@@ -197,7 +197,7 @@ export class MyCustomerPage {
                 money: '1230987',
                 hasovermoney: true,
                 payrate: '35.1',
-                orderid: '3948755'
+                orderid: '6'
               },
               {
                 house_no: '3-0-1-1-1',
@@ -207,7 +207,7 @@ export class MyCustomerPage {
                 money: '323940',
                 hasovermoney: false,
                 payrate: '11',
-                orderid: '394755'
+                orderid: '4'
               }
             ];
           }
@@ -309,7 +309,8 @@ export class MyCustomerPage {
   }
 
   selectItem2(item) {
-    console.log(item);
+    // console.log(item);
+    this.app.getRootNavs()[0].push('PaymoneyListPage', item);
   }
 
   doRefresh(ev) {
@@ -761,6 +762,16 @@ export class MyCustomerPage {
       {
         name: '按揭',
         value: '1',
+        field: 'pay_type'
+      },
+      {
+        name: '一次性分期',
+        value: '2',
+        field: 'pay_type'
+      },
+      {
+        name: '首付分期',
+        value: '3',
         field: 'pay_type'
       },
     ],

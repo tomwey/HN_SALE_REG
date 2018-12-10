@@ -1,0 +1,141 @@
+page-paymoney-list {
+    p,h2,ion-row,ion-col {
+        margin: 0!important;
+        padding: 0!important;
+    }
+
+    .caption-wrap {
+        background: color($colors, primary);
+        font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+        margin-bottom: 10px;
+        color: #fff;
+
+        .base-info {
+            text-align: center;
+            padding: 10px;
+            .house-no {
+                font-size: 14px;
+                font-weight: 700;
+            }
+            .custname {
+                margin-top: 5px;
+                font-size: 12px;
+
+                position: relative;
+                &::after {
+                    display: block;
+                    content: '';
+                    width: 30px;
+                    height: 1px;
+                    background: #fff;
+                    position: absolute;
+                    bottom: -10px;
+                    left: 50%;
+                    margin-left: -15px;
+                }
+            }
+        }
+
+        .money-wrap {
+            text-align: center;
+            padding: 10px 15px 15px;
+
+            .money {
+                .label {
+                    font-size: 12px;
+                }
+                .value {
+                    font-size: 0;
+
+                    .symbol {
+                        font-size: 10px;
+                        padding-right: 3px;
+                    }
+                    .digit {
+                        font-size: 16px;
+                    }
+                    .unit {
+                        font-size: 10px;
+                        padding-left: 3px;
+                    }
+                }
+                
+
+                &.lg {
+                    margin-bottom: 15px;
+                    .digit {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+
+        .other-info {
+            p,ion-note {
+                font-size: 14px;
+                color: #333;
+            }
+            .item-inner {
+                border-bottom: 0!important;
+            }
+        }
+    }
+
+    .fundname, .time {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .time {
+        text-align: right;
+    }
+
+    .money-box {
+        padding-top: 5px;
+        .label {
+            font-size: 12px;
+            color: #999;
+        }
+        .value {
+            font-size: 0;
+            .symbol {
+                font-size: 10px;
+                padding-right: 3px;
+            }
+            .digit {
+                font-size: 16px;
+                font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+                color: #333;
+            }
+            .unit {
+                font-size: 10px;
+                padding-left: 3px;
+            }
+        }
+        &.payed {
+            text-align: center;
+            .digit {
+                color: #7FB762;
+            }
+        }
+
+        &.unpayed {
+            text-align: right;
+            .digit {
+                color: color($colors, primary);
+            }
+        }
+    }
+
+    .money-list-wrap {
+        background: #fff;
+        .title {
+            font-size: 16px;
+            font-weight: normal;
+            text-align: center;
+            padding: 10px!important;
+            // border-bottom: 0.5px solid #eee;
+            
+        }
+    }
+}
