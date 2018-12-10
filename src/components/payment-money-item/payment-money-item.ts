@@ -24,25 +24,52 @@ export class PaymentMoneyItemComponent {
     this.onSelect.emit(item);
   }
 
+  showAlert(title = '拨打电话失败', message = '未找到客户电话号码') {
+    this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['确定']
+    }).present();
+  }
+
   callPhone(ev: Event) {
     ev.stopPropagation();
 
-    const arr = this.item.custandphone.split('*');
+    let custandphone = this.item.custandphone || this.item.custandpone || '';
+    custandphone = custandphone.replace('NULL', '');
+
+    if (!custandphone) {
+      this.showAlert();
+      return;
+    }
+
+    const arr = custandphone.split('*');
+    if (arr.length !== 2) {
+      this.showAlert('客户资料错误', '不正确的客户姓名和电话')
+      return;
+    }
+
     let phones = arr[0];
     let names = arr[1];
 
-    phones = phones.split(':')[1];
-    names = names.split(':')[1];
+    phones = phones.split(':');
+    names = names.split(':');
 
-    phones = phones.split(',');
-    names = names.split(',');
+    if (phones.length !== 2) {
+      this.showAlert('客户资料错误', '不正确的客户电话')
+      return;
+    }
+
+    if (names.length !== 2) {
+      this.showAlert('客户资料错误', '不正确的客户姓名')
+      return;
+    }
+
+    phones = phones[1].split(',');
+    names = names[1].split(',');
 
     if (phones.length <= 0) {
-      this.alertCtrl.create({
-        title: '拨打电话失败',
-        message: '未找到客户电话号码',
-        buttons: ['确定']
-      }).present();
+      this.showAlert();
       return;
     };
 
@@ -54,7 +81,11 @@ export class PaymentMoneyItemComponent {
     let alert = this.alertCtrl.create();
     alert.setTitle('选择一个电话号码拨打');
 
-    for (let i = 0; i < names.length; i++) {
+    let count = names.length;
+    if (count > phones.length) {
+      count = phones.length
+    }
+    for (let i = 0; i < count; i++) {
       let checked = (i === 0);
       let label = `${phones[i]} ${names[i]}`;
       let value = phones[i];
