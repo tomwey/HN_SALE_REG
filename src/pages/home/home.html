@@ -14,7 +14,7 @@
     </ion-buttons>
     <ion-title>
       销售系统
-        <!-- <button ion-button class="limit-width1" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button> -->
+      <!-- <button ion-button class="limit-width1" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button> -->
     </ion-title>
     <!-- <ion-buttons end>
       <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
@@ -41,15 +41,15 @@
           <div class="value">
             <span class="money">{{statData.ordertotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
             <span class="digit">{{statData.ordercount}}</span><span class="unit">套</span>
-            
+
           </div>
           <div class="name">认购</div>
         </div>
         <div class="stat-item right">
           <div class="value">
-              <span class="money">{{statData.contotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
-              <span class="digit">{{statData.concount}}</span><span class="unit">套</span>
-            </div>
+            <span class="money">{{statData.contotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
+            <span class="digit">{{statData.concount}}</span><span class="unit">套</span>
+          </div>
           <div class="name">签约</div>
         </div>
         <div class="stat-item right">
@@ -72,7 +72,7 @@
         <ion-col col-6>
           <div class="stat-box b-bottom right" tappable (click)="openList('2','到期未签约');">
             <div class="name">到期未签约</div>
-            <div class="value"><span class="digit">{{statData.overdueunconcount}}</span><span class="unit">套</span></div>
+            <div class="value"><span class="digit">{{statData.overdueunconcount}}</span><span class="unit">组</span></div>
           </div>
         </ion-col>
         <ion-col col-6>

@@ -109,4 +109,9 @@ export class PaymentMoneyItemComponent {
     alert.present();
   }
 
+  formatRate(item) {
+    const rate = parseFloat(item.payrate);
+    return rate.toFixed(1);
+  }
+
 }

@@ -20,7 +20,7 @@
           <p class="paymoney"><span class="label">已回款金额</span><span class="value">{{item.paymoney | formatWan}}万</span></p>
         </ion-col>
         <ion-col col-4>
-          <p class="rate"><span class="label">占比</span><span class="value">{{item.payrate}}%</span></p>
+          <p class="rate"><span class="label">占比</span><span class="value">{{formatRate(item)}}%</span></p>
         </ion-col>
       </ion-row>
       <div class="progress">
