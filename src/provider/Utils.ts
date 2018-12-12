@@ -35,7 +35,8 @@ export class Utils {
       }
       console.log('解析参数');
     } else {
-      console.info('params:', this.params);
+      // console.info('params:', this.params);
+      console.log('参数已经解析');
     }
 
     if (!this.params) {

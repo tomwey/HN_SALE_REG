@@ -39,8 +39,8 @@ export class TreeSelectPage {
     this.prepareData();
 
     // hack history back
-    var foo = { foo: true };
-    history.pushState(foo, "Anything", " ");
+    var foo = { ts1: true };
+    history.pushState(foo, "treeselect", " ");
   }
 
   prepareData() {

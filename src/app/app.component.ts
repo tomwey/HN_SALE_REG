@@ -33,6 +33,7 @@ export class MyApp {
         this._ionicApp._modalPortal.getActive() ||
         this._ionicApp._toastPortal.getActive() ||
         this._ionicApp._overlayPortal.getActive();
+      // console.log(activePortal);
       if (activePortal) {
         activePortal.dismiss();
         return;

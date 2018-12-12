@@ -19,18 +19,18 @@
       基本信息
     </ion-card-header>
     <table class="table">
-        <tr *ngFor="let info of data">
-          <td class="label">{{info.label}}</td>
-          <td class="value">
-            <span *ngIf="!info.type">{{info.value}}</span>
-            <!-- <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer> -->
-            <img *ngIf="info.type && info.type == '2'" [src]="info.value" imageViewer>
-          </td>
-        </tr>
-      </table>
+      <tr *ngFor="let info of data">
+        <td class="label">{{info.label}}</td>
+        <td class="value">
+          <span *ngIf="!info.type">{{info.value}}</span>
+          <!-- <img *ngIf="info.type && info.type == '2'" src="{{info.value}}" imageViewer> -->
+          <img *ngIf="info.type && info.type == '2'" [src]="info.value" imageViewer>
+        </td>
+      </tr>
+    </table>
   </ion-card>
 
-  <ion-card *ngIf="data2.length > 0 && (house.statenum == '10' || house.statenum == '20')">
+  <ion-card *ngIf="!hideInfo && data2.length > 0 && (house.statenum == '10' || house.statenum == '20')">
     <ion-card-header>
       成交信息
     </ion-card-header>

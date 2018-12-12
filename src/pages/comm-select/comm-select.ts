@@ -40,7 +40,7 @@ export class CommSelectPage {
     this.originData = this.data;
 
     // hack history back
-    var foo = { foo: true };
+    var foo = { cs1: true };
     history.pushState(foo, "Anything", " ");
   }
 
