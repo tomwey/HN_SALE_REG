@@ -1,16 +1,51 @@
 import { Injectable } from '@angular/core';
 import { Md5 } from 'ts-md5';
+import * as CryptoJS from 'crypto-js';
+
+declare const Buffer;
+
+const fillKey = (key) => {
+  const filledKey = Buffer.alloc(128 / 8);
+  const keys = Buffer.from(key);
+  let index = 0;
+  while (index < filledKey.length) {
+    filledKey[index] = keys[index];
+    index += 1;
+  }
+
+  return filledKey;
+}
 
 @Injectable()
-export class Utils 
-{
+export class Utils {
+
+  static params: any = null;
   /**
    * 获取地址栏参数
    * @param name
    * @returns {any}
    */
-  static getQueryString(name): string 
-  {
+  static getQueryString(name): string {
+    if (!this.params) {
+      const encrypted = this._getQueryString('key');
+
+      if (encrypted) {
+        let result = this.aesDecrypt(encrypted, 'Hnerp_2018');
+        this.params = JSON.parse(result);
+      }
+      console.log('解析参数');
+    } else {
+      console.info('params:', this.params);
+    }
+
+    if (!this.params) {
+      return this._getQueryString(name);
+    }
+
+    return this.params[name];
+  }
+
+  static _getQueryString(name): string {
     let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     let url = decodeURIComponent(window.location.search);
     // let r = window.location.search.substr(1).match(reg);
@@ -29,7 +64,7 @@ export class Utils
     for (var i = 0; i < len; i++) {
       pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
     }
-  　return pwd;
+    return pwd;
   }
 
   static md5(string): string {
@@ -39,7 +74,7 @@ export class Utils
   static isWeiXin(): boolean {
     let ua = window.navigator.userAgent.toLowerCase();
     let results: RegExpMatchArray = ua.match(/MicroMessenger/i);
-    if(results && results.toString() == 'micromessenger') {
+    if (results && results.toString() == 'micromessenger') {
       return true;
     } else {
       return false;
@@ -115,32 +150,54 @@ export class Utils
   static dateDiff(date) {//di作为一个变量传进来
     //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
     var dateBegin = new Date(date.replace(/-/g, "/"));//将-转化为/，使用new Date
-    var dateEnd   = new Date();//获取当前时间
-    var dateDiff  = dateBegin.getTime() - dateEnd.getTime();//时间差的毫秒数
-    var dayDiff   = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
-    var leave1    = dateDiff%(24*3600*1000)    //计算天数后剩余的毫秒数
-    var hours     = Math.floor(leave1/(3600*1000))//计算出小时数
+    var dateEnd = new Date();//获取当前时间
+    var dateDiff = dateBegin.getTime() - dateEnd.getTime();//时间差的毫秒数
+    var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+    var leave1 = dateDiff % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+    var hours = Math.floor(leave1 / (3600 * 1000))//计算出小时数
     //计算相差分钟数
-    var leave2    = leave1%(3600*1000)    //计算小时数后剩余的毫秒数
-    var minutes   = Math.floor(leave2/(60*1000))//计算相差分钟数
+    var leave2 = leave1 % (3600 * 1000)    //计算小时数后剩余的毫秒数
+    var minutes = Math.floor(leave2 / (60 * 1000))//计算相差分钟数
     //计算相差秒数
-    var leave3    = leave2 % (60*1000)      //计算分钟数后剩余的毫秒数
-    var seconds   = Math.round(leave3/1000)
-    return { days: dayDiff, hours: hours, minutes: minutes, seconds: seconds, mseconds: dateDiff }; 
+    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+    var seconds = Math.round(leave3 / 1000)
+    return { days: dayDiff, hours: hours, minutes: minutes, seconds: seconds, mseconds: dateDiff };
   }
 
   static formatMoney(money) {
-    if( money && money != null ) {
+    if (money && money != null) {
       money = String(money);
-      let left = money.split('.')[0],right = money.split('.')[1];
-      right = right ? (right.length>=2 ? '.'+right.substr(0,2) : '.'+right+'0') : '.00';
+      let left = money.split('.')[0], right = money.split('.')[1];
+      right = right ? (right.length >= 2 ? '.' + right.substr(0, 2) : '.' + right + '0') : '.00';
       let temp = left.split('').reverse().join('').match(/(\d{1,3})/g);
-      return (Number(money)<0?"-":"") + temp.join(',').split('').reverse().join('')+right;
-    } else if ( money === 0 ) {   //注意===在这里的使用，如果传入的money为0,if中会将其判定为boolean类型，故而要另外做===判断
-        return '0.00';
-    } else{
-        return "";
+      return (Number(money) < 0 ? "-" : "") + temp.join(',').split('').reverse().join('') + right;
+    } else if (money === 0) {   //注意===在这里的使用，如果传入的money为0,if中会将其判定为boolean类型，故而要另外做===判断
+      return '0.00';
+    } else {
+      return "";
     }
   }
-  
+
+  static aesEncrypt(string, key) {
+    if (!string || !key) return null;
+    key = CryptoJS.enc.Utf8.parse(fillKey(key));
+    return CryptoJS.AES.encrypt(string, key, {
+      iv: '',
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    }).ciphertext.toString();
+  }
+
+  static aesDecrypt(string, key) {
+    if (!string || !key) return null;
+    // console.log(CryptoJS.enc);
+    key = CryptoJS.enc.Utf8.parse(fillKey(key));
+    let bytes = CryptoJS.AES.decrypt(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Hex.parse(string)), key, {
+      iv: '',
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+
 }
