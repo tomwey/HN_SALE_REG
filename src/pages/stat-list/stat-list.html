@@ -20,8 +20,8 @@
   <div class="empty-error-box" *ngIf="!!error">
     {{error}}
   </div>
-  <ion-list>
-    <div *ngFor="let item of data">
+  <ion-list [virtualScroll]="data" [approxItemHeight]=" '80px' ">
+    <div *virtualItem="let item" class="custom-card">
       <man-item *ngIf="type === '1'" [item]="item" (onSelect)="selectItem(item);"></man-item>
       <order-sign-item *ngIf="type === '2'" [item]="item" menuType='2'></order-sign-item>
 
