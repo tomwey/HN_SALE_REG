@@ -19,9 +19,8 @@
   <ion-card>
     <ion-card-header>
       <span>客户基本资料</span>
-      <button ion-button class="float-right" 
-        small outline color="btn-state-{{person.statenum}}" 
-        [disabled]="true" *ngIf="person.statedesc">{{person.statedesc}}</button>
+      <button ion-button class="float-right" small outline color="btn-state-{{person.statenum}}" [disabled]="true"
+        *ngIf="person.statedesc">{{person.statedesc}}</button>
     </ion-card-header>
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
@@ -41,7 +40,7 @@
           <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 女</span>
       </div>
     </ion-item> -->
-    
+
     <!-- <ion-row class="custom-item-box">
         <ion-col col-3>
           <span class="custom-label">客户性别*</span>
@@ -62,9 +61,13 @@
       <div class="custom-controls-wrap" item-content>
         <div class="select-box">
           <span class="select-item" tappable (click)="person.sex = '男'">
-            <ion-icon name="{{ person.sex == '男' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 男</span>
+            <ion-icon name="{{ person.sex == '男' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            男
+          </span>
           <span class="select-item" tappable (click)="person.sex = '女'">
-            <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> 女</span>
+            <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            女
+          </span>
         </div>
       </div>
     </ion-item>
@@ -113,16 +116,17 @@
 
     <ion-item>
       <ion-label>出生日期</ion-label>
-      <ion-datetime displayFormat="YYYY-MM-DD" 
-          pickerFormat="YYYY-MM-DD" 
-          cancelText="取消"
-          doneText="确定"
-          [(ngModel)]="person.birthday" placeholder="请设置"></ion-datetime>
+      <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" cancelText="取消" doneText="确定" [(ngModel)]="person.birthday"
+        placeholder="请设置"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label>通讯地址</ion-label>
       <ion-input [(ngModel)]="person.address" placeholder="请输入"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>邮政编码</ion-label>
+      <ion-input [(ngModel)]="person.postcode" type="tel" placeholder="请输入"></ion-input>
     </ion-item>
 
     <button ion-item (click)="selectCardType();" *ngIf="followtype == '20'">
@@ -130,14 +134,14 @@
       <div class="custom-controls-wrap" item-content>
         <span class="placeholder">{{person.cardtypename || '请选择'}}</span>
       </div>
-      
+
     </button>
 
     <ion-item *ngIf="followtype == '20'">
       <ion-label>证件号码</ion-label>
       <ion-input [(ngModel)]="person.cardno" placeholder="输入证件号码"></ion-input>
     </ion-item>
-    
+
     <!-- <ion-row class="custom-item-box" *ngIf="person.statenum == '0'">
       <ion-col col-3>
         <span class="custom-label">客户操作</span>
@@ -185,10 +189,11 @@
       <ion-label>跟进方式</ion-label>
       <div class="custom-controls-wrap" item-content>
         <div class="select-box" item-right>
-          <span class="select-item" *ngFor="let type of followtypes" 
-            tappable (click)="selectFollowType(type);">
-              <ion-icon name="{{ currentFollowType == type.value ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon> {{type.label}}</span>
-          </div>
+          <span class="select-item" *ngFor="let type of followtypes" tappable (click)="selectFollowType(type);">
+            <ion-icon name="{{ currentFollowType == type.value ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            {{type.label}}
+          </span>
+        </div>
       </div>
     </ion-item>
     <!-- <ion-item>

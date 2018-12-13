@@ -37,7 +37,8 @@ export class VistorRegisterPage {
     sex: '',
     srctypename: '',
     birthday: '',
-    address: ''
+    address: '',
+    postcode: ''
   };
   followtype: any;
   currentFollowType: any;
@@ -88,7 +89,7 @@ export class VistorRegisterPage {
   ];
 
   knowwayReadonly: any = false;
-  mobileReadonly: any  = true;
+  mobileReadonly: any = true;
 
   hasSrcType: boolean = false;
 
@@ -119,7 +120,7 @@ export class VistorRegisterPage {
 
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
@@ -137,43 +138,45 @@ export class VistorRegisterPage {
     // console.log('ionViewDidLoad VistorRegisterPage');
     this.iosFixed.fixedScrollFreeze(this.content);
     if (!this.person.callid || this.person.callid == '0') {
-      
-      this.api.POST(null, { dotype: 'GetData', 
-                            funname: '获取表的主键APP', 
-                            param1: Utils.getQueryString('manid'),
-                            param2: 'H_SP_Call',
-                           })
-              .then(data => {
-                // console.log(data);
-                if (data && data['data']) {
-                  let arr = data['data'];
-                  if (arr.length > 0) {
-                    this.callid = arr[0].id;
-                  }
-                }
-              })
-              .catch(error => {});
+
+      this.api.POST(null, {
+        dotype: 'GetData',
+        funname: '获取表的主键APP',
+        param1: Utils.getQueryString('manid'),
+        param2: 'H_SP_Call',
+      })
+        .then(data => {
+          // console.log(data);
+          if (data && data['data']) {
+            let arr = data['data'];
+            if (arr.length > 0) {
+              this.callid = arr[0].id;
+            }
+          }
+        })
+        .catch(error => { });
     }
 
     if (this.followtype === '20') {
       setTimeout(() => {
-        this.api.POST(null, { dotype: 'GetData', 
-                    funname: '获取房源业态APP', 
-                    param1: this.proj_id,
-                    // param2: 'H_SP_Call',
-                  }, '正在加载', false)
-              .then(data => {
-              console.log(data);
-                if (data && data['data']) {
-                  // let arr = data['data'];
-                  // if (arr.length > 0) {
-                  //   this.callid = arr[0].id;
-                  // }
-                  // console.log(data);
-                  this.ytButtons = data['data'];
-                }
-              })
-              .catch(error => {});
+        this.api.POST(null, {
+          dotype: 'GetData',
+          funname: '获取房源业态APP',
+          param1: this.proj_id,
+          // param2: 'H_SP_Call',
+        }, '正在加载', false)
+          .then(data => {
+            console.log(data);
+            if (data && data['data']) {
+              // let arr = data['data'];
+              // if (arr.length > 0) {
+              //   this.callid = arr[0].id;
+              // }
+              // console.log(data);
+              this.ytButtons = data['data'];
+            }
+          })
+          .catch(error => { });
       }, 100);
     }
 
@@ -185,19 +188,19 @@ export class VistorRegisterPage {
         param1: this.proj_id,
         param2: Utils.getQueryString('manid')
       }, '正在加载', false)
-      .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-          const arr = data['data'];
-          if (arr.length > 0) {
-            this.hasLDSurvey = arr[0].haveldsurvey;
-            this.hasLFSurvey = arr[0].havelfsurvey;
+        .then(data => {
+          // console.log(data);
+          if (data && data['data']) {
+            const arr = data['data'];
+            if (arr.length > 0) {
+              this.hasLDSurvey = arr[0].haveldsurvey;
+              this.hasLFSurvey = arr[0].havelfsurvey;
+            }
           }
-        }
-      })
-      .catch();
+        })
+        .catch();
     }, 300);
-    
+
   }
 
   // 准备数据
@@ -211,7 +214,7 @@ export class VistorRegisterPage {
     }
 
     this.proj_id = this.navParams.data.proj_id || this.person.project_id;
-    
+
     this.followtype = this.navParams.data.followtype == 1 ? '10' : '20';
     this.currentFollowType = this.followtype;
 
@@ -266,19 +269,21 @@ export class VistorRegisterPage {
 
     if (this.hasSrcType) { return; }
 
-    this.api.POST(null, { "dotype": "GetData", 
-        "funname": "通用获取数据字典数据APP", 
-        "param1": '415' })
-    .then(data => {
-      console.log(data);
-      if (data && data['data']) {
-        let arr = data['data'];
-        this.showSelectPage(arr, '选择客户来源', 1);
-      }
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "通用获取数据字典数据APP",
+      "param1": '415'
     })
-    .catch(error => {
-      this.tools.showToast(error.message || '获取数据失败');
-    });
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.showSelectPage(arr, '选择客户来源', 1);
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取数据失败');
+      });
   }
 
   // 打开选择页面
@@ -287,20 +292,22 @@ export class VistorRegisterPage {
     // console.log(arr);
     arr.forEach(element => {
       // "project_id":"1291428","project_name":"珍宝金楠一期"
-      data.push(`${element.dic_name}|${element.dic_value}`);  
+      data.push(`${element.dic_name}|${element.dic_value}`);
     });
     let selectedItem = null;
     // if (this.person.srctypename && this.person.srctypeid) {
     //   selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
     // }
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
-                                                          title: title, data: data })
+    let modal = this.modalCtrl.create('CommSelectPage', {
+      selectedItem: selectedItem,
+      title: title, data: data
+    })
     modal.onDidDismiss((res) => {
       if (res) {
         // this.storage.set('selected.project', JSON.stringify(data));
         if (type == 1) { // 客户来源
           this.person.srctypename = res.label;
-          this.person.srctypeid   = res.value;
+          this.person.srctypeid = res.value;
 
           if (res.value == '1') {
             this.source = { descname: '老业主', field: 'old_person' };
@@ -342,7 +349,7 @@ export class VistorRegisterPage {
     }
 
     btn.selected = true;
-    
+
     this.currentSelectBtn = btn;
   }
 
@@ -353,7 +360,7 @@ export class VistorRegisterPage {
     // }
 
     // btn.selected = true;
-    
+
     // this.currentYtBtn = btn;
     this.currentYTID = btn.usertype_id;
   }
@@ -365,11 +372,12 @@ export class VistorRegisterPage {
       this.tools.showToast('还未做过跟进，不能进行问卷调查');
       return;
     }
-    this.navCtrl.push('SurveyPage', { callid: this.person.callid || this.callid, 
-                                      tplid: type,
-                                      proj_id: this.proj_id,
-                                      surveyData: this.surveyData,
-                                     });
+    this.navCtrl.push('SurveyPage', {
+      callid: this.person.callid || this.callid,
+      tplid: type,
+      proj_id: this.proj_id,
+      surveyData: this.surveyData,
+    });
   }
 
   // 保存跟进
@@ -378,12 +386,12 @@ export class VistorRegisterPage {
 
     if (!this.person.custname) {
       this.tools.showToast('客户姓名不能为空');
-        return;
+      return;
     }
 
     if (!this.person.sex) {
       this.tools.showToast('客户性别不能为空');
-        return;
+      return;
     }
 
     if (this.followtype == '20') {
@@ -414,7 +422,7 @@ export class VistorRegisterPage {
     let params = {
       dotype: 'GetData',
       funname: '案场新建更新访客记录APP',
-      param1: `${Utils.getQueryString('manid')},${this.currentYTID || ''},${Utils.getQueryString('manname')},${this.person.birthday || ''}`,
+      param1: `${Utils.getQueryString('manid')},${this.currentYTID || ''},${Utils.getQueryString('manname')},${this.person.birthday || ''},${this.person.postcode || ''}`,
       param2: this.person.address || '',
       param3: this.person.callid || this.callid || '0',
       param4: this.person.telephone,
@@ -444,11 +452,11 @@ export class VistorRegisterPage {
         if (this.followid == '0') {
           this.person.followcnt = parseInt(this.person.followcnt || 0) + 1;
         }
-        
+
         if (data && data['data']) {
           let arr = data['data'];
           if (arr.length > 0) {
-            
+
             // 重置跟进相关数据
 
             // this.followcontent = '';
@@ -466,13 +474,13 @@ export class VistorRegisterPage {
             if (this.operType == '0') {
               this.person.callid = this.person.callid || arr[0].callid;
               this.followid = arr[0].followid;
-              this.person.statenum     = this.person.statenum || '0';
+              this.person.statenum = this.person.statenum || '0';
               this.person.statedesc = this.person.statedesc || '跟进';
 
-              this.mobileReadonly  = true;
+              this.mobileReadonly = true;
               this.knowwayReadonly = true;
 
-              this.hasSrcType      = this.person.callid && this.person.srctypename;
+              this.hasSrcType = this.person.callid && this.person.srctypename;
 
               // this.tools.showToast('保存跟进成功');
               if (this.surveyData) {
@@ -481,9 +489,9 @@ export class VistorRegisterPage {
                 this.tools.showToast('保存成功');
                 this.tools.hideLoading();
               }
-              
+
             } else {
-              this.person.statenum     = this.operType;
+              this.person.statenum = this.operType;
               this.person.statedesc = this.operType == '30' ? '丢失' : '作废';
               this.tools.showToast('操作成功');
               this.tools.hideLoading();
@@ -500,7 +508,7 @@ export class VistorRegisterPage {
               this.events.publish('follow:saved', '0');
             }
             // this.navParams.data.person = this.person;
-            
+
           } else {
             this.tools.showToast('未知错误');
             this.tools.hideLoading();
@@ -530,7 +538,7 @@ export class VistorRegisterPage {
         });
       } else { // 填空
         // if (element.addvalue) {
-          sql += ` update H_SP_Questionnaire_DB set AddValue = '${element.addvalue || ""}' where did = ${element.did}`;
+        sql += ` update H_SP_Questionnaire_DB set AddValue = '${element.addvalue || ""}' where did = ${element.did}`;
         // }
       }
     });
@@ -548,11 +556,11 @@ export class VistorRegisterPage {
         //   if (arr.length > 0) {
         //     let item = arr[0];
         //     if (item.code == '0') {
-              this.tools.showToast('保存成功');
+        this.tools.showToast('保存成功');
 
-              this.surveyData = null;
+        this.surveyData = null;
 
-              this.tools.hideLoading();
+        this.tools.hideLoading();
         //     } else {
         //       this.tools.showToast(item.codemsg);
         //     }
@@ -576,9 +584,11 @@ export class VistorRegisterPage {
 
   // 选择证件类型
   selectCardType() {
-    this.api.POST(null, { "dotype": "GetData", 
-          "funname": "通用获取数据字典数据APP", 
-          "param1": '88' })
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "通用获取数据字典数据APP",
+      "param1": '88'
+    })
       .then(data => {
         console.log(data);
         if (data && data['data']) {
