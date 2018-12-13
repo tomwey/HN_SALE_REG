@@ -257,6 +257,10 @@ export class MyCustomerPage {
         }
       }
 
+      if (item['payrate'] && item['payrate'] === 'NULL') {
+        item['payrate'] = 0.0;
+      }
+
       temp.push(item);
 
     });
