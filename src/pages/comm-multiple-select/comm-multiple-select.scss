@@ -1,0 +1,12 @@
+page-comm-multiple-select {
+    .item-ios {
+        font-size: 14px !important;
+        ion-icon {
+            font-size: 24px;
+            color: rgb(199,198,202);
+            &.checked {
+                color: color($colors, primary);
+            }
+        }
+    }
+}

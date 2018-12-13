@@ -44,27 +44,27 @@ export class HomePage {
   };
 
   @ViewChild(Content) content: Content;
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
     public navParams: NavParams) {
 
-      this.prepareFunc();
+    this.prepareFunc();
 
-      this.events.subscribe('project:changed', (projData) => {
-        this.changeCurrentProject(projData);
+    this.events.subscribe('project:changed', (projData) => {
+      this.changeCurrentProject(projData);
+      this.loadStatData(false);
+    });
+
+    this.events.subscribe('follow:saved', (data) => {
+      if (data === '1') {
+        // const callcount = parseInt(this.statData.callcount);
+        // this.statData.callcount = callcount + 1;
         this.loadStatData(false);
-      });
-
-      this.events.subscribe('follow:saved', (data) => {
-        if (data === '1') {
-          // const callcount = parseInt(this.statData.callcount);
-          // this.statData.callcount = callcount + 1;
-          this.loadStatData(false);
-        }
-      });
+      }
+    });
   }
 
   loadStatData(loading = true) {
@@ -76,10 +76,10 @@ export class HomePage {
     }
 
     if (this.loading) return;
-    
+
     this.loading = true;
 
-    this.api.POST(null, { 
+    this.api.POST(null, {
       dotype: 'GetData',
       funname: '查询销售系统首页信息APP',
       param1: this.currentProject.id,
@@ -127,7 +127,7 @@ export class HomePage {
     // console.log(ev);
     this.currentProject = ev;
     this.loadStatData(true);
-    
+
   }
 
   ionViewDidLoad() {
@@ -149,9 +149,9 @@ export class HomePage {
     this.navCtrl.push(item.page);
   }
 
-  openList(type,title) {
+  openList(type, title) {
     // let params = {};
-    this.navCtrl.push('StatListPage', { type: type, title: title});
+    this.navCtrl.push('StatListPage', { type: type, title: title });
   }
 
   // 与后台数据库保持一致的功能权限配置
@@ -165,7 +165,7 @@ export class HomePage {
     '20': {
       icon: 'icon_aj.png',
       name: ' 按揭台账',
-      page: 'MortgageListPage',
+      page: 'MortgageSearchPage',//'MortgageListPage',
       powerid: 20
     },
     '21': {

@@ -1,0 +1,59 @@
+page-mortgage-search {
+    .search-header {
+        border-bottom: 0.55px solid #f2f2f2;
+        text-align: center;
+    }
+    .item-ios {
+        border-bottom: 0.55px solid #f2f2f2;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 14px !important; 
+        color: #999;
+        .label-ios {
+            width: 80px!important;
+            flex: 0 0 80px !important;
+            color: #333;
+        }
+    }
+
+    .custom-controls-wrap {
+        flex: 1;
+        // width: 100%;
+        margin-left: 16px;
+        width: calc(100% - 80px)!important;
+        // position: static;
+        text-align: left;
+        // .select-box {
+        //     margin-left: 16px;
+        //     width: calc(100% - (16px / 2) - 16px);
+        // }
+    }
+
+    .warning {
+        font-size: 12px;
+        // text-align: center;
+        margin-top: 10px;
+        // color: red;
+        .special {
+            color: red;
+        }
+    }
+
+    .state-item {
+        display: inline-block;
+        font-size: 10px;
+        line-height: 10px;
+        background: #f1f1f1;
+        padding: 2px 5px;
+        border-radius: 2px;
+        margin: 3px 6px 3px 0;
+        color: #666;
+        ion-icon {
+            font-size: 18px;
+            vertical-align: middle;
+        }
+        .name {
+            vertical-align: middle;
+        }
+    }
+}

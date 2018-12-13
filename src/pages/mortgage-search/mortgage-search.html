@@ -1,0 +1,54 @@
+<!--
+  Generated template for the MortgageSearchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>按揭台账</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="search-header">按揭客户搜索</ion-card-header>
+    <button ion-item (click)="selectProject();">
+      <ion-label>所属项目</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{project.name || '请选择'}}</span>
+      </div>
+    </button>
+    <ion-item>
+      <ion-label>按揭银行</ion-label>
+      <ion-input [(ngModel)]="bank" placeholder="输入银行名字"></ion-input>
+      <!-- <div class="custom-controls-wrap" item-content>
+        <span class="placeholder">{{bank.name || '请选择'}}</span>
+      </div> -->
+    </ion-item>
+    <button ion-item (click)="selectState();">
+      <ion-label>按揭状态</ion-label>
+      <div class="custom-controls-wrap" item-content>
+        <span class="placeholder" *ngIf="!isCheckAll && selectedItems.length === 0">{{'请选择'}}</span>
+        <span class="placeholder" *ngIf="isCheckAll">全部</span>
+        <div *ngIf="!isCheckAll">
+          <span class="state-item" *ngFor="let it of selectedItems" tappable (click)="removeMe($event,it);">
+            <span class="name">{{it.label}}</span>
+            <ion-icon name="ios-close-outline"></ion-icon>
+          </span>
+        </div>
+      </div>
+    </button>
+    <ion-item>
+      <ion-label>关键字</ion-label>
+      <ion-input [(ngModel)]="keyword" placeholder="输入客户姓名或房号"></ion-input>
+    </ion-item>
+
+    <div padding>
+      <button ion-button full color="primary" (click)="search();">搜索</button>
+      <p class="warning"><span class="special">注: </span>所属项目、按揭银行、关键字三者至少一个必填</p>
+    </div>
+  </ion-card>
+</ion-content>
