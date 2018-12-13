@@ -51,8 +51,8 @@ export class CommMultipleSelectPage {
     this.checkAll = this.navParams.data.checkAll || this.data.length === this.selectedItems.length;
 
     // hack history back
-    var foo = { cms1: true };
-    history.pushState(foo, "Anything", " ");
+    // var foo = { cms1: true };
+    // history.pushState(foo, "Anything", " ");
   }
 
   ionViewDidLoad() {

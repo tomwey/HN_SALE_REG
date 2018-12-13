@@ -69,8 +69,8 @@ export class SearchSelectPage {
     });
 
     // hack history back
-    var foo = { ss1: true };
-    history.pushState(foo, "search", " ");
+    // var foo = { ss1: true };
+    // history.pushState(foo, "search", " ");
   }
 
   ionViewDidLoad() {

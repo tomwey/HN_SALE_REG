@@ -40,8 +40,8 @@ export class CommSelectPage {
     this.originData = this.data;
 
     // hack history back
-    var foo = { cs1: true };
-    history.pushState(foo, "Anything", " ");
+    // var foo = { cs1: true };
+    // history.pushState(foo, "Anything", " ");
   }
 
   ionViewDidLoad() {

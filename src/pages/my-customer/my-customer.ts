@@ -402,7 +402,7 @@ export class MyCustomerPage {
   filterData: any = {
     '1': [
       {
-        name: '时间',
+        name: '创建时间',
         field: 'time'
       },
       {
@@ -416,7 +416,7 @@ export class MyCustomerPage {
     ],
     '2': [
       {
-        name: '时间',
+        name: '认购时间',
         field: 'time'
       },
       {
@@ -430,7 +430,7 @@ export class MyCustomerPage {
     ],
     '3': [
       {
-        name: '时间',
+        name: '签约时间',
         field: 'time'
       },
       {
@@ -444,7 +444,7 @@ export class MyCustomerPage {
     ],
     '4': [
       {
-        name: '时间',
+        name: '签约时间',
         field: 'time'
       },
       {
@@ -462,7 +462,7 @@ export class MyCustomerPage {
     ],
     '5': [
       {
-        name: '时间',
+        name: '认购时间',
         field: 'time'
       },
       {

@@ -38,8 +38,8 @@ export class SelectProjectPage {
     this.onlyShowL1Projects = this.navParams.data.onlyShowL1Projects;
 
     // hack history back
-    var foo = { sp1: true };
-    history.pushState(foo, "selectproject", " ");
+    // var foo = { sp1: true };
+    // history.pushState(foo, "selectproject", " ");
   }
 
   ionViewDidLoad() {

@@ -129,7 +129,8 @@ export class MortgageSearchPage {
       return;
     }
 
-    console.info(this.keyword, this.selectedItems, this.isCheckAll, this.bank, this.project);
+    // console.info(this.keyword, this.selectedItems, this.isCheckAll, this.bank, this.project);
+    this.navCtrl.push('MortgageListPage', { project: this.project, keyword: this.keyword, bank: this.bank, states: this.selectedItems })
   }
 
 }

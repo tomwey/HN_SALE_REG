@@ -7,12 +7,12 @@
 <ion-header no-border>
 
   <ion-navbar color="primary">
-    <ion-title>按揭台账</ion-title>
+    <ion-title>按揭搜索结果</ion-title>
     <!-- <ion-buttons end>
       <button ion-button (click)="showPanel1();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
     </ion-buttons> -->
   </ion-navbar>
-  <ion-toolbar color="white">
+  <!-- <ion-toolbar color="white">
     <ion-row class="subnavbar">
       <ion-col col-6 tappable (click)="showPanel1(1);">
         {{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon>
@@ -23,7 +23,6 @@
     </ion-row>
   </ion-toolbar>
   <ion-toolbar color="white" class="searchbar">
-    <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
     <form action=".">
       <ion-searchbar
         #searchBar
@@ -38,7 +37,7 @@
       >
       </ion-searchbar>
   </form>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
@@ -46,22 +45,20 @@
     {{error}}
   </div>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="ios-arrow-round-down-outline"
-      pullingText="下拉刷新"
-      refreshingSpinner="circles" 
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="下拉刷新" refreshingSpinner="circles"
       refreshingText="正在刷新">
     </ion-refresher-content>
-  </ion-refresher>
-  
-  <ion-list>
-    <ion-item *ngFor="let item of dataList" tappable (click)="openDetail(item);">
-      <h2 class="title">{{item.project_name}}&emsp;{{item.house_no}}</h2>
-      <p class="custname">客户: {{item.custnames}}</p>
-      <ion-note item-right>
-        
-        <p class="money-box"><!--span class="help-text">贷款金额</span -->
+  </ion-refresher> -->
+
+  <ion-list [virtualScroll]="dataList" [approxItemHeight]=" '40px' ">
+    <ion-item *virtualItem="let item" tappable (click)="openDetail(item);">
+      <h2 class="title">{{item.custnames}}&emsp;{{item.house_no}}</h2>
+      <p class="custname">项目: {{item.project_name}}</p>
+      <ion-note item-right style="text-align: right;">
+
+        <p class="money-box">
+          <!--span class="help-text">贷款金额</span -->
           <span class="money">{{item.ajmoney}}万</span></p>
         <span class="custom-badge ajstate-{{item.ajstate}}">{{item.ajstate_desc}}</span>
         <!-- <ion-badge color="ajstate-{{item.ajstate}}" class="custom-badge">{{item.ajstate_desc}}</ion-badge> -->
