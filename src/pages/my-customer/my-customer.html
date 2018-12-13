@@ -74,8 +74,8 @@
     </ion-refresher-content>
   </ion-refresher>
   <!-- 列表 -->
-  <ion-list>
-    <div *ngFor="let item of data" class="custom-card">
+  <ion-list [virtualScroll]="data" [approxItemHeight]=" '80px' ">
+    <div *virtualItem="let item" class="custom-card">
       <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
 
       <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
