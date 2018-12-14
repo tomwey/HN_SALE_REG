@@ -35,9 +35,12 @@
         </span> -->
         <call-phone [mobile]="item.custphone"></call-phone>
         <!-- <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p> -->
-        <p class="left-days-warning" *ngIf="menuType === '2'">
+        <p class="left-days-warning" *ngIf="menuType === '2' && !isth">
           <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
           <span *ngIf="item.left_days === 0">即将过期</span>
+        </p>
+        <p class="left-days-warning" *ngIf="menuType === '2' && !!isth">
+          <span>{{isth}}</span>
         </p>
         <!-- <p class="state-wrap" *ngIf="menuType === '3'">
           <span class="state state-{{item.constatenum === '20' ? '1' : '0'}}">
