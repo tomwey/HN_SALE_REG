@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, App, Content, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Content, Events } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
-import { Tools } from '../../provider/Tools';
+// import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
-import { AppStore } from '../../provider/app-store';
+// import { AppStore } from '../../provider/app-store';
 
 /**
  * Generated class for the MortgageListPage page.
@@ -40,12 +40,12 @@ export class MortgageListPage {
 
   constructor(public navCtrl: NavController,
     private api: ApiService,
-    private tools: Tools,
+    // private tools: Tools,
     private app: App,
     private events: Events,
-    private store: AppStore,
+    // private store: AppStore,
     private iosFixed: iOSFixedScrollFreeze,
-    private modalCtrl: ModalController,
+    // private modalCtrl: ModalController,
     public navParams: NavParams) {
 
     this.searchConditions = this.navParams.data;
