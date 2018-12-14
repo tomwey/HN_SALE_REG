@@ -29,7 +29,6 @@ export class MyCustomerPage {
   // showPanel: boolean = false;
   @ViewChild(Content) content: Content;
   @ViewChild('searchBar') searchBar: Searchbar;
-
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private app: App,
@@ -694,16 +693,16 @@ export class MyCustomerPage {
         value: '-1',
         field: 'yq_state'
       },
-      {
-        name: '1天后逾期',
-        value: '2',
-        field: 'yq_state'
-      },
-      {
-        name: '2天后逾期',
-        value: '3',
-        field: 'yq_state'
-      },
+      // {
+      //   name: '1天后逾期',
+      //   value: '2',
+      //   field: 'yq_state'
+      // },
+      // {
+      //   name: '2天后逾期',
+      //   value: '3',
+      //   field: 'yq_state'
+      // },
       {
         name: '未逾期',
         value: '0',

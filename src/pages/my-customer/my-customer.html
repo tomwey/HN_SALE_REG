@@ -68,11 +68,11 @@
     {{error}}
   </div>
   <!-- 下拉刷新 -->
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="下拉刷新" refreshingSpinner="circles"
       refreshingText="正在刷新">
     </ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
   <!-- 列表 -->
   <ion-list [virtualScroll]="data" [approxItemHeight]=" '80px' ">
     <div *virtualItem="let item" class="custom-card">
