@@ -127,58 +127,70 @@ export class SearchSelectPage {
   }
 
   selectProject() {
-    this.api.POST(null, {
-      "dotype": "GetData",
-      "funname": "案场获取项目列表APP",
-      "param1": Utils.getQueryString("manid")
-    })
-      .then(data => {
-        if (data && data['data']) {
-          let arr = data['data'];
-          // console.log(arr);
-          // this.projects = arr;
-          if (arr.length == 0) {
-            this.tools.showToast('暂无项目数据');
-          } else {
-            this.forwardToPage(arr);
-          }
-          // this.showSelectPage(arr);
-          // this.loadIndustries(this.projects[0]);
-        } else {
-          this.tools.showToast('非法错误!');
-        }
-      })
-      .catch(error => {
-        this.tools.showToast(error.message || '获取项目失败');
-      });
-  }
+    let modal = this.modalCtrl.create('SelectProjectPage');
+    modal.onDidDismiss(data => {
+      if (!data) return;
 
-  forwardToPage(arr) {
-    let temp = [];
-
-    arr.forEach(element => {
-      temp.push(`${element.project_name}|${element.project_id}`);
-    });
-
-    let modal = this.modalCtrl.create('CommSelectPage', {
-      selectedItem: null,
-      title: '选择项目', data: temp
-    });
-    modal.onDidDismiss((res) => {
-      // console.log(res);
-      if (!res) return;
-
-      this.currentProject.name = res.label;
-      this.currentProject.id = res.value;
-
-      // this.store.saveProject(res);
+      this.currentProject.name = data.label;
+      this.currentProject.id = data.value;
 
       this.startSearch(this.keyword);
 
-      // this.loadData();
-    });
+    })
     modal.present();
+
+    // this.api.POST(null, {
+    //   "dotype": "GetData",
+    //   "funname": "案场获取项目列表APP",
+    //   "param1": Utils.getQueryString("manid")
+    // })
+    //   .then(data => {
+    //     if (data && data['data']) {
+    //       let arr = data['data'];
+    //       // console.log(arr);
+    //       // this.projects = arr;
+    //       if (arr.length == 0) {
+    //         this.tools.showToast('暂无项目数据');
+    //       } else {
+    //         this.forwardToPage(arr);
+    //       }
+    //       // this.showSelectPage(arr);
+    //       // this.loadIndustries(this.projects[0]);
+    //     } else {
+    //       this.tools.showToast('非法错误!');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.tools.showToast(error.message || '获取项目失败');
+    //   });
   }
+
+  // forwardToPage(arr) {
+  //   let temp = [];
+
+  //   arr.forEach(element => {
+  //     temp.push(`${element.project_name}|${element.project_id}`);
+  //   });
+
+  //   let modal = this.modalCtrl.create('CommSelectPage', {
+  //     selectedItem: null,
+  //     title: '选择项目', data: temp
+  //   });
+  //   modal.onDidDismiss((res) => {
+  //     // console.log(res);
+  //     if (!res) return;
+
+  //     this.currentProject.name = res.label;
+  //     this.currentProject.id = res.value;
+
+  //     // this.store.saveProject(res);
+
+  //     this.startSearch(this.keyword);
+
+  //     // this.loadData();
+  //   });
+  //   modal.present();
+  // }
 
   selectItem(item) {
     if (this.source.field == 'employer') {

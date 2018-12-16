@@ -3,4 +3,15 @@ page-search-select {
         max-width: 120px;
         font-size: 14px;
     }
+
+    .item-ios {
+        h2 {
+            font-size: 14px !important;
+            color: #333;
+        }
+        p {
+            font-size: 14px !important;
+            color: #999;
+        }
+    }
 }
