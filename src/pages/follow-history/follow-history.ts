@@ -22,7 +22,7 @@ export class FollowHistoryPage {
   error: any = null;
 
   @ViewChild(Content) content: Content;
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
@@ -36,25 +36,27 @@ export class FollowHistoryPage {
   }
 
   loadData() {
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '获取跟进列表APP ', 
-                          param1: this.navParams.data.callid, 
-                          param2: Utils.getQueryString('manid') })
-            .then(data => {
-              // console.log(data);
-              if (data && data['data']) {
-                this.dataList = data['data'];
-              }
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取跟进列表APP',
+      param1: this.navParams.data.callid,
+      param2: Utils.getQueryString('manid')
+    })
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          this.dataList = data['data'];
+        }
 
-              if (this.dataList.length > 0) {
-                this.error = null;
-              } else {
-                this.error = '您还未做过跟进~';
-              }
-            })
-            .catch(error => {
-              this.error = error.message || '服务器出错了~';
-            })
+        if (this.dataList.length > 0) {
+          this.error = null;
+        } else {
+          this.error = '您还未做过跟进~';
+        }
+      })
+      .catch(error => {
+        this.error = error.message || '服务器出错了~';
+      })
   }
 
   followTypeName(item) {
