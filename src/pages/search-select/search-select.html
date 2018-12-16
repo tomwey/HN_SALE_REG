@@ -14,26 +14,18 @@
     </ion-buttons>
     <ion-title>搜索</ion-title>
     <ion-buttons end *ngIf="source.field === 'old_person'">
-      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}}
+        <ion-icon name="md-arrow-dropdown"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar color="white">
-      <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
-      <form action=".">
-        <ion-searchbar
-          #searchBar
-          [(ngModel)]="keyword"
-          cancelButtonText="取消"
-          [ngModelOptions]="{standalone: true}"
-          [showCancelButton]="true"
-          (search)="startSearch(keyword)"
-          [placeholder]="placeholder"
-          [animated]="false"
-          name="search"
-        >
-        </ion-searchbar>
+    <!-- <ion-searchbar placeholder="搜索"></ion-searchbar> -->
+    <form action=".">
+      <ion-searchbar #searchBar [(ngModel)]="keyword" cancelButtonText="取消" [ngModelOptions]="{standalone: true}"
+        [showCancelButton]="true" (search)="startSearch(keyword)" [placeholder]="placeholder" [animated]="false" name="search">
+      </ion-searchbar>
     </form>
-    </ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
 
