@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
-import { Tools } from '../../provider/Tools';
+// import { Tools } from '../../provider/Tools';
 import { AppStore } from '../../provider/app-store';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 // import { Tools } from '../../provider/Tools';
@@ -42,7 +42,7 @@ export class SearchSelectPage {
     private viewCtrl: ViewController,
     private api: ApiService,
     private modalCtrl: ModalController,
-    private tools: Tools,
+    // private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     private store: AppStore,
     public navParams: NavParams) {
