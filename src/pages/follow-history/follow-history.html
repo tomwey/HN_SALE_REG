@@ -22,7 +22,7 @@
       <p>购房意向: {{item.buypossible == '0' ? '无' : item.buypossible + '%'}}</p>
       <ion-note item-right style="text-align: right;">
         <span class="follow-type follow-type-{{item.followtype}}">{{followTypeName(item)}}</span><br>
-        <span class="time">{{item.create_date.replace('+08:00', '').replace('+', ' ').replace('T', ' ')}}</span>
+        <span class="time">{{item.follow_date|formatDate:1}}</span>
       </ion-note>
     </ion-item>
   </ion-list>
