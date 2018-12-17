@@ -33,7 +33,7 @@
         <!-- <span class="call-btn" *ngIf="menuType === '2' || menuType === '3'" tappable (click)="callPhone(item, $event);">
           <ion-icon name="ios-call-outline"></ion-icon>
         </span> -->
-        <call-phone [mobile]="item.custphone"></call-phone>
+        <call-phone [mobile]="item.custandphone" multiple="true"></call-phone>
         <!-- <p class="con-date" *ngIf="menuType === '3'">{{item.condate.split('T')[0]}}<span class="help-text">签约</span></p> -->
         <p class="left-days-warning" *ngIf="menuType === '2' && (!item.isth || item.isth === 'NULL')">
           <span *ngIf="item.left_days !== 0">{{item.left_days_label}}{{item.left_days}}天</span>
