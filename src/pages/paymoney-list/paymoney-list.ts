@@ -55,4 +55,34 @@ export class PaymoneyListPage {
       })
   }
 
+  // 是否已经逾期
+  checkExpire(item) {
+    const unpayMoney = parseFloat(item.unpaymoney);
+    const planDate = new Date(item.plandate);
+    // console.log(planDate.getFullYear(), planDate.getMonth(), planDate.getDate());
+    let now = new Date();
+
+    if (this._date1SmallerDate2(planDate, now) && unpayMoney > 0.0) return true;
+    return false;
+  }
+
+  _date1SmallerDate2(d1: Date, d2: Date) {
+    const y1 = d1.getFullYear();
+    const m1 = d1.getMonth();
+    const date1 = d1.getDate();
+
+    const y2 = d2.getFullYear();
+    const m2 = d2.getMonth();
+    const date2 = d2.getDate();
+
+    if (y1 < y2) return true;
+    if (y1 > y2) return false;
+
+    if (m1 < m2) return true;
+    if (m1 > m2) return false;
+
+    if (date1 < date2) return true;
+    return false;
+  }
+
 }

@@ -18,7 +18,7 @@
   </div>
   <ion-list>
     <ion-item *ngFor="let item of dataList">
-      <h2>{{item.content}}</h2>
+      <h2 text-wrap>{{item.content}}</h2>
       <p>购房意向: {{item.buypossible == '0' ? '无' : item.buypossible + '%'}}</p>
       <ion-note item-right style="text-align: right;">
         <span class="follow-type follow-type-{{item.followtype}}">{{followTypeName(item)}}</span><br>

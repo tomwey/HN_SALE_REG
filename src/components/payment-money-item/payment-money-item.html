@@ -8,7 +8,10 @@
     </ion-col>
   </ion-row>
   <div class="time-state-wrap">
-    <p class="time"><span class="label">签约/认购日期</span><span class="value">{{item.orderdate | formatDate:0}}</span></p>
+    <p class="time"><span class="label">认购日期</span><span class="value">{{item.orderdate | formatDate:0}}</span>
+      <span class="label" *ngIf="item.condate && item.condate !== 'NULL'">签约日期</span><span class="value" *ngIf="item.condate && item.condate !== 'NULL'">{{item.condate
+        | formatDate:0}}</span>
+    </p>
     <div class="state-wrap">
       <span class="yq-state state-{{item.hasovermoney}}">{{item.hasovermoney ? '已逾期' : '未逾期'}}</span>
     </div>

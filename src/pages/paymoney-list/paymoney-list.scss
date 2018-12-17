@@ -88,6 +88,10 @@ page-paymoney-list {
 
     .time {
         text-align: right;
+        .danger-text {
+            padding-left: 5px;
+            color: #BD5450;
+        }
     }
 
     .money-box {

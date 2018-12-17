@@ -69,7 +69,7 @@
             <div class="fundname">{{obj.fundname2}}</div>
           </ion-col>
           <ion-col col-4>
-            <div class="time">{{obj.plandate}}</div>
+            <div class="time">{{obj.plandate}}<span class="danger-text" *ngIf="checkExpire(obj);">逾期</span></div>
           </ion-col>
         </ion-row>
         <ion-row>
