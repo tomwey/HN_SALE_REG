@@ -2,6 +2,12 @@ payment-money-item {
     .custname, .house-no {
         font-size: 14px;
         color: #333;
+
+        width: 100%;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .house-no {
