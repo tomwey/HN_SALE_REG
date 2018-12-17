@@ -10,7 +10,7 @@
         </p>
         <p class="hor-item" *ngIf="menuType === '3'">
           <span class="label-text">签约日期</span>
-          <span class="value-text">{{item.condate && item.condate.split('T')[0]}}</span>
+          <span class="value-text">{{item.condate | formatDate:0}}</span>
         </p>
       </div>
     </ion-col>
