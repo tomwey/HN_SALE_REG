@@ -24,20 +24,20 @@ export class HouseInfoPage {
   // hasUnit: boolean = true;
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.house = this.navParams.data.house;
     this.project = this.navParams.data.project;
     this.industry = this.navParams.data.industry;
-    
+
     // console.log(this.project);
     // console.log(this.industry);
     // console.log(this.house);
 
     this.prepareUnits();
-    
+
   }
 
   prepareUnits() {
@@ -45,7 +45,7 @@ export class HouseInfoPage {
     if (!ids) {
       this.unit = '-1';
       return;
-    } 
+    }
 
     ids = ids.split(',');
     let names = this.house.unitnames.replace('NULL', '').split(',');
@@ -61,7 +61,7 @@ export class HouseInfoPage {
     let arr = [];
     let emptyUnitIDs = [];
     let allUnit = null;
-    for(var i=0; i<count; i++) {
+    for (var i = 0; i < count; i++) {
       let _id = ids[i];
       if (_id == '') {
         if (emptyUnitIDs.indexOf(_id) != -1) {
@@ -90,7 +90,7 @@ export class HouseInfoPage {
 
     if (this.units.length > 0) {
       this.unit = this.units[0]['ID'];
-    } 
+    }
   }
 
   ionViewDidLoad() {
@@ -109,13 +109,14 @@ export class HouseInfoPage {
     this.floors = {};
     this.error = null;
     this.roomsData = [];
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '获取房源房间列表APP', 
-                          param1: this.project.id,
-                          param2: this.industry.id,
-                          param3: this.unit,
-                          param4: this.house.building_id
-                         })
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取房源房间列表APP',
+      param1: this.project.id,
+      param2: this.industry.id,
+      param3: this.unit,
+      param4: this.house.building_id
+    })
       .then(data => {
         // console.log(data);
         // console.log('#######');
@@ -147,7 +148,7 @@ export class HouseInfoPage {
     let temp = [];
     arr.forEach(item => {
       const floor = item.floor;
-      
+
       if (item.statenum == '100') { // 销控
         item.roomcolor = 'rgb(255,255,100)';//'#DA9694';
         let count = this.colors[2].count || 0;
@@ -169,7 +170,7 @@ export class HouseInfoPage {
           item.roomcolor = 'rgb(161,43,241)';//'#538DD5';
           let count = this.colors[4].count || 0;
           this.colors[4].count = count + 1;
-        } 
+        }
       }
       if (this.floors[floor]) {
         this.floors[floor].push(item);
@@ -177,7 +178,7 @@ export class HouseInfoPage {
         this.floors[floor] = [item];
       }
     });
-    
+
     for (const key in this.floors) {
       if (this.floors.hasOwnProperty(key)) {
         const rooms = this.floors[key];
@@ -190,7 +191,7 @@ export class HouseInfoPage {
     }
 
     // this.roomsData = temp;
-    this.roomsData = temp.sort((b,a) => {
+    this.roomsData = temp.sort((b, a) => {
       if (a.floorno < b.floorno) {
         return -1;
       }
@@ -215,7 +216,7 @@ export class HouseInfoPage {
     var no = parseInt(room.house_number);
     if (no < 10) {
       return `${room.floor}0${no}`;
-    } 
+    }
 
     return `${room.floor}${no}`;
   }

@@ -54,6 +54,14 @@ page-house-info {
             height: 44px;
             line-height: 44px;
             text-align: center;
+            position: relative;
+            ion-icon {
+                position: absolute;
+                bottom: 0;
+                right: 2px;
+                font-size: 18px;
+                color: color($colors,primary);
+            }
         }
     }
 
