@@ -40,7 +40,7 @@
           <ion-col *ngFor="let room of floor.rooms" class="cell">
             <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
               {{formatHouseNumber(room)}}
-              <ion-icon name="ios-lock-outline" *ngIf="item.statenum == '0' && room.locked"></ion-icon>
+              <ion-icon name="ios-lock-outline" *ngIf="room.statenum == '0' && room.locked"></ion-icon>
             </div>
           </ion-col>
         </ion-row>
