@@ -74,7 +74,7 @@
     </ion-refresher-content>
   </ion-refresher> -->
   <!-- 列表 -->
-  <virtual-scroller #scroll [items]="data">
+  <virtual-scroller #scroll [items]="data" [childHeight]="80">
     <ion-list>
       <div *ngFor="let item of scroll.viewPortItems" class="custom-card">
         <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
