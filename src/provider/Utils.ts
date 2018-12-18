@@ -30,7 +30,7 @@ export class Utils {
       const encrypted = this._getQueryString('key');
 
       if (encrypted) {
-        let result = this.aesDecrypt(encrypted, 'Hnerp_2018');
+        let result = this.aesDecrypt(encrypted, 'HN_GroupAES_2018');
         this.params = JSON.parse(result);
       }
       console.log('解析参数');
