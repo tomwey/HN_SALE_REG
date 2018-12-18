@@ -29,6 +29,7 @@ export class MyCustomerPage {
   // showPanel: boolean = false;
   @ViewChild(Content) content: Content;
   @ViewChild('searchBar') searchBar: Searchbar;
+
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private app: App,
@@ -87,11 +88,6 @@ export class MyCustomerPage {
     modal.present();
   }
 
-  virtualTrack(index, item) {
-    // console.log(item);
-    return index;
-  }
-
   cancelClick() {
     this.showSearch = false;
     if (this.keyword.length > 0) {
@@ -114,7 +110,6 @@ export class MyCustomerPage {
       this.data = [];
     }
 
-    // console.log(this.currentFilterData);
     let filterOptions = null;
 
     const optionConfig = this.filterOptionConfigs[this.menuType];
@@ -270,9 +265,6 @@ export class MyCustomerPage {
     });
     this.data = temp;
 
-    setTimeout(() => {
-      this.content.scrollToTop();
-    }, 50);
   }
 
   selectItem(item) {

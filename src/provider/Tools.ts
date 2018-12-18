@@ -6,10 +6,10 @@ export class Tools {
 
     private loading: Loading;
     // private loadingIsOpen: boolean = false;
-  
+
     constructor(private toastCtrl: ToastController,
-                private loadingCtrl: LoadingController) {
-      // console.log('Hello ToolService Provider');
+        private loadingCtrl: LoadingController) {
+        // console.log('Hello ToolService Provider');
     }
 
     /**
@@ -19,11 +19,11 @@ export class Tools {
     */
     showToast(message: string = '操作完成', duration: number = 2000): void {
         this.toastCtrl.create({
-        message: message,
-        duration: duration,
-        position: 'middle',
-        showCloseButton: false,
-        cssClass: 'custom-toast',
+            message: message,
+            duration: duration,
+            position: 'middle',
+            showCloseButton: false,
+            cssClass: 'custom-toast',
         }).present();
     }
 
@@ -51,9 +51,9 @@ export class Tools {
             loading.present();
             this.loading = loading;
 
-            setTimeout( () => {
-                this.hideLoading();
-            }, 60000 ) // 最长显示10秒
+            // setTimeout(() => {
+            //     this.hideLoading();
+            // }, 60000) // 最长显示10秒
         }
     }
 

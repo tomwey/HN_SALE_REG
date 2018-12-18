@@ -33,6 +33,7 @@
     "ionic-img-viewer": "^2.9.0",
     "ionicons": "3.0.0",
     "moment": "^2.22.2",
+    "ngx-virtual-scroller": "^1.0.16",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
     "ts-md5": "^1.2.4",

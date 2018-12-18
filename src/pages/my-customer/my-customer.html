@@ -74,34 +74,36 @@
     </ion-refresher-content>
   </ion-refresher> -->
   <!-- 列表 -->
-  <ion-list [virtualScroll]="data" [virtualTrackBy]="virtualTrack" [approxItemHeight]=" '80px' ">
-    <div *virtualItem="let item" class="custom-card">
-      <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
+  <virtual-scroller #scroll [items]="data">
+    <ion-list>
+      <div *ngFor="let item of scroll.viewPortItems" class="custom-card">
+        <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
 
-      <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
-        <h2 text-wrap class="title">
-          {{item.telephone}} {{item.custname}}
-          <ion-icon [class.male]="item.sex == '1' || item.sex == '男'" [class.female]="item.sex == '2' || item.sex == '女'"
-            name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
-          </ion-icon>
-        </h2>
-        <p>房号: {{item.house_no}}</p>
-        <p text-wrap>{{item.abnormalsubname}}</p>
-        <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' :
-          '已回复'}}</ion-badge>
-      </ion-item>
+        <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
+          <h2 text-wrap class="title">
+            {{item.telephone}} {{item.custname}}
+            <ion-icon [class.male]="item.sex == '1' || item.sex == '男'" [class.female]="item.sex == '2' || item.sex == '女'"
+              name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
+            </ion-icon>
+          </h2>
+          <p>房号: {{item.house_no}}</p>
+          <p text-wrap>{{item.abnormalsubname}}</p>
+          <ion-badge item-right class="custom-badge" color="reply-{{item.is_reply}}">{{item.is_reply == '0' ? '未回复' :
+            '已回复'}}</ion-badge>
+        </ion-item>
 
-      <order-sign-item *ngIf="menuType === '2' || menuType === '3'" [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
-        (onCallPhone)="callPhone(item);">
+        <order-sign-item *ngIf="menuType === '2' || menuType === '3'" [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
+          (onCallPhone)="callPhone(item);">
 
-      </order-sign-item>
+        </order-sign-item>
 
-      <mortgage-item [item]="item" *ngIf="menuType === '4'" (onSelect)="selectItem(item);"></mortgage-item>
+        <mortgage-item [item]="item" *ngIf="menuType === '4'" (onSelect)="selectItem(item);"></mortgage-item>
 
-      <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);"></payment-money-item>
+        <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);"></payment-money-item>
 
-    </div>
-  </ion-list>
+      </div>
+    </ion-list>
+  </virtual-scroller>
   <!-- 条件过滤 -->
 
   <!-- </div> -->
