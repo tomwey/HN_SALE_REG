@@ -87,6 +87,11 @@ export class MyCustomerPage {
     modal.present();
   }
 
+  virtualTrack(index, item) {
+    // console.log(item);
+    return index;
+  }
+
   cancelClick() {
     this.showSearch = false;
     if (this.keyword.length > 0) {
@@ -264,6 +269,10 @@ export class MyCustomerPage {
 
     });
     this.data = temp;
+
+    setTimeout(() => {
+      this.content.scrollToTop();
+    }, 50);
   }
 
   selectItem(item) {

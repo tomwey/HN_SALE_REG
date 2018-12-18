@@ -74,7 +74,7 @@
     </ion-refresher-content>
   </ion-refresher> -->
   <!-- 列表 -->
-  <ion-list [virtualScroll]="data" [approxItemHeight]=" '80px' ">
+  <ion-list [virtualScroll]="data" [virtualTrackBy]="virtualTrack" [approxItemHeight]=" '80px' ">
     <div *virtualItem="let item" class="custom-card">
       <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
 
