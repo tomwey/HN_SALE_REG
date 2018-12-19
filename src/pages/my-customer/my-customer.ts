@@ -26,6 +26,8 @@ export class MyCustomerPage {
   showFilterPanel: boolean = false;
   showSearch: boolean = false;
 
+  itemHeight: number = 80;
+
   // showPanel: boolean = false;
   @ViewChild(Content) content: Content;
   @ViewChild('searchBar') searchBar: Searchbar;
@@ -285,6 +287,15 @@ export class MyCustomerPage {
   }
 
   segmentChanged(ev) {
+    if (this.menuType === '4') {
+      this.itemHeight = 62;
+    } else if (this.menuType === '5') {
+      this.itemHeight = 114;
+    } else if (this.menuType === '2' || this.menuType === '3') {
+      this.itemHeight = 120;
+    } else {
+      this.itemHeight = 80;
+    }
     this.showFilterPanel = false;
 
     if (!this.currentProject.id) {
