@@ -29,8 +29,30 @@ export class ExCustomerReplyPage {
     public navParams: NavParams) {
     this.item = this.navParams.data;
     this.item.sex_name = this.item.sex == '1' ? '男' : '女';
-    console.log(this.item);
+
+    if (this.item.abnormalsubname === 'NULL') {
+      this.item.abnormalsubname = '--';
+    }
+
+    if (this.item.followupdesc === 'NULL') {
+      this.item.followupdesc = '--';
+    }
+
+    // console.log(this.item);
   }
+
+  formatCustphone(item) {
+    // custandphone: "Tel:13608022941*Name:董靖"
+    let phone = item.custandphone;
+    if (!phone || phone === 'NULL') return '--';
+
+    let arr = phone.split('*');
+    phone = arr[0];
+    phone = phone && phone.replace('Tel:', '');
+    return phone;
+  }
+
+
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad ExCustomerReplyPage');

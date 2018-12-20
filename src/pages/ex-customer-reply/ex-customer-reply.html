@@ -18,7 +18,7 @@
     <ion-row>
       <ion-col col-6>
         <p class="pair">
-          <span class="label">姓名:</span><span class="value">{{item.custname || '无'}}</span>
+          <span class="label">姓名:</span><span class="value">{{item.custnames || '无'}}</span>
         </p>
       </ion-col>
       <ion-col col-6>
@@ -28,7 +28,7 @@
       </ion-col>
       <ion-col col-6>
         <p class="pair">
-          <span class="label">电话:</span><span class="value">{{item.custphone || '无'}}</span>
+          <span class="label">电话:</span><span class="value">{{formatCustphone(item)}}</span>
         </p>
       </ion-col>
       <ion-col col-6>
