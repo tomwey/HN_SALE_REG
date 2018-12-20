@@ -12,7 +12,12 @@ export class iOSFixedScrollFreeze {
   fixedScrollFreeze(content: Content) {
     if (this.platform.is('mobileweb') && this.platform.is('ios')) {
       const scrollElement = content.getScrollElement();
-      
+
+      if (!scrollElement || !scrollElement.scrollTo) {
+        // content.enableJsScroll();
+        return;
+      }
+
       scrollElement.scrollTo(0, 1);
 
       content.ionScrollEnd.subscribe(evt => {
