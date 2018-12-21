@@ -5,8 +5,8 @@
         <p class="custname" text-wrap>{{item.custnames}}</p>
       </td>
       <td class="center">
-        <p class="house-info"><span class="outusertypename type-color-{{item.outusertypeid}}">{{item.outusertypename}}</span><span
-            class="house-no" text-wrap>{{item.house_no}}</span></p>
+        <p class="house-info"><span class="outusertypename type-color-{{item.innerusertypeid1 || item.outusertypeid}}">{{item.innerusertypename1
+            || item.outusertypename}}</span><span class="house-no" text-wrap>{{item.house_no}}</span></p>
 
       </td>
       <td class="right">
