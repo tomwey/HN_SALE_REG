@@ -22,7 +22,7 @@ export class SourceChangePage {
   source: any;
   newSource?: any;
   proj_id: any;
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
@@ -38,19 +38,21 @@ export class SourceChangePage {
 
   selectPersonSource() {
 
-    this.api.POST(null, { "dotype": "GetData", 
-        "funname": "通用获取数据字典数据APP", 
-        "param1": '415' })
-    .then(data => {
-      console.log(data);
-      if (data && data['data']) {
-        let arr = data['data'];
-        this.showSelectPage(arr, '选择客户来源', 1);
-      }
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "通用获取数据字典数据APP",
+      "param1": '415'
     })
-    .catch(error => {
-      this.tools.showToast(error.message || '获取数据失败');
-    });
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.showSelectPage(arr, '选择客户来源', 1);
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取数据失败');
+      });
   }
 
   showSelectPage(arr, title, type) {
@@ -58,20 +60,22 @@ export class SourceChangePage {
     // console.log(arr);
     arr.forEach(element => {
       // "project_id":"1291428","project_name":"珍宝金楠一期"
-      data.push(`${element.dic_name}|${element.dic_value}`);  
+      data.push(`${element.dic_name}|${element.dic_value}`);
     });
     let selectedItem = null;
     // if (this.person.srctypename && this.person.srctypeid) {
     //   selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
     // }
-    let modal = this.modalCtrl.create('CommSelectPage', { selectedItem: selectedItem, 
-                                                          title: title, data: data })
+    let modal = this.modalCtrl.create('CommSelectPage', {
+      selectedItem: selectedItem,
+      title: title, data: data
+    })
     modal.onDidDismiss((res) => {
       if (res) {
         // this.storage.set('selected.project', JSON.stringify(data));
         if (type == 1) { // 客户来源
           this.person.srctypename2 = res.label;
-          this.person.srctypeid2   = res.value;
+          this.person.srctypeid2 = res.value;
 
           if (res.value == '1') {
             this.newSource = { descname: '老业主', field: 'old_person' };
@@ -84,7 +88,7 @@ export class SourceChangePage {
           } else {
             this.newSource = null;
           }
-        } 
+        }
       }
     });
     modal.present();
@@ -109,8 +113,14 @@ export class SourceChangePage {
       return;
     }
 
-    if (this.person.srctypeid == this.person.srctypeid2) {
-      this.tools.showToast('变更后的客户来源与变更前一样');
+    if (this.newSource && !this.newSource.value) {
+      this.tools.showToast(`${this.newSource.descname}不能为空`);
+      return;
+    }
+
+    if (this.person.srctypeid == this.person.srctypeid2 &&
+      this.person.srcid == this.newSource.value) {
+      this.tools.showToast(`变更后的${this.newSource.descname}与变更前一样`);
       return;
     }
 
@@ -118,24 +128,25 @@ export class SourceChangePage {
   }
 
   sendFlow() {
-    let srcID   = null;
+    let srcID = null;
     let srcName = null;
     if (this.newSource) {
       srcID = this.newSource.value;
       srcName = this.newSource.label;
     }
 
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '客户来源类型变更APP', 
-                          param1: '1',
-                          param2: this.person.callid,
-                          param3: Utils.getQueryString('manid'),
-                          param4: this.person.srctypeid2 || '-1',
-                          param5: srcID,
-                          param6: srcName,
-                          param7: this.person.srcmemo2,
-                          param8: this.person.changereason
-                         })
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '客户来源类型变更APP',
+      param1: '1',
+      param2: this.person.callid,
+      param3: Utils.getQueryString('manid'),
+      param4: this.person.srctypeid2 || '-1',
+      param5: srcID,
+      param6: srcName,
+      param7: this.person.srcmemo2,
+      param8: this.person.changereason
+    })
       .then(data => {
         if (data && data['data']) {
           let arr = data['data'];
