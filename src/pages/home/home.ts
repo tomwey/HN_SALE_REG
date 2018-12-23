@@ -43,6 +43,8 @@ export class HomePage {
     unpaymoney: "NULL",
   };
 
+  showLoading: boolean = true;
+
   @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private api: ApiService,
@@ -55,14 +57,14 @@ export class HomePage {
 
     this.events.subscribe('project:changed', (projData) => {
       this.changeCurrentProject(projData);
-      this.loadStatData(false);
+      this.loadStatData(this.showLoading);
     });
 
     this.events.subscribe('follow:saved', (data) => {
       if (data === '1') {
         // const callcount = parseInt(this.statData.callcount);
         // this.statData.callcount = callcount + 1;
-        this.loadStatData(false);
+        this.loadStatData(this.showLoading);
       }
     });
   }
@@ -132,6 +134,14 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
+  }
+
+  ionViewWillEnter() {
+    this.showLoading = true;
+  }
+
+  ionViewWillLeave() {
+    this.showLoading = false;
   }
 
   changeCurrentProject(projData) {
