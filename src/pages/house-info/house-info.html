@@ -29,8 +29,9 @@
     {{error}}
   </div>
   <ion-grid>
-    <ion-list>
-      <ion-row *ngFor="let floor of roomsData">
+    <!-- <ion-list> -->
+    <virtual-scroller #scroll [items]="roomsData" [enableUnequalChildrenSizes]="true">
+      <ion-row *ngFor="let floor of scroll.viewPortItems">
         <ion-col col-2>
           <div class="floor-box">
             {{floor.floor}}
@@ -55,7 +56,8 @@
           </div>
         </ion-col>
       </ion-row>
-    </ion-list>
+    </virtual-scroller>
+    <!-- </ion-list> -->
   </ion-grid>
   <!-- <table class="rooms-table">
     <tr *ngFor="let floor of roomsData">
