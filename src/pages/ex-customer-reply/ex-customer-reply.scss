@@ -24,6 +24,28 @@ page-ex-customer-reply {
                 padding-left: 5px;
             }
         }
+
+        .table {
+            width: 100%;
+            font-size: 14px;
+            td {
+                vertical-align: top;
+                padding-bottom: 10px;
+            }
+            .label,.value {
+                line-height: 14px;
+                vertical-align: middle;
+            }
+            .label {
+                width: 36px;
+                color: #999;
+            }
+            .value {
+                width: calc(100% - 80px) / 2;
+                color: #333;
+                max-width: 100px;
+            }
+        }
     }
 
     .reply-form {

@@ -29,14 +29,15 @@
     {{error}}
   </div>
   <ion-grid>
-    <ion-row *ngFor="let floor of roomsData">
-      <ion-col col-2>
-        <div class="floor-box">
-          {{floor.floor}}
-        </div>
-      </ion-col>
-      <ion-col col-10>
-        <!-- <ion-row class="rooms">
+    <ion-list [virtualScroll]="roomsData">
+      <ion-row *virtualItem="let floor">
+        <ion-col col-2>
+          <div class="floor-box">
+            {{floor.floor}}
+          </div>
+        </ion-col>
+        <ion-col col-10>
+          <!-- <ion-row class="rooms">
           <ion-col *ngFor="let room of floor.rooms" class="cell">
             <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
               {{formatHouseNumber(room)}}
@@ -44,16 +45,17 @@
             </div>
           </ion-col>
         </ion-row> -->
-        <div class="rooms-wrap">
-          <div class="room-wrap" *ngFor="let room of floor.rooms">
-            <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
-              {{formatHouseNumber(room)}}
-              <ion-icon name="ios-lock-outline" *ngIf="room.statenum == '0' && room.locked"></ion-icon>
+          <div class="rooms-wrap">
+            <div class="room-wrap" *ngFor="let room of floor.rooms">
+              <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
+                {{formatHouseNumber(room)}}
+                <ion-icon name="ios-lock-outline" *ngIf="room.statenum == '0' && room.locked"></ion-icon>
+              </div>
             </div>
           </div>
-        </div>
-      </ion-col>
-    </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-list>
   </ion-grid>
   <!-- <table class="rooms-table">
     <tr *ngFor="let floor of roomsData">

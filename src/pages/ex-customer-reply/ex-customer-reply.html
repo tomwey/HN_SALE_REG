@@ -15,28 +15,20 @@
 <ion-content>
   <div class="info-box">
     <h2 class="title">基本信息</h2>
-    <ion-row>
-      <ion-col col-6>
-        <p class="pair">
-          <span class="label">姓名:</span><span class="value">{{item.custnames || '无'}}</span>
-        </p>
-      </ion-col>
-      <ion-col col-6>
-        <p class="pair">
-          <span class="label">房号:</span><span class="value">{{item.house_no || '无'}}</span>
-        </p>
-      </ion-col>
-      <ion-col col-6>
-        <p class="pair">
-          <span class="label">电话:</span><span class="value">{{formatCustphone(item)}}</span>
-        </p>
-      </ion-col>
-      <ion-col col-6>
-        <p class="pair">
-          <span class="label">性别:</span><span class="value">{{item.sex_name || '无'}}</span>
-        </p>
-      </ion-col>
-    </ion-row>
+    <table class="table">
+      <tr>
+        <td class="label">姓名</td>
+        <td class="value lg">{{item.custnames || '无'}}</td>
+        <td class="label">房号</td>
+        <td class="value">{{item.house_no || '无'}}</td>
+      </tr>
+      <tr>
+        <td class="label">电话</td>
+        <td class="value lg">{{formatCustphone(item)}}</td>
+        <td class="label">性别</td>
+        <td class="value">{{item.sex_name || '无'}}</td>
+      </tr>
+    </table>
   </div>
   <div class="info-box">
     <h2 class="title">异常类型</h2>
