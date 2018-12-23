@@ -47,15 +47,17 @@
         </ion-col>
       </ion-row>
     </div>
-    <div class="other-info">
-      <ion-item>
-        <p text-wrap>客户: {{item.custnames}}</p>
-        <ion-note item-right>
-          {{item.house_no}}
-        </ion-note>
-      </ion-item>
-    </div>
+
   </div>
+  <div class="other-info">
+    <ion-item>
+      <p text-wrap>客户: {{item.custnames}}</p>
+      <ion-note item-right>
+        {{item.house_no}}
+      </ion-note>
+    </ion-item>
+  </div>
+
   <div class="empty-error-box" *ngIf="!!error">
     {{error}}
   </div>
@@ -69,7 +71,7 @@
             <div class="fundname">{{obj.fundname2}}</div>
           </ion-col>
           <ion-col col-4>
-            <div class="time">{{obj.plandate}}<span class="danger-text" *ngIf="checkExpire(obj);">逾期</span></div>
+            <div class="time">{{obj.plandate | formatDate:0}}<span class="danger-text" *ngIf="checkExpire(obj);">逾期</span></div>
           </ion-col>
         </ion-row>
         <ion-row>
