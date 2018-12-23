@@ -28,7 +28,13 @@ export class ExCustomerReplyPage {
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.item = this.navParams.data;
-    this.item.sex_name = this.item.sex == '1' ? '男' : '女';
+
+    let sexandname = this.item.sexandname;
+    if (sexandname) {
+      sexandname = sexandname.split('*')[0];
+      sexandname = sexandname.replace('Sex:', '');
+    }
+    this.item.sex_name = sexandname;
 
     if (this.item.abnormalsubname === 'NULL') {
       this.item.abnormalsubname = '--';
