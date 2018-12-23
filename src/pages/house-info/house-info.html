@@ -48,7 +48,7 @@
         </ion-row> -->
           <div class="rooms-wrap">
             <div class="room-wrap" *ngFor="let room of floor.rooms">
-              <div class="room-box" [style.background]="room.roomcolor" tappable (click)="selectRoom(room);">
+              <div class="room-box" [style.background]="room.roomcolor" (tap)="selectRoom(room);">
                 {{formatHouseNumber(room)}}
                 <ion-icon name="ios-lock-outline" *ngIf="room.statenum == '0' && room.locked"></ion-icon>
               </div>
