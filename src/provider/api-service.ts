@@ -14,8 +14,8 @@ import 'rxjs/add/operator/timeout';
 */
 // 正式服务器和账号
 const API_HOST: string = "http://cys.afterwind.cn/api/v1";
-const API_KEY:  string = "c2fb2548ed4460dd10c7f62b33d9082e";
-const API_SERVER:string = "http://erp20-app.heneng.cn:16681";
+const API_KEY: string = "c2fb2548ed4460dd10c7f62b33d9082e";
+const API_SERVER: string = "http://erp20-app.heneng.cn:16681";
 
 // 测试账号和测试服务器
 // const API_HOST: string = "http://0.0.0.0:3000/api/v1";
@@ -54,7 +54,7 @@ export class ApiService {
 
     // 组装参数
     let searchParams = new URLSearchParams();
-    
+
     // 设置安全参数
     // searchParams.set('i', i.toString());
     // searchParams.set('ak', this.generateAccessKey(i));
@@ -69,33 +69,33 @@ export class ApiService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url, new RequestOptions({ search: searchParams }))
-      .toPromise()
-      .then(resp => {
-        this.hideLoading();
-        // console.log('success');
-        let result = this.handleSuccess(resp);
-        if (result.code == 0) {
-          resolve(result);
-          // resolve({ data: result.data, total: result.total });
-        } else {
-          reject(result);
-        }
-      })
-      .catch(error => {
-        this.hideLoading();
-        let err = this.handleError(error);
-        reject(err);
-      });
+        .toPromise()
+        .then(resp => {
+          this.hideLoading();
+          // console.log('success');
+          let result = this.handleSuccess(resp);
+          if (result.code == 0) {
+            resolve(result);
+            // resolve({ data: result.data, total: result.total });
+          } else {
+            reject(result);
+          }
+        })
+        .catch(error => {
+          this.hideLoading();
+          let err = this.handleError(error);
+          reject(err);
+        });
     });
-     
+
   } // end get 
 
   // 发起调查问卷
   SendSurvey(sql, loadingText = '正在加载', showLoading = true) {
     if (showLoading) {
-        this.showLoading(loadingText);
+      this.showLoading(loadingText);
     }
-    
+
     let url = API_SERVER + '/savedata'; //+ '/api';//API_HOST + '/' + uri;
 
     // 参数签名
@@ -113,33 +113,33 @@ export class ApiService {
     let requestOptions = new RequestOptions({ headers: headers });
     return new Promise((resolve, reject) => {
       this.http.post(url, sql, requestOptions)
-      .toPromise()
-      .then(resp => {
-        this.hideLoading();
-        // console.log('success');
-        let result = this.handleSuccess(resp);
-        if (parseInt(result.code) == 0) {
-          resolve(result);
-          // resolve({ data: result.data, total: result.total });
-        } else {
-          reject(result);
-        }
-      })
-      .catch(error => {
-        this.hideLoading();
+        .toPromise()
+        .then(resp => {
+          this.hideLoading();
+          // console.log('success');
+          let result = this.handleSuccess(resp);
+          if (parseInt(result.code) == 0) {
+            resolve(result);
+            // resolve({ data: result.data, total: result.total });
+          } else {
+            reject(result);
+          }
+        })
+        .catch(error => {
+          this.hideLoading();
 
-        let err = this.handleError(error);
-        reject(err);
-      });
+          let err = this.handleError(error);
+          reject(err);
+        });
     });
   } // end post
 
   // 处理POST请求
   POST(uri, params, loadingText = '正在加载', showLoading = true) {
     if (showLoading) {
-        this.showLoading(loadingText);
+      this.showLoading(loadingText);
     }
-    
+
     let url = API_SERVER; //+ '/api';//API_HOST + '/' + uri;
 
     // 参数签名
@@ -157,41 +157,41 @@ export class ApiService {
     let requestOptions = new RequestOptions({ headers: headers });
     return new Promise((resolve, reject) => {
       this.http.post(url, JSON.stringify(params), requestOptions)
-      .timeout(60000)
-      .toPromise()
-      .then(resp => {
-        this.hideLoading();
-        // console.log('success');
-        let result = this.handleSuccess(resp);
-        if (parseInt(result.code) == 0) {
-          resolve(result);
-          // resolve({ data: result.data, total: result.total });
-        } else {
-          reject(result);
-        }
-      })
-      .catch(error => {
-        this.hideLoading();
+        .timeout(60000)
+        .toPromise()
+        .then(resp => {
+          this.hideLoading();
+          // console.log('success');
+          let result = this.handleSuccess(resp);
+          if (parseInt(result.code) == 0) {
+            resolve(result);
+            // resolve({ data: result.data, total: result.total });
+          } else {
+            reject(result);
+          }
+        })
+        .catch(error => {
+          this.hideLoading();
 
-        let err = this.handleError(error);
-        reject(err);
-      });
+          let err = this.handleError(error);
+          reject(err);
+        });
     });
   } // end post
 
   // 上传文件
   upload(uri, body: FormData) {
-      let url = API_HOST + '/' + uri;
+    let url = API_HOST + '/' + uri;
 
-      // 组装参数
-      let i  = new Date().getTime();
-      let ak = this.generateAccessKey(i);
+    // 组装参数
+    let i = new Date().getTime();
+    let ak = this.generateAccessKey(i);
 
-      body.append('i', i.toString());
-      body.append('ak', ak);
+    body.append('i', i.toString());
+    body.append('ak', ak);
 
-      // let headers = new Headers({'Content-Type': 'multipart/form-data'});
-      return this.http.post(url, body, null)
+    // let headers = new Headers({'Content-Type': 'multipart/form-data'});
+    return this.http.post(url, body, null)
       .toPromise()
       .then(this.handleSuccess)
       .catch(this.handleError);
@@ -205,17 +205,17 @@ export class ApiService {
 
     let url = API_SERVER + '/scm';
 
-      // 组装参数
-      // let i  = new Date().getTime();
-      // let ak = this.generateAccessKey(i);
+    // 组装参数
+    // let i  = new Date().getTime();
+    // let ak = this.generateAccessKey(i);
 
-      // body.append('i', i.toString());
-      // body.append('ak', ak);
+    // body.append('i', i.toString());
+    // body.append('ak', ak);
 
-      // let headers = new Headers({'Content-Type': 'multipart/form-data'});
-      // const options = new RequestOptions();
-      return new Promise((resolve, reject) => {
-        this.http.post(url, body)
+    // let headers = new Headers({'Content-Type': 'multipart/form-data'});
+    // const options = new RequestOptions();
+    return new Promise((resolve, reject) => {
+      this.http.post(url, body)
         .toPromise()
         .then(resp => {
           this.hideLoading();
@@ -234,9 +234,9 @@ export class ApiService {
           let err = this.handleError(error);
           reject(err);
         });
-      }); 
-      //.then(this.handleSuccess)
-      //.catch(this.handleError);
+    });
+    //.then(this.handleSuccess)
+    //.catch(this.handleError);
   }
 
   // 生成MD5
@@ -247,12 +247,12 @@ export class ApiService {
   // 处理请求成功的回调
   private handleSuccess(resp: Response): any {
     let body = resp.json();
-    console.log(`result: ${JSON.stringify(body)}`);
+    // console.log(`result: ${JSON.stringify(body)}`);
     if (parseInt(body.code) == 0) {
       let rd: ResultData = { code: 0, total: body.total || 0, data: body.data || [] };
       return rd;
     } else {
-      let errorData: ErrorData = { code:body.code, message: body.msg };
+      let errorData: ErrorData = { code: body.code, message: body.msg };
       return errorData;
     }
   } // end handle success
@@ -262,15 +262,15 @@ export class ApiService {
     console.log(error);
     console.log('###################');
     let errMsg: string;
-    if ( error instanceof Response ) {
+    if (error instanceof Response) {
       const body = error.json() || '';
-      const err  = body.error || JSON.stringify(body);
+      const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
       errMsg = error.msg ? error.msg : error.toString();
     }
 
-    let errorData: ErrorData = { code:500, message: errMsg };
+    let errorData: ErrorData = { code: 500, message: errMsg };
     return errorData;
   } // end handle error 
 
@@ -280,7 +280,7 @@ export class ApiService {
     let signStr = '';
     let keys = Object.keys(params).sort();
     // console.log(`keys:${keys}`);
-    if ( keys.length == 0 ) return null;
+    if (keys.length == 0) return null;
 
     keys.forEach(key => {
       let value = params[key];
@@ -296,7 +296,7 @@ export class ApiService {
   private showLoading(loadingText) {
     // console.log(this.count);
     // if (++this.count === 1) {
-      this.tools.showLoading(loadingText);
+    this.tools.showLoading(loadingText);
     // }
   }
 
@@ -304,7 +304,7 @@ export class ApiService {
     // console.log('hide');
     // console.log(this.count);
     // if (--this.count === 0) {
-      this.tools.hideLoading();
+    this.tools.hideLoading();
     // }
   }
 

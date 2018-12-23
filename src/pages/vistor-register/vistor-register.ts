@@ -166,7 +166,7 @@ export class VistorRegisterPage {
           // param2: 'H_SP_Call',
         }, '正在加载', false)
           .then(data => {
-            console.log(data);
+            // console.log(data);
             if (data && data['data']) {
               // let arr = data['data'];
               // if (arr.length > 0) {
@@ -275,7 +275,7 @@ export class VistorRegisterPage {
       "param1": '415'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
           this.showSelectPage(arr, '选择客户来源', 1);
@@ -590,7 +590,7 @@ export class VistorRegisterPage {
       "param1": '88'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
           this.showSelectPage(arr, '选择证件类型', 2);

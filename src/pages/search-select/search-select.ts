@@ -105,7 +105,7 @@ export class SearchSelectPage {
 
     this.api.POST(null, params)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           this.data = data['data'];
           if (this.data.length > 0) {

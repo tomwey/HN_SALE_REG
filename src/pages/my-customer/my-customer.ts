@@ -349,7 +349,7 @@ export class MyCustomerPage {
 
   selectFilterItem(item) {
     this.showFilterPanel = false;
-    console.log(item);
+    // console.log(item);
     if (!(item.field === 'time' && item.value === '100')) {
       if (item.selected) return;
     }

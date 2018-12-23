@@ -54,7 +54,7 @@ export class HouseDetailPage {
       param2: Utils.getQueryString('manid')
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
           if (arr.length > 0) {

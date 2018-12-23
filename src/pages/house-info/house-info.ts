@@ -210,7 +210,14 @@ export class HouseInfoPage {
   }
 
   formatHouseNumber(room) {
+    // console.log(this.industry);
+    if (this.industry.id === '4') {
+      const arr = room.house_no.split('-');
+      if (arr.length === 0) return room.house_number;
+      return arr[arr.length - 1];
+    };
     if (!room.house_number) return '--';
+    // const floor = parseInt(room.floor);
     if (room.house_number.length > 2) return room.house_number;
 
     var no = parseInt(room.house_number);

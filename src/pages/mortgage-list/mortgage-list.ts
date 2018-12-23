@@ -49,7 +49,7 @@ export class MortgageListPage {
     public navParams: NavParams) {
 
     this.searchConditions = this.navParams.data;
-    console.log(this.searchConditions);
+    // console.log(this.searchConditions);
 
     this.events.subscribe('state:changed', () => {
       // this.items = [];

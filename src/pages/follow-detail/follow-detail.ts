@@ -20,7 +20,7 @@ export class FollowDetailPage {
   exception: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.exception = this.navParams.data;
-    console.log(this.exception);
+    // console.log(this.exception);
     this.prepareData();
   }
 
@@ -33,7 +33,7 @@ export class FollowDetailPage {
 
     temp.push({ label: '按揭状态', value: this.exception.ajstate_desc.replace('NULL', '--') });
     temp.push({ label: '开始日期', value: this.exception.followupdate.replace('NULL', '--') });
-    
+
     if (this.exception.ajstate === '40' || this.exception.ajstate === '90') {
       temp.push({ label: '异常类型', value: this.exception.abnormalname.replace('NULL', '--') });
       temp.push({ label: '异常子类型', value: this.exception.abnormalsubname.replace('NULL', '--') });

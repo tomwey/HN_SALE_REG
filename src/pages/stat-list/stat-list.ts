@@ -222,7 +222,7 @@ export class StatListPage {
   }
 
   selectItem(item) {
-    console.log(item);
+    // console.log(item);
     if (this.type == '4') {
       this.app.getRootNavs()[0].push('ExCustomerReplyPage', item);
     } else {

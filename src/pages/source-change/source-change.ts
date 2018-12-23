@@ -44,7 +44,7 @@ export class SourceChangePage {
       "param1": '415'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
           this.showSelectPage(arr, '选择客户来源', 1);
