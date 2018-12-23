@@ -29,8 +29,8 @@
     {{error}}
   </div>
   <ion-grid>
-    <ion-list [virtualScroll]="roomsData">
-      <ion-row *virtualItem="let floor">
+    <ion-list>
+      <ion-row *ngFor="let floor of roomsData">
         <ion-col col-2>
           <div class="floor-box">
             {{floor.floor}}
