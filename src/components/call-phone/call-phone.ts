@@ -31,7 +31,7 @@ export class CallPhoneComponent {
   private _callMultiPhone() {
     let custandphone = this.mobile || '';
     custandphone = custandphone.replace('NULL', '');
-
+    console.log(custandphone);
     if (!custandphone) {
       this.showAlert();
       return;
