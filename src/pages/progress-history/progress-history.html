@@ -23,7 +23,7 @@
         <span class="time">{{item.followupdate.split('T')[0]}}</span>
         <div class="content">
           <h2 class="title">{{item.ajstate_desc}}</h2>
-          <p class="summary">{{item.followupdesc}}</p>
+          <p class="summary">{{item.followupdesc === 'NULL' ? '' : item.followupdesc}}</p>
         </div>
       </li>
     </ul>
@@ -35,11 +35,11 @@
       <h2>{{item.ajstate_desc}}</h2>
       <p>{{item.followupdesc}}</p> -->
 
-      <!-- <h2>{{item.followupdesc}}</h2> -->
-      <!-- <p>{{item.followupdate.split('T')[0]}}</p> -->
-        <!-- <ion-badge item-right class="custom-badge" color="ajstate-{{item.ajstate}}">{{item.ajstate_desc}}</ion-badge> -->
-    
-      <!-- </ion-item>
+  <!-- <h2>{{item.followupdesc}}</h2> -->
+  <!-- <p>{{item.followupdate.split('T')[0]}}</p> -->
+  <!-- <ion-badge item-right class="custom-badge" color="ajstate-{{item.ajstate}}">{{item.ajstate_desc}}</ion-badge> -->
+
+  <!-- </ion-item>
   </ion-list> -->
 
 </ion-content>
