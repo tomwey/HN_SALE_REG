@@ -108,6 +108,11 @@ export class MyCustomerPage {
   }
 
   loadData(loading = true, refresher: any = null) {
+    if (!this.currentProject.id) {
+      this.error = '请先选择项目';
+      return;
+    }
+
     if (!refresher) {
       this.data = [];
     }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, App, Content,IonicPage } from 'ionic-angular';
+import { NavController, NavParams, App, Content, IonicPage } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
@@ -21,7 +21,7 @@ export class HouseQueryPage {
   projects: any = [];
 
   error2: any = null;
-  
+
   industries: any = [];
 
   keyword: any = '';
@@ -36,7 +36,7 @@ export class HouseQueryPage {
 
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private app: App,
     private iosFixed: iOSFixedScrollFreeze,
     private api: ApiService,
@@ -49,6 +49,7 @@ export class HouseQueryPage {
   }
 
   onSelectedProject(ev) {
+    // console.log(ev);
     if (ev) {
       this.currentProject = ev;
     }
@@ -65,7 +66,7 @@ export class HouseQueryPage {
       this.industries = [];
       this.loadIndustries(this.currentProject.id);
     }
-    
+
   }
 
   loadIndustries(project_id) {
@@ -109,7 +110,7 @@ export class HouseQueryPage {
         } else {
           this.error2 = '未知错误';
         }
-        
+
       })
       .catch(error => {
         this.error2 = error.message || '服务器出错了~';
@@ -119,7 +120,7 @@ export class HouseQueryPage {
   openHouse(item) {
     let industry = null;
     this.industries.forEach(element => {
-      if (this.industryID === element.id ) {
+      if (this.industryID === element.id) {
         industry = element;
       }
     });
@@ -133,11 +134,13 @@ export class HouseQueryPage {
 
   loadHouses() {
     this.error = null;
-    
-    this.api.POST(null, { dotype: 'GetData', 
-                          funname: '获取房源楼栋列表APP', 
-                          param1: this.currentProject.id, 
-                          param2: this.industryID }, '正在加载', true)
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取房源楼栋列表APP',
+      param1: this.currentProject.id,
+      param2: this.industryID
+    }, '正在加载', true)
       .then(data => {
         // console.log(data);
         if (data && data['data']) {

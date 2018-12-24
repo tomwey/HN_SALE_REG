@@ -19,41 +19,43 @@ export class ProjectSelectComponent {
     name: ''
   };
 
+  @Input() initProject: any = { id: '', name: '' };
+
   @Input() size?: number;
   @Input() limitWidth?: number;
   @Input() onlyShowL1Projects: boolean = false;
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
 
-  constructor(private store: AppStore, 
-              private modalCtrl: ModalController) {
+  constructor(private store: AppStore,
+    private modalCtrl: ModalController) {
     this.store.getProject(data => {
       if (data) {
         this.currentProject.id = data.value;
         this.currentProject.name = data.label;
-        this.currentProject.fromStore = true;
-
-        this.onSelect.emit(this.currentProject);
       }
+
+      this.currentProject.fromStore = true;
+      this.onSelect.emit(this.currentProject);
     });
   }
 
   selectProject() {
-    let modal = this.modalCtrl.create('SelectProjectPage', 
+    let modal = this.modalCtrl.create('SelectProjectPage',
       { onlyShowL1Projects: this.onlyShowL1Projects, currentProject: this.currentProject });
-      modal.onDidDismiss((res) => {
-        // console.log(res);
-        if (!res) return;
+    modal.onDidDismiss((res) => {
+      // console.log(res);
+      if (!res) return;
 
-        this.currentProject.name = res.label;
-        this.currentProject.id   = res.value;
-        this.currentProject.fromStore = false;
+      this.currentProject.name = res.label;
+      this.currentProject.id = res.value;
+      this.currentProject.fromStore = false;
 
-        this.store.saveProject(res);
+      this.store.saveProject(res);
 
-        this.onSelect.emit(this.currentProject);
+      this.onSelect.emit(this.currentProject);
 
-        // this.loadData();
-      });
+      // this.loadData();
+    });
     modal.present();
   }
 

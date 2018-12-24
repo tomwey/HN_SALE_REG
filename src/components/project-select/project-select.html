@@ -1,7 +1,4 @@
-<button ion-button 
-  [style.fontSize]="size && (size + 'px')"
-  [style.maxWidth]="limitWidth && (limitWidth + 'px')" 
-  text-wrap 
-  (click)="selectProject();">{{currentProject.name || '选择项目'}}
+<button ion-button [style.fontSize]="size && (size + 'px')" [style.maxWidth]="limitWidth && (limitWidth + 'px')"
+  text-wrap (click)="selectProject();">{{currentProject.name || initProject?.name || '选择项目'}}
   &nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon>
 </button>

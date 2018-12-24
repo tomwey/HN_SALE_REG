@@ -27,7 +27,7 @@
   <div class="dashboard" *ngIf="hasDashboard">
     <div class="stats">
       <div class="project-wrap">
-        <project-select (onSelect)="onSelectedProject($event);"></project-select>
+        <project-select (onSelect)="onSelectedProject($event);" [initProject]="currentProject"></project-select>
       </div>
       <div class="stat-wrap">
         <div class="stat-item ">

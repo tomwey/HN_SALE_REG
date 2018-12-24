@@ -10,7 +10,7 @@
     <ion-title>{{project.name}} — {{house.building_name}} {{industry.name}}</ion-title>
   </ion-navbar>
   <ion-toolbar color="white">
-    <ion-segment [(ngModel)]="unit" mode="md" (ionChange)="segmentChanged($event)">
+    <ion-segment [(ngModel)]="unit" mode="md" [class.scrollable]="units.length > 7" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="{{u.ID}}" *ngFor="let u of units">
         {{u.name}}
       </ion-segment-button>
