@@ -87,7 +87,7 @@ export class VistorsQueryPage {
       return;
     }
 
-    var phoneReg = /^1[3|4|5|7|8|9]\d{9}$/;
+    var phoneReg = /^1[3|4|5|6|7|8|9]\d{9}$/;
     if (!phoneReg.test(this.queryModel.mobile)) {
       this.tools.showToast('不正确的手机号');
       return
