@@ -122,7 +122,8 @@ export class VistorsQueryPage {
           this.dataList = [];
           this.forwardTo({
             custname: this.queryModel.name,
-            telephone: this.queryModel.mobile
+            telephone: this.queryModel.mobile,
+            custphone: this.queryModel.mobile,
           }, true);
         }
       })

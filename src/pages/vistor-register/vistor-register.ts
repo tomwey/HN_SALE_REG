@@ -33,6 +33,7 @@ export class VistorRegisterPage {
   person: any = {
     custname: '',
     telephone: '',
+    custphone: '',
     knowway: '',
     sex: '',
     srctypename: '',
@@ -90,6 +91,7 @@ export class VistorRegisterPage {
 
   knowwayReadonly: any = false;
   mobileReadonly: any = true;
+  custnameReadonly: any = false;
 
   hasSrcType: boolean = false;
 
@@ -129,6 +131,8 @@ export class VistorRegisterPage {
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.person = JSON.parse(JSON.stringify(this.navParams.data.person));
+
+    this.custnameReadonly = this.person.caneditname == '0';
 
     this.prepareData();
 
@@ -425,7 +429,7 @@ export class VistorRegisterPage {
       param1: `${Utils.getQueryString('manid')},${this.currentYTID || ''},${Utils.getQueryString('manname')},${this.person.birthday || ''},${this.person.postcode || ''}`,
       param2: this.person.address || '',
       param3: this.person.callid || this.callid || '0',
-      param4: this.person.telephone,
+      param4: this.person.custphone,
       param5: this.person.custname,
       param6: this.person.sex,
       param7: this.person.cardtypeid || this.person.cardtype,

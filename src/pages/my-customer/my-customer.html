@@ -13,8 +13,8 @@
     <div class="searchbar-wrap" [hidden]="!showSearch">
       <form action=".">
         <ion-searchbar #searchBar [(ngModel)]="keyword" cancelButtonText="取消" [ngModelOptions]="{standalone: true}"
-          [showCancelButton]="true" (search)="startSearch(keyword)" (ionCancel)="cancelClick();" [placeholder]="placeholderConfigs[menuType]"
-          [animated]="false" name="search">
+          [showCancelButton]="true" (search)="startSearch(keyword)" (ionCancel)="cancelClick();"
+          [placeholder]="placeholderConfigs[menuType]" [animated]="false" name="search">
         </ion-searchbar>
       </form>
     </div>
@@ -52,7 +52,8 @@
     </form>
     </ion-toolbar> -->
   <div class="filter-bar">
-    <div class="filter-item" tappable (click)="selectFilter(filterItem);" *ngFor="let filterItem of filterData[menuType]">
+    <div class="filter-item" tappable (click)="selectFilter(filterItem);"
+      *ngFor="let filterItem of filterData[menuType]">
       <span class="name">{{filterMenuName(filterItem)}}</span>
       <span class="icon-wrap">
         <ion-icon name="md-arrow-dropdown"></ion-icon>
@@ -77,12 +78,14 @@
   <virtual-scroller #scroll [items]="data" [childHeight]="itemHeight">
     <ion-list>
       <div *ngFor="let item of scroll.viewPortItems" class="custom-card">
-        <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);"></man-item>
+        <man-item *ngIf="menuType == '1'" [item]="item" (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);">
+        </man-item>
 
         <ion-item tappable (click)="selectItem(item);" *ngIf="menuType == '6'">
           <h2 text-wrap class="title">
-            {{item.telephone}} {{item.custname}}
-            <ion-icon [class.male]="item.sex == '1' || item.sex == '男'" [class.female]="item.sex == '2' || item.sex == '女'"
+            {{item.custphone}} {{item.custname}}
+            <ion-icon [class.male]="item.sex == '1' || item.sex == '男'"
+              [class.female]="item.sex == '2' || item.sex == '女'"
               name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
             </ion-icon>
           </h2>
@@ -92,14 +95,15 @@
             '已回复'}}</ion-badge>
         </ion-item>
 
-        <order-sign-item *ngIf="menuType === '2' || menuType === '3'" [item]="item" [menuType]="menuType" (onSelect)="selectItem(item);"
-          (onCallPhone)="callPhone(item);">
+        <order-sign-item *ngIf="menuType === '2' || menuType === '3'" [item]="item" [menuType]="menuType"
+          (onSelect)="selectItem(item);" (onCallPhone)="callPhone(item);">
 
         </order-sign-item>
 
         <mortgage-item [item]="item" *ngIf="menuType === '4'" (onSelect)="selectItem(item);"></mortgage-item>
 
-        <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);"></payment-money-item>
+        <payment-money-item [item]="item" *ngIf="menuType === '5'" (onSelect)="selectItem2($event);">
+        </payment-money-item>
 
       </div>
     </ion-list>
@@ -114,15 +118,18 @@
     <ion-list>
       <button ion-item detail-none *ngFor="let item of filterConfigData" (click)="selectFilterItem(item);">
         <ion-label class="name">{{item.name}}</ion-label>
-        <ion-icon color="primary" name="ios-checkmark-outline" item-right *ngIf="item.value !== '100' && item.selected"></ion-icon>
+        <ion-icon color="primary" name="ios-checkmark-outline" item-right *ngIf="item.value !== '100' && item.selected">
+        </ion-icon>
         <div item-content *ngIf="item.field === 'time' && item.value === '100'" class="date-control-wrap">
-          <ion-datetime [(ngModel)]="item.startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" cancelText="取消"
-            doneText="确定" placeholder="开始日期" [max]="item.endDate" class="custom-date-control"></ion-datetime>
+          <ion-datetime [(ngModel)]="item.startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"
+            cancelText="取消" doneText="确定" placeholder="开始日期" [max]="item.endDate" class="custom-date-control">
+          </ion-datetime>
           <span class="date-line">-</span>
           <ion-datetime [(ngModel)]="item.endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" cancelText="取消"
             doneText="确定" placeholder="截止日期" [min]="item.startDate" class="custom-date-control"></ion-datetime>
         </div>
-        <button ion-button item-right *ngIf="item.field === 'time' && item.value === '100'" [disabled]="!item.startDate && !item.endDate">确定</button>
+        <button ion-button item-right *ngIf="item.field === 'time' && item.value === '100'"
+          [disabled]="!item.startDate && !item.endDate">确定</button>
       </button>
     </ion-list>
   </div>

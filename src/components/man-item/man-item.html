@@ -13,7 +13,8 @@
     <ion-icon [class.male]="item.sex == '1' || item.sex == '男'" [class.female]="item.sex == '2' || item.sex == '女'"
       name="{{item.sex == '1' || item.sex == '男' ? 'ios-male-outline' : 'ios-female-outline'}}">
     </ion-icon>
-    <span class="industry industry-{{item.usertype_id}}" *ngIf="item.usertype_name && item.usertype_name !== 'NULL'">{{item.usertype_name}}</span>
+    <span class="industry industry-{{item.usertype_id}}"
+      *ngIf="item.usertype_name && item.usertype_name !== 'NULL'">{{item.usertype_name}}</span>
   </p>
   <p class="follow-content">上次跟进内容: {{item.content}}</p>
   <p class="follow-time">上次跟进时间: {{item.lastfollowdate | formatDate:'1'}}</p>

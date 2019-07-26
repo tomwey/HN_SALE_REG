@@ -25,11 +25,11 @@
     <!-- <h2>客户基本资料<span class="state state-{{person.statenum}}">{{person.statedesc}}</span></h2> -->
     <ion-item>
       <ion-label><span class="required">*</span>客户手机</ion-label>
-      <ion-input [(ngModel)]="person.telephone" type="number" pattern="[0-9]*" [disabled]="true"></ion-input>
+      <ion-input [(ngModel)]="person.custphone" type="number" pattern="[0-9]*" [disabled]="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label><span class="required">*</span>客户姓名</ion-label>
-      <ion-input [(ngModel)]="person.custname" placeholder="输入姓名"></ion-input>
+      <ion-input [(ngModel)]="person.custname" placeholder="输入姓名" [disabled]="custnameReadonly"></ion-input>
     </ion-item>
     <!-- <ion-item>
       <ion-label>客户性别</ion-label>
@@ -61,11 +61,13 @@
       <div class="custom-controls-wrap" item-content>
         <div class="select-box">
           <span class="select-item" tappable (click)="person.sex = '男'">
-            <ion-icon name="{{ person.sex == '男' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            <ion-icon name="{{ person.sex == '男' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}">
+            </ion-icon>
             男
           </span>
           <span class="select-item" tappable (click)="person.sex = '女'">
-            <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            <ion-icon name="{{ person.sex == '女' ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}">
+            </ion-icon>
             女
           </span>
         </div>
@@ -103,7 +105,8 @@
       <div class="custom-controls-wrap" item-content>
         <ion-row class="custom-item-right">
           <ion-col col-4 *ngFor="let btn of ytButtons">
-            <span class="custom-btn" [class.active]="btn.usertype_id === currentYTID" tappable (click)="selectBtn2(btn);">{{btn.usertype_name}}</span>
+            <span class="custom-btn" [class.active]="btn.usertype_id === currentYTID" tappable
+              (click)="selectBtn2(btn);">{{btn.usertype_name}}</span>
           </ion-col>
         </ion-row>
       </div>
@@ -116,8 +119,8 @@
 
     <ion-item>
       <ion-label>出生日期</ion-label>
-      <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" cancelText="取消" doneText="确定" [(ngModel)]="person.birthday"
-        placeholder="请设置"></ion-datetime>
+      <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" cancelText="取消" doneText="确定"
+        [(ngModel)]="person.birthday" placeholder="请设置"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -190,7 +193,9 @@
       <div class="custom-controls-wrap" item-content>
         <div class="select-box" item-right>
           <span class="select-item" *ngFor="let type of followtypes" tappable (click)="selectFollowType(type);">
-            <ion-icon name="{{ currentFollowType == type.value ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}"></ion-icon>
+            <ion-icon
+              name="{{ currentFollowType == type.value ? 'ios-radio-button-on-outline' : 'ios-radio-button-off-outline' }}">
+            </ion-icon>
             {{type.label}}
           </span>
         </div>
@@ -223,7 +228,8 @@
       <div class="custom-controls-wrap" item-content>
         <ion-row class="custom-item-right">
           <ion-col col-4 *ngFor="let btn of buttons">
-            <span class="custom-btn" [class.active]="btn.selected" tappable (click)="selectBtn(btn);">{{btn.label}}</span>
+            <span class="custom-btn" [class.active]="btn.selected" tappable
+              (click)="selectBtn(btn);">{{btn.label}}</span>
           </ion-col>
         </ion-row>
       </div>
