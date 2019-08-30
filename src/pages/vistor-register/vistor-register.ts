@@ -243,7 +243,7 @@ export class VistorRegisterPage {
       if (this.person.srctypeid == '1') {
         this.source = { descname: '老业主', field: 'old_person', label: this.person.srcname };
       } else if (this.person.srctypeid == '3') {
-        this.source = { descname: '转介公司', field: 'company', label: this.person.srcname };
+        this.source = { descname: '分销公司', field: 'company', label: this.person.srcname };
       } else if (this.person.srctypeid == '5') {
         this.source = { descname: '公司员工', field: 'employer', label: this.person.srcname };
       } else if (this.person.srctypeid == '6') {
@@ -316,7 +316,7 @@ export class VistorRegisterPage {
           if (res.value == '1') {
             this.source = { descname: '老业主', field: 'old_person' };
           } else if (res.value == '3') {
-            this.source = { descname: '转介公司', field: 'company' };
+            this.source = { descname: '分销公司', field: 'company' };
           } else if (res.value == '5') {
             this.source = { descname: '公司员工', field: 'employer' };
           } else if (res.value == '6') {

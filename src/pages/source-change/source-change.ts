@@ -80,7 +80,7 @@ export class SourceChangePage {
           if (res.value == '1') {
             this.newSource = { descname: '老业主', field: 'old_person' };
           } else if (res.value == '3') {
-            this.newSource = { descname: '转介公司', field: 'company' };
+            this.newSource = { descname: '分销公司', field: 'company' };
           } else if (res.value == '5') {
             this.newSource = { descname: '公司员工', field: 'employer' };
           } else if (res.value == '6') {

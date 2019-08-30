@@ -54,7 +54,7 @@ export class SearchSelectPage {
     } else if (this.source.field == 'employer') {
       this.placeholder = '输入员工姓名搜索';
     } else if (this.source.field == 'company') {
-      this.placeholder = '输入转介公司名字搜索';
+      this.placeholder = '输入分销公司名字搜索';
     }
 
     this.error = this.placeholder;
