@@ -165,7 +165,10 @@ export class ApiService {
         .timeout(60000)
         .toPromise()
         .then(resp => {
-          this.hideLoading();
+          if (showLoading) {
+            this.hideLoading();
+          }
+
           // console.log('success');
           let result = this.handleSuccess(resp);
           if (parseInt(result.code) == 0) {
@@ -176,7 +179,10 @@ export class ApiService {
           }
         })
         .catch(error => {
-          this.hideLoading();
+          // this.hideLoading();
+          if (showLoading) {
+            this.hideLoading();
+          }
 
           let err = this.handleError(error);
           reject(err);

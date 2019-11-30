@@ -23,6 +23,8 @@ export class HomePage {
 
   hasDashboard: boolean = false;
 
+  dataType: number = 1;
+
   currentProject: any = {
     id: '',
     name: ''
@@ -57,29 +59,101 @@ export class HomePage {
 
     this.events.subscribe('project:changed', (projData) => {
       this.changeCurrentProject(projData);
-      this.loadStatData(this.showLoading);
+      console.log('project:changed');
+      this.loadData();
     });
 
     this.events.subscribe('follow:saved', (data) => {
       if (data === '1') {
         // const callcount = parseInt(this.statData.callcount);
         // this.statData.callcount = callcount + 1;
-        this.loadStatData(this.showLoading);
+        this.loadStatData(this.showLoading, null);
       }
     });
   }
 
-  loadStatData(loading = true) {
-    if (!this.hasDashboard) return;
+  selectItem(type) {
+    this.dataType = type;
+  }
 
+  loadData() {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    let counter = 0;
+    this.tools.showLoading('正在加载');
+    // console.log(111);
+    this.loadStatData(false, () => {
+      // console.log(122);
+      this.loadDone(++counter);
+    });
+    this.loadQYData(false, () => {
+      // console.log(11);
+      this.loadDone(++counter);
+    });
+  }
+
+  loadDone(count) {
+    if (count === 2) {
+      this.tools.hideLoading();
+      this.loading = false;
+    }
+  }
+
+  loadQYData(loading = false, cb) {
+    console.log(123);
     if (!this.currentProject.id) {
       this.tools.showToast('选择项目查看统计数据');
       return;
     }
 
-    if (this.loading) return;
+    // if (this.loading) return;
 
-    this.loading = true;
+    // this.loading = true;
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '销售系统获取人员签约任务APP',
+      param1: this.currentProject.id,
+      param2: Utils.getQueryString('manid')
+    }, '正在加载', loading).then(data => {
+      console.log(data);
+      // if (data && data['data']) {
+      //   let arr = data['data'];
+      //   if (arr.length > 0) {
+      //     this.statData = arr[0];
+      //   }
+      // }
+      // this.loading = false;
+      if (cb) {
+        cb();
+      }
+    }).catch(error => {
+      // this.loading = false;
+      if (cb) {
+        cb();
+      }
+    });
+  }
+
+  loadStatData(loading = true, cb) {
+    if (!this.hasDashboard) {
+      if (cb) {
+        cb();
+      }
+      return;
+    }
+
+    if (!this.currentProject.id) {
+      this.tools.showToast('选择项目查看统计数据');
+      if (cb) {
+        cb();
+      }
+      return;
+    }
 
     this.api.POST(null, {
       dotype: 'GetData',
@@ -94,9 +168,15 @@ export class HomePage {
           this.statData = arr[0];
         }
       }
-      this.loading = false;
+      // this.loading = false;
+      if (cb) {
+        cb();
+      }
     }).catch(error => {
-      this.loading = false;
+      // this.loading = false;
+      if (cb) {
+        cb();
+      }
     });
   }
 
@@ -127,9 +207,12 @@ export class HomePage {
 
   onSelectedProject(ev) {
     // console.log(ev);
-    this.currentProject = ev;
-    this.loadStatData(true);
+    console.log('onSelectedProject');
 
+    this.currentProject = ev;
+    // this.loadStatData(true);
+    // this.loadQYData();
+    this.loadData();
   }
 
   ionViewDidLoad() {
