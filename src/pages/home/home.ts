@@ -46,18 +46,18 @@ export class HomePage {
   };
 
   qyData = {
-    monthmoney: '****',
-    monthnum: '****',
-    realmonthmoney: '****',
-    realmonthnum: '****',
-    weekmoney: '****',
-    weeknum: '****',
-    realweekmoney: '****',
-    realweeknum: '****',
-    daymoney: '****',
-    daynum: '****',
-    realdaymoney: '****',
-    realdaynum: '****',
+    monthmoney: '0',
+    monthnum: '0',
+    realmonthmoney: '0',
+    realmonthnum: '0',
+    weekmoney: '0',
+    weeknum: '0',
+    realweekmoney: '0',
+    realweeknum: '0',
+    daymoney: '0',
+    daynum: '0',
+    realdaymoney: '0',
+    realdaynum: '0',
   };
 
   showLoading: boolean = true;
@@ -93,6 +93,11 @@ export class HomePage {
   }
 
   loadData() {
+    if (!this.currentProject.id) {
+      this.tools.showToast('请先选择项目');
+      return;
+    }
+
     if (this.loading) {
       return;
     }
@@ -122,7 +127,7 @@ export class HomePage {
   loadQYData(loading = false, cb) {
     // console.log(123);
     if (!this.currentProject.id) {
-      this.tools.showToast('选择项目查看统计数据');
+      this.tools.showToast('选择项目查看签约数据');
       return;
     }
 
@@ -154,14 +159,6 @@ export class HomePage {
 
   loadStatData(loading = true, cb) {
     if (!this.hasDashboard) {
-      if (cb) {
-        cb();
-      }
-      return;
-    }
-
-    if (!this.currentProject.id) {
-      this.tools.showToast('选择项目查看统计数据');
       if (cb) {
         cb();
       }

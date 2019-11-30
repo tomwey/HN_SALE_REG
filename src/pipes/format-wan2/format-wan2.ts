@@ -21,8 +21,8 @@ export class FormatWan2Pipe implements PipeTransform {
     let val = parseFloat(value);
     if (val == 0.0) return '0.00'
 
-    const res = (val / 10000.0).toFixed(1);
+    // const res = (val / 10000.0).toFixed(1);
 
-    return `${res}`;
+    return `${val}`;
   }
 }
