@@ -65,7 +65,7 @@
       <div class="scope-area">
         <div class="seg-bar">
           <span class="seg-item" [class.active]="dataType == 1" tappable (click)="selectItem(1)">我的</span>
-          <span class="seg-item" [class.active]="dataType == 2" tappable (click)="selectItem(2)">本项目</span>
+          <span class="seg-item" [class.active]="dataType == 0" tappable (click)="selectItem(0)">本项目</span>
         </div>
         <div class="tip-area">计划 VS <span class="real">实际</span></div>
       </div>
@@ -74,12 +74,12 @@
           <ion-col col-4>
             <div class="plan-box">
               <div class="plan item">
-                <div class="money">5103.8万</div>
-                <div class="count">25套</div>
+                <div class="money">{{qyData.monthmoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.monthnum || '***').replace('NULL', '***')}}套</div>
               </div>
               <div class="real item">
-                <div class="money">3003.4万</div>
-                <div class="count">14套</div>
+                <div class="money">{{qyData.realmonthmoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.realmonthnum || '***').replace('NULL', '***')}}套</div>
                 <span class="date-tag">本月签约</span>
               </div>
             </div>
@@ -87,12 +87,12 @@
           <ion-col col-4>
             <div class="plan-box">
               <div class="plan item">
-                <div class="money">1503万</div>
-                <div class="count">7套</div>
+                <div class="money">{{qyData.weekmoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.weeknum || '***').replace('NULL', '***')}}套</div>
               </div>
               <div class="real item">
-                <div class="money">773.6万</div>
-                <div class="count">4套</div>
+                <div class="money">{{qyData.realweekmoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.realweeknum || '***').replace('NULL', '***')}}套</div>
                 <span class="date-tag">本周签约</span>
               </div>
             </div>
@@ -100,12 +100,12 @@
           <ion-col col-4>
             <div class="plan-box">
               <div class="plan item">
-                <div class="money">388万</div>
-                <div class="count">2套</div>
+                <div class="money">{{qyData.daymoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.daynum || '***').replace('NULL', '***')}}套</div>
               </div>
               <div class="real item">
-                <div class="money">0万</div>
-                <div class="count">0套</div>
+                <div class="money">{{qyData.realdaymoney | formatWan2}}万</div>
+                <div class="count">{{(qyData.realdaynum || '***').replace('NULL', '***')}}套</div>
                 <span class="date-tag">今日签约</span>
               </div>
             </div>

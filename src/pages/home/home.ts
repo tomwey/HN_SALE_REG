@@ -45,6 +45,21 @@ export class HomePage {
     unpaymoney: "NULL",
   };
 
+  qyData = {
+    monthmoney: '****',
+    monthnum: '****',
+    realmonthmoney: '****',
+    realmonthnum: '****',
+    weekmoney: '****',
+    weeknum: '****',
+    realweekmoney: '****',
+    realweeknum: '****',
+    daymoney: '****',
+    daynum: '****',
+    realdaymoney: '****',
+    realdaynum: '****',
+  };
+
   showLoading: boolean = true;
 
   @ViewChild(Content) content: Content;
@@ -74,6 +89,7 @@ export class HomePage {
 
   selectItem(type) {
     this.dataType = type;
+    this.loadQYData(true, null);
   }
 
   loadData() {
@@ -104,29 +120,26 @@ export class HomePage {
   }
 
   loadQYData(loading = false, cb) {
-    console.log(123);
+    // console.log(123);
     if (!this.currentProject.id) {
       this.tools.showToast('选择项目查看统计数据');
       return;
     }
 
-    // if (this.loading) return;
-
-    // this.loading = true;
-
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '销售系统获取人员签约任务APP',
       param1: this.currentProject.id,
-      param2: Utils.getQueryString('manid')
+      param2: Utils.getQueryString('manid'),
+      param3: this.dataType.toString()
     }, '正在加载', loading).then(data => {
       console.log(data);
-      // if (data && data['data']) {
-      //   let arr = data['data'];
-      //   if (arr.length > 0) {
-      //     this.statData = arr[0];
-      //   }
-      // }
+      if (data && data['data']) {
+        const arr = data['data'];
+        if (arr.length > 0) {
+          this.qyData = arr[0];
+        }
+      }
       // this.loading = false;
       if (cb) {
         cb();
