@@ -1,7 +1,7 @@
 page-home {
     .stats {
         background: color($colors, primary);
-        padding: 5px 15px!important;
+        padding: 5px 0 0!important;
         color: white;
         font-size: 14px;
         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
@@ -17,7 +17,7 @@ page-home {
 
         .stat-wrap {
             display: flex;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             .stat-item {
                 flex: 1;
                 text-align: center;
@@ -47,6 +47,32 @@ page-home {
                     font-size: 10px;
                     font-weight: normal;
                 }
+            }
+        }
+
+        ion-row,ion-col {
+            margin: 0;
+            padding: 0;
+        }
+        ion-row {
+            border-top: 1px solid rgba(0,0,0,0.2);
+        }
+        .other-stat {
+            font-size: 0;
+            text-align: center;
+            padding: 12px 10px;
+            width: 100%;
+            &.right-line {
+                border-right: 1px solid rgba(0,0,0,0.2);
+            }
+            .label {
+                font-size: 14px;
+                padding-right: 5px;
+            }
+            .value {
+                font-size: 16px;
+                font-weight: 700;
+                font-family: 'PingFang SC';
             }
         }
         

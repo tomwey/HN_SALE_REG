@@ -29,36 +29,60 @@
       <div class="project-wrap">
         <project-select (onSelect)="onSelectedProject($event);" [initProject]="currentProject"></project-select>
       </div>
-      <div class="stat-wrap" *ngIf="hasDashboard">
-        <div class="stat-item ">
-          <div class="value">
-            <br>
-            <span class="digit">{{statData.callcount}}</span><span class="unit">组</span>
-          </div>
-          <div class="name">来访</div>
-        </div>
-        <div class="stat-item ">
-          <div class="value">
-            <span class="money">{{statData.ordertotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
-            <span class="digit">{{statData.ordercount}}</span><span class="unit">套</span>
+      <div class="stat-box" *ngIf="hasDashboard">
+        <div class="stat-wrap">
+          <!-- <div class="stat-item ">
+            <div class="value">
+              <br>
+              <span class="digit">{{statData.callcount}}</span><span class="unit">组</span>
+            </div>
+            <div class="name">来访</div>
+          </div> -->
+          <div class="stat-item ">
+            <div class="value">
+              <span class="money">{{statData.totalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
+              <span class="digit">{{statData.totalnum}}</span><span class="unit">套</span>
 
+            </div>
+            <div class="name">总货值</div>
           </div>
-          <div class="name">认购</div>
-        </div>
-        <div class="stat-item right">
-          <div class="value">
-            <span class="money">{{statData.contotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
-            <span class="digit">{{statData.concount}}</span><span class="unit">套</span>
+          <div class="stat-item ">
+            <div class="value">
+              <span class="money">{{statData.ordertotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
+              <span class="digit">{{statData.ordercount}}</span><span class="unit">套</span>
+
+            </div>
+            <div class="name">认购</div>
           </div>
-          <div class="name">签约</div>
-        </div>
-        <div class="stat-item right">
-          <div class="value">
-            <br>
-            <span class="digit">{{statData.totalpaymoney | formatWan}}</span><span class="unit">万</span>
+          <div class="stat-item right">
+            <div class="value">
+              <span class="money">{{statData.contotalmoney | formatWan}}</span><span class="sm-unit">万</span><br>
+              <span class="digit">{{statData.concount}}</span><span class="unit">套</span>
+            </div>
+            <div class="name">签约</div>
           </div>
-          <div class="name">回款</div>
+          <!-- <div class="stat-item right">
+            <div class="value">
+              <br>
+              <span class="digit">{{statData.totalpaymoney | formatWan}}</span><span class="unit">万</span>
+            </div>
+            <div class="name">回款</div>
+          </div> -->
         </div>
+        <ion-row>
+          <ion-col col-6>
+            <div class="other-stat right-line">
+              <span class="label">来访</span>
+              <span class="value">{{statData.callcount}}组</span>
+            </div>
+          </ion-col>
+          <ion-col col-6>
+            <div class="other-stat">
+              <span class="label">回款</span>
+              <span class="value">{{statData.totalpaymoney | formatWan}}万</span>
+            </div>
+          </ion-col>
+        </ion-row>
       </div>
     </div>
     <div class="plan-section">
